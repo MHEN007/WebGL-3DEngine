@@ -87,14 +87,21 @@ class Matrix4x4{
     }
     
     static createRotationMatrixFromQuaternion(quaternion) {
-        let x = quaternion.getX()
-        let y = quaternion.getY()
-        let z = quaternion.getZ()
-        let w = quaternion.getW()
+        let x = quaternion.x
+        let y = quaternion.y
+        let z = quaternion.z
+        let w = quaternion.w
 
         let square = (number) => {
             return number ** 2
         }
+
+        let magnitude = Math.sqrt(x*x + y*y + z*z + w*w)
+        x = x/magnitude
+        y = y/magnitude
+        z = z/magnitude
+        w = w/magnitude
+
         return [
             square(w)+square(x)-square(y)-square(z), 2*(x*y - w*z), 2*(w*y + x*z), 0,
             2*(x*y + w*z), square(w)-square(x)+square(y)-square(z), 2*(y*z - w*x), 0,
@@ -107,6 +114,8 @@ class Matrix4x4{
         let quaternion = new Quaternion(0, 0, 0, 1)
         return this.createRotationMatrixFromQuaternion(quaternion.setEuler(yaw, roll, pitch))
     }
+
+    
 
     static multiply(m1, m2) {
         let result = Array(4).fill(null).map(() => Array(4).fill(0));
