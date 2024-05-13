@@ -1,3 +1,4 @@
+
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
 
@@ -82,6 +83,12 @@ function draw() {
     var offset = 0;
     var count = 3;
     gl.drawArrays(primitiveType, offset, count);
+}
+
+function quaternionToRotation(x, y, z, w) {
+
+    let text = Matrix4x4.createRotationMatrixFromQuaternion(new Quaternion(4, 3, 2, 1)).join(", ")
+    document.getElementById("result").innerText = text;
 }
 
 init()
