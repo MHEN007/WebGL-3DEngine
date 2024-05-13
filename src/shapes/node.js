@@ -1,7 +1,7 @@
 class NodeScene {
     constructor(){
         this.position = Vector3()
-        this.rotation = Vector3()
+        this.rotation = Vector3(0, 0, 0) // angles in radian
         this.scale = Vector3(1,1,1)
 
         this.localMatrix = Matrix4x4.mat4Identity
