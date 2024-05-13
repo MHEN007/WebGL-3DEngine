@@ -67,4 +67,44 @@ class NodeScene {
             }
         }
     }
+
+    remove(...objects){
+        if (objects.length > 1){
+            objects.forEach(object => this.remove(object))
+        }
+        if(objects.length === 0){
+            return this;
+        }
+        if(objects.length === 1){
+            const object = objects[0];
+            if (object){
+                const idx = this.children.indexOf(object);
+                if(idx !== -1){
+                    object.parent = null
+                    this.children.splice(idx, 1)
+                }
+            }
+        }
+        return this;
+    }
+
+    add(...objects){
+        if(objects.length > 1){
+            objects.forEach(object => this.add(object))
+        }
+        if(objects.length === 0){
+            return this
+        }
+        if(objects.length === 1){
+            const object = objects[0]
+            if(object){
+                if(object.parent){
+                    object.parent.remove(object)
+                }
+                object.parent = this
+                this.children.push(object)
+            }
+        }
+        return this
+    }
 }
