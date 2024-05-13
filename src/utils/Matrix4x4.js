@@ -13,18 +13,67 @@ class Matrix4x4{
         0, 0, 0, 0
     ]
     
+    
     static identity(){
         return this.mat4Identity
     }
 
-    static transpose(original) {
-        let transposeMat = this.emptyMat() 
-        for (let col = 0; col < 4; col++) {
-            for (let row = 0; row < 4; row++) {
-                transposeMat[row*4 + col] = original[col*4+row]
+    static determinant(matrix) {
+        let det = 0;
+        for (let i = 0; i < 4; i++) {
+            const sign = (i % 2 === 0) ? 1 : -1;
+            const minor = this.getMinor(matrix, 0, i);
+            det += sign * matrix[i] * this.determinant(minor);
+        }
+        return det;
+    }
+    
+    // Function to get the minor of a matrix
+    static getMinor(matrix, row, col) {
+        const minor = [];
+        for (let i = 0; i < 16; i++) {
+            if (Math.floor(i / 4) !== row && i % 4 !== col) {
+                minor.push(matrix[i]);
             }
         }
-        return transposeMat
+        return minor;
+    }
+    
+    // Function to transpose a matrix
+    static transpose(matrix) {
+        const transposed = this.emptyMat;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                transposed[j*4+i] = matrix[i * 4 + j];
+            }
+        }
+        return transposed;
+    }
+    
+    // Function to calculate the inverse of a matrix
+    static inverse(original) {
+        if (original.length !== 16) {
+            throw new Error("Matrix must have 16 elements (4x4 matrix)");
+        }
+        
+        let det = this.determinant(original);
+        if (det === 0) {
+            throw new Error("Matrix is singular, cannot invert");
+        }
+        
+        const cofactors = [];
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                const sign = ((i + j) % 2 === 0) ? 1 : -1;
+                const minor = this.getMinor(original, i, j);
+                cofactors.push(sign * this.determinant(minor));
+            }
+        }
+        
+        const adjugate = this.transpose(cofactors);
+        const inverseMatrix = adjugate.map(elem => elem / det);
+        
+        return inverseMatrix;
     }
 
     static createTranslationMatrix(transformation){
@@ -129,6 +178,29 @@ class Matrix4x4{
         }
     
         return result;
+    }
+    static persProj(fov, aspect, near, far) {
+        const f = Math.tan(0.5*Math.PI*(1-fov/180));
+        const nf = 1 / (near - far);
+
+        return new Matrix4x4([
+            f / aspect, 0, 0,                    0,
+            0,          f, 0,                    0,
+            0,          0, (far + near) * nf,   -1,
+            0,          0, 2 * far * near * nf,  0,
+        ]);
+    }
+
+    static ortoProj(left, right, bottom, top, near, far) {
+        const a = 1 / (right - left);
+        const b = 1 / (top - bottom);
+        const c = 1 / (near - far);
+        return [
+            2*a, 0, 0, 0,
+            0, 2*b, 0, 0,
+            0, 0, 2*c, 0,
+            (left + right)*(-a), (bottom + top)*(-b), (near + far)*c, 1
+        ]
     }
 }
 
