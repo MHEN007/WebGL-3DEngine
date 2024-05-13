@@ -2,7 +2,7 @@ class NodeScene {
     constructor(){
         this.position = Vector3()
         this.rotation = Vector3()
-        this.scale = Vector3()
+        this.scale = Vector3(1,1,1)
 
         this.localMatrix = Matrix4x4.mat4Identity
         this.worldMatrix = Matrix4x4.mat4Identity
@@ -44,8 +44,8 @@ class NodeScene {
     }
 
     computeLocalMatrix(){
-        this.localMatrix = Matrix4x4.multiply(Matrix4x4.createTranslationMatrix(this.position), Matrix4x4.createRotationMatrix(this.position))
-        this.localMatrix = Matrix4x4.multiply(this.localMatrix, Matrix4x4.createScalingMatrix(this.position))
+        this.localMatrix = Matrix4x4.multiply(Matrix4x4.createTranslationMatrix(this.position), Matrix4x4.createRotationMatrix(this.rotation))
+        this.localMatrix = Matrix4x4.multiply(this.localMatrix, Matrix4x4.createScalingMatrix(this.scale))
     }
 
     computeWorldMatrix(updateParent=true, updateChild = true){
