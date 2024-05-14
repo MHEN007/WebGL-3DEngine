@@ -38,4 +38,27 @@ class Orthographic extends Camera {
             border[0], border[1], border[2], border[3], this.near, this.far,
         );
     }
+
+    toJSON() {
+        const obj = {
+            left: this.left,
+            right: this.right,
+            top: this.top,
+            bottom: this.bottom,
+            near: this.near,
+            far: this.far
+        };
+
+        return JSON.stringify(obj)
+    }
+
+    static fromJSON(jsonString) {
+        try {
+            const obj = JSON.parse(jsonString);
+            return (new Orthographic(obj.left, obj.right, obj.top, obj.bottom, obj.near, obj.far))
+        } catch (e) {
+            console.error('Invalid JSON string', e);
+        }
+        
+    }
 }
