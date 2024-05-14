@@ -26,4 +26,12 @@ class Vector3 {
     static up(){
         return Vector3(0, 1, 0)
     }
+
+    toArray(){
+        return [this.x, this.y, this.z]
+    }
+
+    static fromJSON(object){
+        return new Vector3(object.x, object.y, object.z)
+    }
 }

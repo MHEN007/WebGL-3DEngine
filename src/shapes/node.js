@@ -107,4 +107,38 @@ class NodeScene {
         }
         return this
     }
+
+    toJSON(){
+        return JSON.stringify({
+            position: this.position.toArray(),
+            rotation: this.rotation.toArray(),
+            scale: this.scale.toArray(),
+            localMatrix: this.localMatrix,
+            worldMatrix: this.worldMatrix,
+            parent: this.parent ? this.parent.serialize() : null,
+            children: this.children.map(child => child.serialize()),
+            visible: this.visible
+        })
+    }
+
+    static fromJSON(jsonString){
+        const data = JSON.parse(jsonString)
+        const node = new NodeScene()
+
+        node.position = Vector3.fromJSON(data.position)
+        node.rotation = Vector3.fromJSON(data.rotation)
+        node.scale = Vector3.fromJSON(data.scale)
+
+        node.localMatrix = data.localMatrix
+        node.worldMatrix = data.worldMatrix
+        node.visible = data.visible
+
+        if (data.parent) {
+            node.parent = NodeScene.deserialize(data.parent)
+        }
+        
+        node.children = data.children.map(child => NodeScene.deserialize(child))
+
+        return node
+    }
 }
