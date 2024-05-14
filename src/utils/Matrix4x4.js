@@ -41,7 +41,7 @@ class Matrix4x4{
     
     // Function to transpose a matrix
     static transpose(matrix) {
-        const transposed = this.emptyMat;
+        const transposed = this.emptyMat.slice();
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 transposed[j*4+i] = matrix[i * 4 + j];
@@ -77,7 +77,7 @@ class Matrix4x4{
     }
 
     static createTranslationMatrix(transformation){
-        var transformationMatrix = this.mat4Identity
+        var transformationMatrix = this.mat4Identity.slice()
 
         transformationMatrix[3] = transformation.x
         transformationMatrix[7] = transformation.y
@@ -87,7 +87,7 @@ class Matrix4x4{
     }
 
     static createScalingMatrix(transformation){
-        var scalingMatrix = this.mat4Identity
+        var scalingMatrix = this.mat4Identity.slice()
     
         scalingMatrix[0] = transformation.x
         scalingMatrix[5] = transformation.y
