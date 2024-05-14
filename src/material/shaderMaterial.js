@@ -1,9 +1,9 @@
-class Material {
-    constructor(name, baseColorFactor, metallicFactor, roughnessFactor){
-        this.name = name || "ShaderMaterial"
-        this.baseColorFactor = baseColorFactor //[r, g, b, a]
-        this.metallicFactor = metallicFactor
-        this.roughnessFactor = roughnessFactor
+class ShaderMaterial {
+    constructor(name, vertexShader, fragmentShader, uniforms){
+        this.super(name)
+        this.vertexShader = vertexShader
+        this.fragmentShader = fragmentShader
+        this.uniforms = uniforms
     }
 
     toJSON(){
