@@ -1,6 +1,6 @@
 class ShaderMaterial {
     constructor(name, vertexShader, fragmentShader, uniforms){
-        this.super(name)
+        this.name = name || "ShaderMaterial"
         this.vertexShader = vertexShader
         this.fragmentShader = fragmentShader
         this.uniforms = uniforms

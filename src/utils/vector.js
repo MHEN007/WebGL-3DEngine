@@ -19,12 +19,32 @@ class Vector3 {
         }
     }
 
-    dot(vec){
-        return (this.x * vec.x + this.y * vec.y + this.z * vec.z)
+    sub(vec){
+        if(vec instanceof Vector3){
+            this.set(this.x - vec.x, this.y - vec.y, this.z - vec.z)
+        }else if(typeof vec ==='number'){
+            this.set(this.x - vec, this.y - vec, this.z - vec)
+        }
+    }
+
+    cross(vec){
+        return this.set(
+            this.y * vec.z - this.z * vec.y,
+            this.z * vec.x - this.x * vec.z,
+            this.x * vec.y - this.y * vec.x
+        );
+    }
+
+    normalize(){
+        
+    }
+
+    static dot(vec1, vec){
+        return (vec1.x * vec.x + vec1.y * vec.y + vec1.z * vec.z)
     }
 
     static up(){
-        return Vector3(0, 1, 0)
+        return new Vector3(0, 1, 0)
     }
 
     toArray(){

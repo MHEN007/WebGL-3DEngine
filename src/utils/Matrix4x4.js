@@ -180,27 +180,48 @@ class Matrix4x4{
         return result;
     }
     static persProj(fov, aspect, near, far) {
-        const f = Math.tan(0.5*Math.PI*(1-fov/180));
+        const f = Math.tan(0.5*fov);
         const nf = 1 / (near - far);
 
-        return new Matrix4x4([
-            f / aspect, 0, 0,                    0,
-            0,          f, 0,                    0,
+        return [
+            1 / f*aspect, 0, 0,                    0,
+            0,          1/f, 0,                    0,
             0,          0, (far + near) * nf,   -1,
             0,          0, 2 * far * near * nf,  0,
-        ]);
+        ];
     }
 
     static ortoProj(left, right, bottom, top, near, far) {
-        const a = 1 / (right - left);
-        const b = 1 / (top - bottom);
-        const c = 1 / (near - far);
+        const a = 2 / (right - left);
+        const b = 2 / (top - bottom);
+        const c = 2 / (near - far);
+        const tx = -(right + left) / (right - left);
+        const ty = -(top + bottom) / (top - bottom);
+        const tz = -(far + near) / (far - near);
         return [
-            2*a, 0, 0, 0,
-            0, 2*b, 0, 0,
-            0, 0, 2*c, 0,
-            (left + right)*(-a), (bottom + top)*(-b), (near + far)*c, 1
+            a, 0, 0, 0,
+            0, b, 0, 0,
+            0, 0, c, 0,
+            tx, ty, tz, 1
         ]
+    }
+
+    static lookAt(eye, target, up) {
+        let zAxis = new Vector3(eye.x, eye.y, eye.z)
+        zAxis.sub(target)
+        zAxis.normalize()
+        const xAxis = new Vector3(up.x, up.y, up.z)
+        xAxis.cross(zAxis)
+        xAxis.normalize()
+        const yAxis = new Vector3(zAxis.x, zAxis.y, zAxis.z)
+        yAxis.cross(xAxis)
+        yAxis.normalize()
+        return [
+            xAxis.x, xAxis.y, xAxis.z, -Vector3.dot(xAxis, eye),
+            yAxis.x, yAxis.y, yAxis.z, -Vector3.dot(yAxis, eye),
+            zAxis.x, zAxis.y, zAxis.z, -Vector3.dot(zAxis, eye),
+            eye.x, eye.y, eye.z, 1
+        ];
     }
 }
 

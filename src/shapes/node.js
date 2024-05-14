@@ -1,8 +1,8 @@
 class NodeScene {
     constructor(){
-        this.position = Vector3()
-        this.rotation = Vector3(0, 0, 0) // angles in radian
-        this.scale = Vector3(1,1,1)
+        this.position = new Vector3()
+        this.rotation = new Vector3(0, 0, 0) // angles in radian
+        this.scale = new Vector3(1,1,1)
 
         this.localMatrix = Matrix4x4.mat4Identity
         this.worldMatrix = Matrix4x4.mat4Identity
@@ -106,6 +106,10 @@ class NodeScene {
             }
         }
         return this
+    }
+    
+    lookAt(target, up){
+        return Matrix4x4.lookAt(this.position, target, up)
     }
 
     toJSON(){

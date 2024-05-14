@@ -1,3 +1,11 @@
+const mesh = new Mesh()
+const plane = new PlaneGeometry(0.5, 0.5)
+const material = new BasicMaterial("green", [0, 1, 0, 1])
+const camera = new PerspectiveCamera(45 * Math.PI / 180, 1, 0.1, 100)
+camera.position = new Vector3(0, 0, -1)
+mesh.position = new Vector3(0.5, 0.5, 0)
+mesh.setGeometry(plane)
+mesh.setMaterial(material)
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
@@ -26,20 +34,12 @@ function init(){
         console.log("WEBGL not available on your browser!")
     }else{
         gl.clearColor(1.0, 1.0, 1.0, 0.0)
-        gl.clear(gl.COLOR_BUFFER_BIT)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
         gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
-
-        vertexShader = createShader(gl, gl.VERTEX_SHADER, vs)
-        fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fs)
-
-        program = createProgram(gl, vertexShader, fragmentShader)
-
-        gl.useProgram(program)
-
-        positionAttributeLocation = gl.getAttribLocation(program, 'a_pos')
-
-        gl.enableVertexAttribArray(positionAttributeLocation)
+        
+        gl.enable(gl.CULL_FACE)
+        gl.enable(gl.DEPTH_TEST)
     }
 }
 
@@ -59,36 +59,45 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
+    var vertexShader = createShader(gl, gl.VERTEX_SHADER, material.vertexShader)
+    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, material.fragmentShader)
+    
+    var program = createProgram(gl, vertexShader, fragmentShader)
+    
+    gl.useProgram(program)
+    
+    var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos')
+    var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
+    var uniformViewMatLoc = gl.getUniformLocation(program, 'viewMat')
+    var uniformColorLoc = gl.getUniformLocation(program, 'color')
+        
+    var target = new Vector3(0, -Math.sqrt(2) / 2, -Math.sqrt(2) / 2); // TODO: INI TARGETNYA MASIH HARDCODE
+    var up = Vector3.up()
+
+    camera.updateProjectionMatrix()
+    
+    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, camera.projectionMatrix)
+    gl.uniformMatrix4fv(uniformViewMatLoc, false, camera.lookAt(target, up))
+    gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
+
+    gl.enableVertexAttribArray(positionAttributeLocation)
+    
     var vertexBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-    var positions = [
-        0, 0,
-        0, 0.5,
-        0.7, 0,
-    ];
 
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
-
-    // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-    var size = 2;          // 2 components per iteration
-    var type = gl.FLOAT;   // the data is 32bit floats
-    var normalize = false; // don't normalize the data
-    var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
-    var offset = 0;        // start at the beginning of the buffer
-    gl.vertexAttribPointer(
-        positionAttributeLocation, size, type, normalize, stride, offset);
-
-    // draw
-    var primitiveType = gl.TRIANGLES;
-    var offset = 0;
-    var count = 3;
-    gl.drawArrays(primitiveType, offset, count);
-}
-
-function quaternionToRotation(x, y, z, w) {
-
-    let text = Matrix4x4.createRotationMatrixFromQuaternion(new Quaternion(4, 3, 2, 1)).join(", ")
-    document.getElementById("result").innerText = text;
+    gl.bufferData(gl.ARRAY_BUFFER, mesh.geometry.getAttribute('position').data, gl.STATIC_DRAW)
+    
+    var size = 3          // 3 components per iteration
+    var type = gl.FLOAT   // the data is 32bit floats
+    var normalize = false // don't normalize the data
+    var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
+    var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
+    gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
+    
+    // Draw
+    var primitiveType = gl.TRIANGLES
+    var count = mesh.geometry.getAttribute('position').length / size // number of vertices
+    gl.drawArrays(primitiveType, offset, count)
 }
 
 init()
