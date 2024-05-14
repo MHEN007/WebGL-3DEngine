@@ -15,20 +15,6 @@ var positionAttributeLocation
 canvas.width = 500
 canvas.height = 500
 
-const vs = `
-attribute vec4 a_pos;
-void main() {
-    gl_Position = a_pos;
-}
-`
-
-const fs = `
-precision mediump float;
-void main() {
-    gl_FragColor = vec4(1.0, 0.0, 0.1, 1);
-}
-`
-
 function init(){
     if(!gl){
         console.log("WEBGL not available on your browser!")
@@ -70,15 +56,18 @@ function draw() {
     var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
     var uniformViewMatLoc = gl.getUniformLocation(program, 'viewMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
-        
+    var uniformModelLoc = gl.getUniformLocation(program, 'u_model')
+    
     var target = new Vector3(0, -Math.sqrt(2) / 2, -Math.sqrt(2) / 2); // TODO: INI TARGETNYA MASIH HARDCODE
     var up = Vector3.up()
 
     camera.updateProjectionMatrix()
+    mesh.computeLocalMatrix()
     
     gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, camera.projectionMatrix)
     gl.uniformMatrix4fv(uniformViewMatLoc, false, camera.lookAt(target, up))
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
+    gl.uniformMatrix4fv(uniformModelLoc, false, mesh.localMatrix)
 
     gl.enableVertexAttribArray(positionAttributeLocation)
     
