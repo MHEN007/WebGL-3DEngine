@@ -1,10 +1,12 @@
 
-/**
-     * @attribute attributes: {[name: string]: BufferAttribute};
-     * @attribute indices?: BufferAttributes;
-     */
 class BufferGeometry{
+    /** 
+     * @type {{[name: string]: BufferAttribute}} 
+     */
     #attributes;
+    /**
+     * @type {BufferAttribute}
+     */
     #indices
 
     constructor(){
@@ -14,6 +16,11 @@ class BufferGeometry{
     get attributes() { return this.#attributes; }
     get indices()    { return this.#indices;    }
 
+    /**
+     * 
+     * @param {BufferAttribute} indices 
+     * @returns 
+     */
     setIndices(indices){
         this.#indices = indices;
         return this;
@@ -24,20 +31,41 @@ class BufferGeometry{
         return this;
     }
 
+    /**
+     * 
+     * @param {string} name 
+     * @param {any} attribute 
+     * @returns 
+     */
     setAttribute(name, attribute){
         this.#attributes[name] = attribute;
         return this;
     }
 
+    /**
+     * 
+     * @param {string} name 
+     * @returns 
+     */
     getAttribute(name) {
         return this.#attributes[name];
     }
 
+    /**
+     * 
+     * @param {string} name 
+     * @returns 
+     */
     deleteAttribute(name){
         delete this.#attributes[name];
         return this;
     }
 
+    /**
+     * 
+     * @param {boolean} forceNewAttribute 
+     * @returns 
+     */
     calculateNormals(forceNewAttribute = false){
         const position = this.getAttribute('position');
         if (!position) 
@@ -53,23 +81,29 @@ class BufferGeometry{
     }
 
     toJSON(){
-        const data = {
+        const json = {
             type: this.type,
             attributes: {}
         };
         for (const name in this.#attributes) {
             if (name === 'normal')
                 { continue; }
-            data.attributes[name] = this.#attributes[name].toJSON();
+            json.attributes[name] = this.#attributes[name].toJSON();
         }
-        return data;
+        return json;
     }
 
-    static fromJSON(data, object = null){
+    /**
+     * 
+     * @param {{[name: string]: BufferAttribute}} json
+     * @param {BufferGeometry} object 
+     * @returns 
+     */
+    static fromJSON(json, object = null){
         if (!object)
             { object = new BufferGeometry(); }
-        for (const name in data.attributes)
-            { object.setAttribute(name, BufferAttribute.fromJSON(data.attributes[name])); }
+        for (const name in json.attributes)
+            { object.setAttribute(name, BufferAttribute.fromJSON(json.attributes[name])); }
         return object;
     }
 }

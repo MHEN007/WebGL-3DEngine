@@ -1,8 +1,5 @@
 
 
-/**
-* 
-*/
 class BufferAttribute{
     #data;
     #size;
@@ -13,7 +10,6 @@ class BufferAttribute{
     #isDirty = true;
 
     /**
-     * Creates an instance of BufferAttribute.
      * @param {TypedArray} data Typed array data.
      * @param {number} size Size of each element in the buffer.
      * @param {object} options Options for attribute.
@@ -109,7 +105,15 @@ class BufferAttribute{
             options: options,
         }
     }
-
+    /**
+     * 
+     * @param {JSON} json contains
+     *  - data: TypedArray
+     *  - size: number
+     *  - options: {}
+     * @param {BufferAttribute} object 
+     * @returns 
+     */
     static fromJSON(json, object=null){
         if (!object)
             { object = new BufferAttribute(new Float32Array(json.data), json.size, json.options); }
