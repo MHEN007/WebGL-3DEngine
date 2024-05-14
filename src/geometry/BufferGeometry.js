@@ -40,11 +40,36 @@ class BufferGeometry{
 
     calculateNormals(forceNewAttribute = false){
         const position = this.getAttribute('position');
-        if (!position) return;
+        if (!position) 
+            { return; }
         let normal = this.getAttribute('normal');
-        if (forceNewAttribute || !normal){
-            normal = new BufferAttribute(new Float32Array(position.length), position.size);
-        }
+        if (forceNewAttribute || !normal)
+            { normal = new BufferAttribute(new Float32Array(position.length), position.size); }
         this.setAttribute('normal', normal);
+    }
+
+    get type(){
+        return "BufferGeometry";
+    }
+
+    toJSON(){
+        const data = {
+            type: this.type,
+            attributes: {}
+        };
+        for (const name in this.#attributes) {
+            if (name === 'normal')
+                { continue; }
+            data.attributes[name] = this.#attributes[name].toJSON();
+        }
+        return data;
+    }
+
+    static fromJSON(data, object = null){
+        if (!object)
+            { object = new BufferGeometry(); }
+        for (const name in data.attributes)
+            { object.setAttribute(name, BufferAttribute.fromJSON(data.attributes[name])); }
+        return object;
     }
 }
