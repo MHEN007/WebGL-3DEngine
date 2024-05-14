@@ -24,16 +24,23 @@ class PlaneGeometry extends BufferGeometry{
     }
 
     toJSON(){
-        const data = super.toJSON();
-        delete data.attributes.position;
+        const json = super.toJSON();
+        delete json.attributes.position;
         return {
-            ...data,
+            ...json,
             width: this.#width,
             height: this.#height,
             type: this.type,
         }
     }
-
+    /**
+     * 
+     * @param {JSON} json contains necessary additional attribute:
+     *  - width
+     *  - height
+     * @param {PlaneGeometry} object 
+     * @returns 
+     */
     static fromJSON(json, object = null){
         if(!object)
             { object = new PlaneGeometry(json.width, json.height); }
