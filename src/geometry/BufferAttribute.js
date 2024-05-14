@@ -24,11 +24,7 @@ class BufferAttribute{
      *   - offset: number,
      * @memberof BufferAttribute
      */
-    constructor(
-        data,
-        size,
-        options = {},
-    ) {
+    constructor(data, size, options = {},) {
         this.#data      = data;
         this.#size      = size;
         this.#dtype     = options.dtype     || WebGLRenderingContext.FLOAT;
@@ -86,7 +82,37 @@ class BufferAttribute{
         index *= this.#size;
         if (!size) size = this.#size;
         const data = [];
+        for (let i = 0; i < size; i++) {
+            data.push(this.data[index + i]);
+        }
         return data;
     }
 
+    get type(){
+        return "BufferAttribute"
+    }
+
+    toJSON(){
+        const options = {}
+        if (this.#dtype !== WebGLRenderingContext.FLOAT)
+            { options.dtype = this.#dtype; }
+        if (this.#normalize) 
+            { options.normalize = this.#normalize; }
+        if (this.#stride)
+            { options.stride = this.#stride; }
+        if (this.#offset)
+            { options.offset = this.#offset; }
+        return {
+            type: this.type,
+            data: Array.from(this.#data),
+            size: this.#size,
+            options: options,
+        }
+    }
+
+    static fromJSON(json, object=null){
+        if (!object)
+            { object = new BufferAttribute(new Float32Array(json.data), json.size, json.options); }
+        return object;
+    }
 }
