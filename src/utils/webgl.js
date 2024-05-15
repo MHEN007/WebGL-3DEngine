@@ -2,12 +2,15 @@ const plane = new BoxGeometry(0.1,0.1,0.1);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
+const projectionSelector = document.getElementById("projection")
+const distanceSlider = document.getElementById("distance")
+const resetButton = document.getElementById("reset")
 canvas.width = 600
 canvas.height = 600
 const material = new BasicMaterial("green", [0, 1, 0, 1])
 
 const mesh = new Mesh(plane, material)
-mesh.position = new Vector3(0.5,0.5,0.5)
+mesh.position = new Vector3(0.1,0.1,0.1)
 mesh.rotation = new Vector3(0,0,0)
 const left = mesh.position.x - mesh.getGeometry().width;
 const right = mesh.position.x + mesh.getGeometry().width;
@@ -16,7 +19,7 @@ const topp = mesh.position.y + mesh.getGeometry().height;
 const near = mesh.position.z - mesh.getGeometry().depth;
 const far = mesh.position.z + mesh.getGeometry().depth;
 
-const camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 // const camera = new Orthographic(left, right, bottom, topp, near, far);
 // const camera = new 
 
@@ -34,6 +37,8 @@ function init(){
         gl.enable(gl.DEPTH_TEST)
     }
 }
+
+
 
 function createShader(gl, type, source){
     var shader = gl.createShader(type)
@@ -96,3 +101,37 @@ function draw() {
 
 init()
 draw()
+
+projectionSelector.addEventListener('change', function(){
+    if (projectionSelector.value === 'perspective'){
+        camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+        distanceSlider.value = -1
+    }else if (projectionSelector.value === 'orthographic'){
+        camera = new Orthographic(left, right, topp, bottom, near, far);
+        distanceSlider.value = -1
+    }else if (projectionSelector.value === 'oblique'){
+        camera = new Oblique(left, right, topp, bottom, near, far);
+        distanceSlider.value = -1
+    }
+    camera.position = new Vector3(1, 1, 1)
+    draw()
+})
+
+distanceSlider.addEventListener('input', function(){
+    console.log(distanceSlider.value)
+    if (camera.type === 'PerspectiveCamera'){
+        camera.far = parseFloat(distanceSlider.value)
+    } else if (camera.type === 'Orthographic'){
+        camera.far = parseFloat(distanceSlider.value)
+    } else if (camera.type === 'ObliqueCamera'){
+        camera.far = parseFloat(distanceSlider.value)
+    }
+    draw()
+})
+
+resetButton.addEventListener('click', function(){
+    camera.position = new Vector3(1, 1, 1)
+    distanceSlider.value = -1
+    camera.far = parseFloat(distanceSlider.value)
+    draw()
+})
