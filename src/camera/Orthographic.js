@@ -5,7 +5,15 @@ class Orthographic extends Camera {
     right
     near
     far
-
+    /**
+     * 
+     * @param {number} left 
+     * @param {number} right 
+     * @param {number} top 
+     * @param {number} bottom 
+     * @param {number} near 
+     * @param {number} far 
+     */
     constructor(left, right, top, bottom, near, far) {
         super();
         this.left = left;

@@ -1,29 +1,37 @@
-const mesh = new Mesh()
-const plane = new PlaneGeometry(0.5, 0.5)
-const material = new BasicMaterial("green", [0, 1, 0, 1])
-const camera = new PerspectiveCamera(45 * Math.PI / 180, 1, 0.1, 100)
-camera.position = new Vector3(0, 0, -1)
-mesh.position = new Vector3(0.5, 0.5, 0)
-mesh.setGeometry(plane)
-mesh.setMaterial(material)
+const plane = new BoxGeomerty(0.1,0.1,0.1);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
+canvas.width = 600
+canvas.height = 600
+const material = new BasicMaterial("green", [0, 1, 0, 1])
 
+const mesh = new Mesh(plane, material)
+mesh.position = new Vector3(0.5,0.5,0.5)
+mesh.rotation = new Vector3(0,0,0)
+const left = mesh.position.x - mesh.getGeometry().width;
+const right = mesh.position.x + mesh.getGeometry().width;
+const bottom = mesh.position.y - mesh.getGeometry().height;
+const topp = mesh.position.y + mesh.getGeometry().height;
+const near = mesh.position.z - mesh.getGeometry().depth;
+const far = mesh.position.z + mesh.getGeometry().depth;
+
+const camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+// const camera = new Orthographic(left, right, bottom, topp, near, far);
+// const camera = new 
+
+camera.position = new Vector3(1, 1, 1)
 var positionAttributeLocation
-
-canvas.width = 500
-canvas.height = 500
 
 function init(){
     if(!gl){
         console.log("WEBGL not available on your browser!")
     }else{
+        
+        
+        gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
         gl.clearColor(1.0, 1.0, 1.0, 0.0)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-
-        gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
-        
         gl.enable(gl.CULL_FACE)
         gl.enable(gl.DEPTH_TEST)
     }
@@ -57,8 +65,11 @@ function draw() {
     var uniformViewMatLoc = gl.getUniformLocation(program, 'viewMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
     var uniformModelLoc = gl.getUniformLocation(program, 'u_model')
+        
+    var target = mesh.position;
+    console.log(mesh)
+    console.log(camera)
     
-    var target = new Vector3(0, -Math.sqrt(2) / 2, -Math.sqrt(2) / 2); // TODO: INI TARGETNYA MASIH HARDCODE
     var up = Vector3.up()
 
     camera.updateProjectionMatrix()

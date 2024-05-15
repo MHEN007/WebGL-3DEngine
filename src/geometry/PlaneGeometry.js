@@ -19,6 +19,18 @@ class PlaneGeometry extends BufferGeometry{
         this.calculateNormals();
     }
 
+    get width(){
+        return this.#width;
+    }
+
+    get height(){
+        return this.#height;
+    }
+    
+    get depth(){
+        return 0;
+    }
+
     get type(){
         return "PlaneGeometry"
     }
