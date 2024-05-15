@@ -4,9 +4,16 @@ const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
 canvas.width = 600
 canvas.height = 600
-const material = new BasicMaterial("green", [0, 1, 0, 1])
+const green = new BasicMaterial("green", [0, 1, 0, 1])
+const red = new BasicMaterial("red", [1, 0, 0, 1])
+const blue = new BasicMaterial("blue", [0, 0, 1, 1])
+const yellow = new BasicMaterial("yellow", [1, 1, 0, 1])
+const purple = new BasicMaterial("purple", [1, 0, 1, 1])
+const cyan = new BasicMaterial("cyan", [0, 1, 1, 1])
+const materials = [green, red, blue, yellow, purple, cyan]
 
-const mesh = new Mesh(plane, material)
+
+const mesh = new Mesh(plane, green)
 mesh.position = new Vector3(0.5,0.5,0.5)
 mesh.rotation = new Vector3(0,0,0)
 const left = mesh.position.x - mesh.getGeometry().width;
@@ -51,6 +58,19 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
+
+    var target = mesh.position;
+    var up = Vector3.up()
+    mesh.computeWorldMatrix()
+    var viewMat = Matrix4x4.multiply(camera.projectionMatrix, camera.lookAt(target, up))
+    var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
+    var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
+    for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6))-1; i++) {
+        drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewMat, materials[i])
+    }
+}
+
+function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, material) {
     var vertexShader = createShader(gl, gl.VERTEX_SHADER, material.vertexShader)
     var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, material.fragmentShader)
     
@@ -64,14 +84,9 @@ function draw() {
     var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
         
-    var target = mesh.position;
-    var up = Vector3.up()
-
-    camera.updateProjectionMatrix()
-    mesh.computeWorldMatrix()
     
-    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, mesh.worldMatrix)
-    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, Matrix4x4.multiply(camera.projectionMatrix, camera.lookAt(target, up)))
+    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
+    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
 
     gl.enableVertexAttribArray(positionAttributeLocation)
@@ -79,20 +94,19 @@ function draw() {
     var vertexBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
 
-    gl.bufferData(gl.ARRAY_BUFFER, mesh.geometry.getAttribute('position').data, gl.STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
     
     var size = 3          // 3 components per iteration
     var type = gl.FLOAT   // the data is 32bit floats
     var normalize = false // don't normalize the data
-    var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
-    var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
+    
     gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
     
     // Draw
     var primitiveType = gl.TRIANGLES
-    var count = mesh.geometry.getAttribute('position').length / size // number of vertices
+    var count = position.length / size // number of vertices
     gl.drawArrays(primitiveType, offset, count)
+    
 }
-
 init()
 draw()
