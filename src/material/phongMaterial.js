@@ -39,24 +39,26 @@ class PhongMaterial extends ShaderMaterial {
     void main() {
         vec3 normal = normalize(v_normal);
         vec3 light = normalize(normalize(lightPos)-v_pos);
-        vec3 half = normalize(lightPos + normalize(camPos));
+        vec3 halfway = normalize(light + normalize(camPos));
 
         float diffuseFactor = max(dot(light, normal), 0.0);
         vec3 diffuse = diffuseFactor * diffuseColor.rgb;
 
-        float specularFactor = pow(max(dot(normal, half), 0.0), shininess);
+        float specularFactor = pow(max(dot(normal, halfway), 0.0), shininess);
         vec3 specular = specularFactor * specularColor.rgb;
 
         gl_FragColor = v_color * vec4(0.5 * ambientColor.a * ambientColor.rgb + diffuseColor.a * diffuse + specularColor.a * specular, 1.0 );
     }`
 
-    constructor(name, ambient = [1,1,1,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = Vector3(300,300,400)){
+    constructor(name, color, camPosition, ambient = [0.05,0.05,0.05,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
         const uniform = {
+            color: color,
             ambient: ambient,
             shininess: shininess,
             diffuse: diffuse,
             specular: specular,
-            lightPosition: lightPosition
+            lightPosition: lightPosition,
+            camPosition: camPosition
         }
         
         super(name, PhongMaterial.vs, PhongMaterial.fs, uniform)        
