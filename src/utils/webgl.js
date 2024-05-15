@@ -27,8 +27,6 @@ function init(){
     if(!gl){
         console.log("WEBGL not available on your browser!")
     }else{
-        
-        
         gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
         gl.clearColor(1.0, 1.0, 1.0, 0.0)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -60,25 +58,21 @@ function draw() {
     
     gl.useProgram(program)
     
+    // BasicMaterial
     var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos')
     var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
-    var uniformViewMatLoc = gl.getUniformLocation(program, 'viewMat')
+    var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
-    var uniformModelLoc = gl.getUniformLocation(program, 'u_model')
         
     var target = mesh.position;
-    console.log(mesh)
-    console.log(camera)
-    
     var up = Vector3.up()
 
     camera.updateProjectionMatrix()
-    mesh.computeLocalMatrix()
+    mesh.computeWorldMatrix()
     
-    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, camera.projectionMatrix)
-    gl.uniformMatrix4fv(uniformViewMatLoc, false, camera.lookAt(target, up))
+    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, mesh.worldMatrix)
+    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, Matrix4x4.multiply(camera.projectionMatrix, camera.lookAt(target, up)))
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
-    gl.uniformMatrix4fv(uniformModelLoc, false, mesh.localMatrix)
 
     gl.enableVertexAttribArray(positionAttributeLocation)
     

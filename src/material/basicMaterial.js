@@ -3,14 +3,13 @@ class BasicMaterial extends ShaderMaterial {
     attribute vec4 a_pos;
 
     uniform mat4 worldMat;
-    uniform mat4 viewMat;
+    uniform mat4 viewProjMat;
     uniform vec4 color;
-    uniform mat4 u_model;
 
     varying vec4 v_color;
 
     void main() {
-        gl_Position = viewMat * worldMat * u_model * a_pos;
+        gl_Position = viewProjMat * worldMat * a_pos;
         v_color = color;
     }
     `

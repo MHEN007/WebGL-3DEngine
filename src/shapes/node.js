@@ -56,9 +56,9 @@ class NodeScene {
         this.computeLocalMatrix()
 
         if(this.parent){
-            this.localMatrix = Matrix4x4.multiply(this.parent.worldMatrix, this.localMatrix)
+            this.worldMatrix = Matrix4x4.multiply(this.localMatrix, this.parent.worldMatrix)
         }else{
-            this.localMatrix = this.localMatrix.clone()
+            this.worldMatrix = this.localMatrix.slice()
         }
 
         if(updateChild){
