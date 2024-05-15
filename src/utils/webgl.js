@@ -16,7 +16,7 @@ const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
 const yellow = new PhongMaterial("yellow", [1, 1, 0, 1], camera.position)
 const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
 const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
-const materials = [green, red, blue, yellow, purple, cyan]
+const materials = [green, purple, yellow, blue, cyan]
 
 
 const mesh = new Mesh(plane, green)
@@ -67,7 +67,7 @@ function draw() {
     var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
     var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
     for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6))-1; i++) {
-        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewMat, materials[i])
+        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewMat, materials[i%materials.length])
     }
 }
 
