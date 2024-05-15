@@ -74,7 +74,7 @@ class BoxGeomerty extends BufferGeometry{
         };
     }
     /**
-     * @param {JSON} json must contain:
+     * @param {JSON} json must contain json:
      *  - width
      *  - height
      *  - depth

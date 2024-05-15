@@ -1,5 +1,9 @@
 class Mesh extends NodeScene {
-    
+    /**
+     * 
+     * @param {BufferGeometry} geometry 
+     * @param {ShaderMaterial | TexturedMaterial} material 
+     */
     constructor(geometry, material){
         super()
         this.geometry = geometry
