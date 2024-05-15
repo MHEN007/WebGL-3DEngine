@@ -36,7 +36,28 @@ class Vector3 {
     }
 
     normalize(){
-        
+        const length = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        return this.set(
+            this.x/length, this.y/length, this.z/length
+        )
+    }
+
+    static calculateNormal(vertices) {
+        if (vertices.length < 9) {
+            throw new Error("Need atleast 3 vertices")
+        }
+        let v1 = new Vector3(vertices[0], vertices[1], vertices[2])
+        let v2 = new Vector3(vertices[3], vertices[4], vertices[5])
+        let v3 = new Vector3(vertices[6], vertices[7], vertices[8])
+
+        let e1 = new Vector3(v2.x, v2.y, v2.z)
+        e1.sub(v1)
+
+        let e2 = new Vector3(v3.x, v3.y, v3.z)
+        e2.sub(v1)
+        e1.cross(e2)
+        e1.normalize()
+        return e1.toArray();
     }
 
     static dot(vec1, vec){
