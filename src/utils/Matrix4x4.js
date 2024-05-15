@@ -218,6 +218,29 @@ class Matrix4x4{
             tx, ty, tz, 1
         ]
     }
+    /**
+     * 
+     * @param {number} left 
+     * @param {number} right 
+     * @param {number} bottom 
+     * @param {number} top 
+     * @param {number} near 
+     * @param {number} far 
+     * @param {number} angle 
+     * @param {number} scale 
+     * @returns 
+     */
+    static obliProj(left, right, bottom, top, near, far, angle, scale=0.5){
+        angle *= Math.PI / 180;
+        return this.multiply(this.ortoProj(left, right, bottom, top, near, far),
+            [
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                -scale * Math.cos(angle), scale * Math.sin(angle), 1, 0,
+                0, 0, 0, 1,
+            ]
+        );
+    }
 
     static lookAt(eye, target, up) {
         let zAxis = new Vector3(eye.x, eye.y, eye.z)
