@@ -41,7 +41,7 @@ class Matrix4x4{
     
     // Function to transpose a matrix
     static transpose(matrix) {
-        const transposed = this.emptyMat;
+        const transposed = this.emptyMat.slice();
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 transposed[j*4+i] = matrix[i * 4 + j];
@@ -77,7 +77,7 @@ class Matrix4x4{
     }
 
     static createTranslationMatrix(transformation){
-        var transformationMatrix = this.mat4Identity
+        var transformationMatrix = this.mat4Identity.slice()
 
         transformationMatrix[3] = transformation.x
         transformationMatrix[7] = transformation.y
@@ -87,7 +87,7 @@ class Matrix4x4{
     }
 
     static createScalingMatrix(transformation){
-        var scalingMatrix = this.mat4Identity
+        var scalingMatrix = this.mat4Identity.slice()
     
         scalingMatrix[0] = transformation.x
         scalingMatrix[5] = transformation.y
@@ -164,21 +164,34 @@ class Matrix4x4{
         return this.createRotationMatrixFromQuaternion(quaternion.setEuler(yaw, roll, pitch))
     }
 
-    
+    static multiply(matrix1, matrix2) {
+        let m1 = []
+        let m2 = []
+        for (let i = 0; i < 4; i++) {
+            m1.push(matrix1.slice(i * 4, i * 4 + 4))
+            m2.push(matrix2.slice(i * 4, i * 4 + 4))
+        }
 
-    static multiply(m1, m2) {
-        let result = Array(4).fill(null).map(() => Array(4).fill(0));
-    
+        let resultMatrix = Array.from({ length: 4 }, () => Array(4).fill(0))
+
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 for (let k = 0; k < 4; k++) {
-                    result[i][j] += m1[i][k] * m2[k][j];
+                    resultMatrix[i][j] += m1[i][k] * m2[k][j];
                 }
             }
         }
-    
-        return result;
+
+        let resultArray = []
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                resultArray.push(resultMatrix[i][j])
+            }
+        }
+
+        return resultArray
     }
+    
     static persProj(fov, aspect, near, far) {
         const f = Math.tan(0.5*fov);
         const nf = 1 / (near - far);
