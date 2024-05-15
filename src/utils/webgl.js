@@ -1,15 +1,16 @@
-const plane = new BoxGeometry(0.1,0.1,0.1);
+const plane = new BoxGeometry(0.5,0.5,0.5);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
+const projectionSelector = document.getElementById("projection")
+const distanceSlider = document.getElementById("distance")
+const resetButton = document.getElementById("reset")
 canvas.width = 600
 canvas.height = 600
 
-const camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-// const camera = new Orthographic(left, right, bottom, topp, near, far);
-// const camera = new 
-
+let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(1, 1, 1)
+
 const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
 const red = new PhongMaterial("red", [1, 0, 0, 1], camera.position)
 const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
@@ -18,18 +19,16 @@ const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
 const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
 const materials = [green, purple, yellow, blue, cyan]
 
-
 const mesh = new Mesh(plane, green)
-mesh.position = new Vector3(0.5,0.5,0.5)
+mesh.position = new Vector3(0, 0, 0)
 mesh.rotation = new Vector3(0,0,0)
-const left = mesh.position.x - mesh.getGeometry().width;
-const right = mesh.position.x + mesh.getGeometry().width;
-const bottom = mesh.position.y - mesh.getGeometry().height;
-const topp = mesh.position.y + mesh.getGeometry().height;
-const near = mesh.position.z - mesh.getGeometry().depth;
-const far = mesh.position.z + mesh.getGeometry().depth;
 
-var positionAttributeLocation
+const left = -mesh.getGeometry().width
+const right = mesh.getGeometry().width
+const bottom = -mesh.getGeometry().height
+const topp = mesh.getGeometry().height
+const near = -1000;
+const far = 1000;
 
 function init(){
     if(!gl){
@@ -59,15 +58,15 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
-
     var target = mesh.position;
     var up = Vector3.up()
     mesh.computeWorldMatrix()
-    var viewMat = Matrix4x4.multiply(camera.projectionMatrix, camera.lookAt(target, up))
+    var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
+    var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
     var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
     var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
     for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6))-1; i++) {
-        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewMat, materials[i%materials.length])
+        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
     }
 }
 
@@ -85,7 +84,6 @@ function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, materi
     var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
         
-    
     gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
     gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
@@ -107,9 +105,7 @@ function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, materi
     var primitiveType = gl.TRIANGLES
     var count = position.length / size // number of vertices
     gl.drawArrays(primitiveType, offset, count)
-
     gl.disableVertexAttribArray(positionAttributeLocation);
-    
 }
 
 function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, material) {
@@ -210,3 +206,37 @@ function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, materi
 
 init()
 draw()
+
+projectionSelector.addEventListener('change', function(){
+    if (projectionSelector.value === 'perspective'){
+        camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+        distanceSlider.value = -1
+    }else if (projectionSelector.value === 'orthographic'){
+        camera = new Orthographic(left, right, topp, bottom, near, far);
+        distanceSlider.value = -1
+    }else if (projectionSelector.value === 'oblique'){
+        camera = new Oblique(left, right, topp, bottom, near, far);
+        distanceSlider.value = -1
+    }
+    camera.position = new Vector3(1, 1, 1)
+    draw()
+})
+
+distanceSlider.addEventListener('input', function(){
+    console.log(distanceSlider.value)
+    if (camera.type === 'PerspectiveCamera'){
+        camera.far = parseFloat(distanceSlider.value)
+    } else if (camera.type === 'Orthographic'){
+        camera.far = parseFloat(distanceSlider.value)
+    } else if (camera.type === 'ObliqueCamera'){
+        camera.far = parseFloat(distanceSlider.value)
+    }
+    draw()
+})
+
+resetButton.addEventListener('click', function(){
+    camera.position = new Vector3(1, 1, 1)
+    distanceSlider.value = -1
+    camera.far = parseFloat(distanceSlider.value)
+    draw()
+})
