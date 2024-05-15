@@ -1,3 +1,5 @@
+const plane = new BoxGeometry(0.5,0.5,0.5);
+
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
 const projectionSelector = document.getElementById("projection")
@@ -6,11 +8,9 @@ const resetButton = document.getElementById("reset")
 canvas.width = 600
 canvas.height = 600
 
-const camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-// const camera = new Orthographic(left, right, bottom, topp, near, far);
-// const camera = new 
-
+let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(1, 1, 1)
+
 const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
 const red = new PhongMaterial("red", [1, 0, 0, 1], camera.position)
 const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
@@ -19,9 +19,8 @@ const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
 const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
 const materials = [green, purple, yellow, blue, cyan]
 
-
 const mesh = new Mesh(plane, green)
-mesh.position = new Vector3(0.5,0.5,0.5)
+mesh.position = new Vector3(0, 0, 0)
 mesh.rotation = new Vector3(0,0,0)
 
 const left = -mesh.getGeometry().width
@@ -30,10 +29,6 @@ const bottom = -mesh.getGeometry().height
 const topp = mesh.getGeometry().height
 const near = -1000;
 const far = 1000;
-
-let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-// camera.position = new Vector3(1, -3, 0) # Lihat bagian bawah dari quad
-camera.position = new Vector3(1, 1, 1)
 
 function init(){
     if(!gl){
@@ -63,7 +58,6 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
-
     var target = mesh.position;
     var up = Vector3.up()
     mesh.computeWorldMatrix()
@@ -72,7 +66,7 @@ function draw() {
     var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
     var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
     for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6))-1; i++) {
-        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewMat, materials[i%materials.length])
+        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
     }
 }
 
