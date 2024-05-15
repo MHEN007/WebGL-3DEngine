@@ -1,6 +1,4 @@
-
-
-class BoxGeomerty extends BufferGeometry{
+class BoxGeometry extends BufferGeometry{
     #width;
     #height;
     #depth;

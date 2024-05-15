@@ -1,4 +1,4 @@
-const plane = new BoxGeomerty(0.1,0.1,0.1);
+const plane = new BoxGeometry(0.1,0.1,0.1);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
