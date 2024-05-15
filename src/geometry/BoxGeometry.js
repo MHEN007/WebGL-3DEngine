@@ -59,6 +59,18 @@ class BoxGeomerty extends BufferGeometry{
         this.calculateNormals();
     }
 
+    get width(){
+        return this.#width;
+    }
+
+    get height(){
+        return this.#height;
+    }
+
+    get depth(){
+        return this.#depth;
+    }
+
     get type()
         { return "BoxGeometry"; }
     
