@@ -1,5 +1,3 @@
-const plane = new BoxGeometry(0.1,0.1,0.1);
-
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
 const projectionSelector = document.getElementById("projection")
@@ -7,24 +5,24 @@ const distanceSlider = document.getElementById("distance")
 const resetButton = document.getElementById("reset")
 canvas.width = 600
 canvas.height = 600
-const material = new BasicMaterial("green", [0, 1, 0, 1])
 
+// const plane = new PlaneGeometry(0.5,0.5);
+const plane = new BoxGeometry(0.5, 0.5, 0.5)
+const material = new BasicMaterial("green", [0, 1, 0, 1])
 const mesh = new Mesh(plane, material)
-mesh.position = new Vector3(0.1,0.1,0.1)
+mesh.position = new Vector3(0, 0, 0)
 mesh.rotation = new Vector3(0,0,0)
-const left = mesh.position.x - mesh.getGeometry().width;
-const right = mesh.position.x + mesh.getGeometry().width;
-const bottom = mesh.position.y - mesh.getGeometry().height;
-const topp = mesh.position.y + mesh.getGeometry().height;
-const near = mesh.position.z - mesh.getGeometry().depth;
-const far = mesh.position.z + mesh.getGeometry().depth;
+
+const left = -mesh.getGeometry().width
+const right = mesh.getGeometry().width
+const bottom = -mesh.getGeometry().height
+const topp = mesh.getGeometry().height
+const near = -1000;
+const far = 1000;
 
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-// const camera = new Orthographic(left, right, bottom, topp, near, far);
-// const camera = new 
-
+// camera.position = new Vector3(1, -3, 0) # Lihat bagian bawah dari quad
 camera.position = new Vector3(1, 1, 1)
-var positionAttributeLocation
 
 function init(){
     if(!gl){
@@ -37,8 +35,6 @@ function init(){
         gl.enable(gl.DEPTH_TEST)
     }
 }
-
-
 
 function createShader(gl, type, source){
     var shader = gl.createShader(type)
@@ -76,7 +72,8 @@ function draw() {
     mesh.computeWorldMatrix()
     
     gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, mesh.worldMatrix)
-    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, Matrix4x4.multiply(camera.projectionMatrix, camera.lookAt(target, up)))
+    var viewMatrix = Matrix4x4.inverse(camera.lookAt(target, up))
+    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, Matrix4x4.multiply(viewMatrix, camera.projectionMatrix))
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
 
     gl.enableVertexAttribArray(positionAttributeLocation)
@@ -97,6 +94,8 @@ function draw() {
     var primitiveType = gl.TRIANGLES
     var count = mesh.geometry.getAttribute('position').length / size // number of vertices
     gl.drawArrays(primitiveType, offset, count)
+
+    console.log(camera.far)
 }
 
 init()

@@ -13,67 +13,84 @@ class Matrix4x4{
         0, 0, 0, 0
     ]
     
-    
     static identity(){
         return this.mat4Identity
     }
-
-    static determinant(matrix) {
-        let det = 0;
-        for (let i = 0; i < 4; i++) {
-            const sign = (i % 2 === 0) ? 1 : -1;
-            const minor = this.getMinor(matrix, 0, i);
-            det += sign * matrix[i] * this.determinant(minor);
-        }
-        return det;
-    }
     
-    // Function to get the minor of a matrix
-    static getMinor(matrix, row, col) {
-        const minor = [];
-        for (let i = 0; i < 16; i++) {
-            if (Math.floor(i / 4) !== row && i % 4 !== col) {
-                minor.push(matrix[i]);
-            }
-        }
-        return minor;
-    }
-    
-    // Function to transpose a matrix
-    static transpose(matrix) {
-        const transposed = this.emptyMat.slice();
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                transposed[j*4+i] = matrix[i * 4 + j];
-            }
-        }
-        return transposed;
-    }
-    
-    // Function to calculate the inverse of a matrix
-    static inverse(original) {
-        if (original.length !== 16) {
-            throw new Error("Matrix must have 16 elements (4x4 matrix)");
-        }
-        
-        let det = this.determinant(original);
-        if (det === 0) {
-            throw new Error("Matrix is singular, cannot invert");
-        }
-        
-        const cofactors = [];
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                const sign = ((i + j) % 2 === 0) ? 1 : -1;
-                const minor = this.getMinor(original, i, j);
-                cofactors.push(sign * this.determinant(minor));
-            }
-        }
-        
-        const adjugate = this.transpose(cofactors);
-        const inverseMatrix = adjugate.map(elem => elem / det);
-        
-        return inverseMatrix;
+    /* m4 Inverse function */
+    static inverse(m) {
+        var out = this.mat4Identity.slice()
+      
+        const m00 = m[0 * 4 + 0]
+        const m01 = m[0 * 4 + 1]
+        const m02 = m[0 * 4 + 2]
+        const m03 = m[0 * 4 + 3]
+        const m10 = m[1 * 4 + 0]
+        const m11 = m[1 * 4 + 1]
+        const m12 = m[1 * 4 + 2]
+        const m13 = m[1 * 4 + 3]
+        const m20 = m[2 * 4 + 0]
+        const m21 = m[2 * 4 + 1]
+        const m22 = m[2 * 4 + 2]
+        const m23 = m[2 * 4 + 3]
+        const m30 = m[3 * 4 + 0]
+        const m31 = m[3 * 4 + 1]
+        const m32 = m[3 * 4 + 2]
+        const m33 = m[3 * 4 + 3]
+        const tmp_0  = m22 * m33
+        const tmp_1  = m32 * m23
+        const tmp_2  = m12 * m33
+        const tmp_3  = m32 * m13
+        const tmp_4  = m12 * m23
+        const tmp_5  = m22 * m13
+        const tmp_6  = m02 * m33
+        const tmp_7  = m32 * m03
+        const tmp_8  = m02 * m23
+        const tmp_9  = m22 * m03
+        const tmp_10 = m02 * m13
+        const tmp_11 = m12 * m03
+        const tmp_12 = m20 * m31
+        const tmp_13 = m30 * m21
+        const tmp_14 = m10 * m31
+        const tmp_15 = m30 * m11
+        const tmp_16 = m10 * m21
+        const tmp_17 = m20 * m11
+        const tmp_18 = m00 * m31
+        const tmp_19 = m30 * m01
+        const tmp_20 = m00 * m21
+        const tmp_21 = m20 * m01
+        const tmp_22 = m00 * m11
+        const tmp_23 = m10 * m01
+      
+        const t0 = (tmp_0 * m11 + tmp_3 * m21 + tmp_4 * m31) -
+            (tmp_1 * m11 + tmp_2 * m21 + tmp_5 * m31);
+        const t1 = (tmp_1 * m01 + tmp_6 * m21 + tmp_9 * m31) -
+            (tmp_0 * m01 + tmp_7 * m21 + tmp_8 * m31);
+        const t2 = (tmp_2 * m01 + tmp_7 * m11 + tmp_10 * m31) -
+            (tmp_3 * m01 + tmp_6 * m11 + tmp_11 * m31);
+        const t3 = (tmp_5 * m01 + tmp_8 * m11 + tmp_11 * m21) -
+            (tmp_4 * m01 + tmp_9 * m11 + tmp_10 * m21);
+      
+        const d = 1.0 / (m00 * t0 + m10 * t1 + m20 * t2 + m30 * t3)
+      
+        out[0] = d * t0
+        out[1] = d * t1
+        out[2] = d * t2
+        out[3] = d * t3
+        out[4] = d * ((tmp_1 * m10 + tmp_2 * m20 + tmp_5 * m30) - (tmp_0 * m10 + tmp_3 * m20 + tmp_4 * m30))
+        out[5] = d * ((tmp_0 * m00 + tmp_7 * m20 + tmp_8 * m30) - (tmp_1 * m00 + tmp_6 * m20 + tmp_9 * m30))
+        out[6] = d * ((tmp_3 * m00 + tmp_6 * m10 + tmp_11 * m30) - (tmp_2 * m00 + tmp_7 * m10 + tmp_10 * m30))
+        out[7] = d * ((tmp_4 * m00 + tmp_9 * m10 + tmp_10 * m20) - (tmp_5 * m00 + tmp_8 * m10 + tmp_11 * m20))
+        out[8] = d * ((tmp_12 * m13 + tmp_15 * m23 + tmp_16 * m33) - (tmp_13 * m13 + tmp_14 * m23 + tmp_17 * m33))
+        out[9] = d * ((tmp_13 * m03 + tmp_18 * m23 + tmp_21 * m33) - (tmp_12 * m03 + tmp_19 * m23 + tmp_20 * m33))
+        out[10] = d * ((tmp_14 * m03 + tmp_19 * m13 + tmp_22 * m33) - (tmp_15 * m03 + tmp_18 * m13 + tmp_23 * m33))
+        out[11] = d * ((tmp_17 * m03 + tmp_20 * m13 + tmp_23 * m23) - (tmp_16 * m03 + tmp_21 * m13 + tmp_22 * m23))
+        out[12] = d * ((tmp_14 * m22 + tmp_17 * m32 + tmp_13 * m12) - (tmp_16 * m32 + tmp_12 * m12 + tmp_15 * m22))
+        out[13] = d * ((tmp_20 * m32 + tmp_12 * m02 + tmp_19 * m22) - (tmp_18 * m22 + tmp_21 * m32 + tmp_13 * m02))
+        out[14] = d * ((tmp_18 * m12 + tmp_23 * m32 + tmp_15 * m02) - (tmp_22 * m32 + tmp_14 * m02 + tmp_19 * m12))
+        out[15] = d * ((tmp_22 * m22 + tmp_16 * m02 + tmp_21 * m12) - (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02))
+      
+        return out
     }
 
     static createTranslationMatrix(transformation){
@@ -193,12 +210,12 @@ class Matrix4x4{
     }
     
     static persProj(fov, aspect, near, far) {
-        const f = Math.tan(0.5*fov);
-        const nf = 1 / (near - far);
+        const f = Math.tan(Math.PI * 0.5 - 0.5*fov);
+        const nf = 1.0 / (near - far);
 
         return [
-            1 / f*aspect, 0, 0,                    0,
-            0,          1/f, 0,                    0,
+            f /aspect, 0, 0,                    0,
+            0,          f, 0,                    0,
             0,          0, (far + near) * nf,   -1,
             0,          0, 2 * far * near * nf,  0,
         ];
@@ -232,13 +249,14 @@ class Matrix4x4{
      */
     static obliProj(left, right, bottom, top, near, far, angle, scale=0.5){
         angle *= Math.PI / 180;
-        return this.multiply(this.ortoProj(left, right, bottom, top, near, far),
+        return this.multiply(
             [
                 1, 0, 0, 0,
                 0, 1, 0, 0,
                 -scale * Math.cos(angle), scale * Math.sin(angle), 1, 0,
                 0, 0, 0, 1,
-            ]
+            ],
+            this.ortoProj(left, right, bottom, top, near, far),
         );
     }
 
@@ -253,9 +271,9 @@ class Matrix4x4{
         yAxis.cross(xAxis)
         yAxis.normalize()
         return [
-            xAxis.x, xAxis.y, xAxis.z, -Vector3.dot(xAxis, eye),
-            yAxis.x, yAxis.y, yAxis.z, -Vector3.dot(yAxis, eye),
-            zAxis.x, zAxis.y, zAxis.z, -Vector3.dot(zAxis, eye),
+            xAxis.x, xAxis.y, xAxis.z, 0,
+            yAxis.x, yAxis.y, yAxis.z, 0,
+            zAxis.x, zAxis.y, zAxis.z, 0,
             eye.x, eye.y, eye.z, 1
         ];
     }
