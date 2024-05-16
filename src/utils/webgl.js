@@ -76,7 +76,7 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
-    var target = mesh1.position;
+    var target = mesh1.getWorldPosition();
     var up = Vector3.up()
     mesh1.computeWorldMatrix()
     var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
@@ -287,7 +287,6 @@ xPos.addEventListener('input', function(){
     console.log(mesh1.position)
     
     scene.drawAllMesh()
-
 })
 
 yPos.addEventListener('input', function(){
