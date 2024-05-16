@@ -11,7 +11,8 @@ const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
 canvas.width = 600
 canvas.height = 600
-        
+
+
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(0, 0, 1)
 const green = new BasicMaterial("green", [0, 1, 0, 1], camera.position)
@@ -32,6 +33,8 @@ const bottom = -mesh.getGeometry().height
 const topp = mesh.getGeometry().height
 const near = -1000;
 const far = 1000;
+
+let isAnimating = false; // Variable to keep track of animation state
 
 function init(){
     if(!gl){
@@ -272,3 +275,28 @@ zPos.addEventListener('input', function(){
     mesh.position.z = parseFloat(zPos.value)
     draw()
 })
+let rotationAngle = 0; // Variable to keep track of rotation angle
+
+
+function animate() {
+    if (isAnimating) {
+        rotationAngle += 0.01;
+        if (rotationAngle>3.14){
+            rotationAngle = -3.14
+        }
+        // set angleslider value
+        angleSlider.value = rotationAngle
+        mesh.rotation.y = rotationAngle; // Update rotation of the mesh
+        draw(); // Redraw the scene
+    }
+    requestAnimationFrame(animate); // Call animate function again in next frame
+}
+
+// Add event listener to the checkbox
+const anim = document.getElementById('anim');
+anim.addEventListener('change', function() {
+    isAnimating = anim.checked; // Update animation state based on checkbox state
+    if (isAnimating) {
+        animate(); // Start animation if checkbox is checked
+    }
+});
