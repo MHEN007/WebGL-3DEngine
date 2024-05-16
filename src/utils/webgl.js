@@ -36,7 +36,7 @@ const near = -1000;
 const far = 1000;
 
 const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-mesh2.position = new Vector3(0.5, 0, 0.5)
+mesh2.position = new Vector3(0.2, 0, 0.1)
 mesh2.rotation = new Vector3(0, 0, 0)
 // const meshes = [mesh1, mesh2]
 // for (let i = 0; i < 6; i ++) {

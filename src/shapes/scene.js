@@ -55,7 +55,7 @@ class Scene{
         this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
         for (let i = 0; i < this.#meshes.length; i++) {
             let mesh = this.#meshes[i]
-            let target = mesh.position
+            let target = mesh.getWorldPosition();
             var up = Vector3.up()
             mesh.computeWorldMatrix()
             var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
