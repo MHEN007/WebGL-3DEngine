@@ -276,13 +276,12 @@ class Matrix4x4{
     static lookAt(eye, target, up) {
         let zAxis = new Vector3(eye.x, eye.y, eye.z)
         zAxis.sub(target)
-        zAxis.normalize()
+        // zAxis.normalize()
         const xAxis = new Vector3(up.x, up.y, up.z)
         xAxis.cross(zAxis)
-        xAxis.normalize()
+        // xAxis.normalize()
         const yAxis = new Vector3(zAxis.x, zAxis.y, zAxis.z)
         yAxis.cross(xAxis)
-        yAxis.normalize()
         return [
             xAxis.x, xAxis.y, xAxis.z, 0,
             yAxis.x, yAxis.y, yAxis.z, 0,

@@ -1,3 +1,5 @@
+const plane = new BoxGeometry(0.5,0.5,0.5);
+
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
 const projectionSelector = document.getElementById("projection")
@@ -10,10 +12,18 @@ const zPos = document.getElementById("z")
 canvas.width = 600
 canvas.height = 600
 
-// const plane = new PlaneGeometry(0.5,0.5);
-const plane = new BoxGeometry(0.5, 0.5, 0.5)
-const material = new BasicMaterial("green", [0, 1, 0, 1])
-const mesh = new Mesh(plane, material)
+        
+let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+camera.position = new Vector3(0, 0, 1)
+const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
+const red = new PhongMaterial("red", [1, 0, 0, 1], camera.position)
+const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
+const yellow = new PhongMaterial("yellow", [1, 1, 0, 1], camera.position)
+const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
+const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
+const materials = [green, purple, yellow, blue, cyan]
+
+const mesh = new Mesh(plane, green)
 mesh.position = new Vector3(0, 0, 0)
 mesh.rotation = new Vector3(0,0,0)
 
@@ -24,10 +34,10 @@ const topp = mesh.getGeometry().height
 const near = -1000;
 const far = 1000;
 
-let camera = new Oblique(left, right, topp, bottom, near, far, 63.4);
+
 
 // camera.position = new Vector3(1, -3, 0) # Lihat bagian bawah dari quad
-camera.position = new Vector3(0, 0, 1)
+
 
 function init(){
     if(!gl){
@@ -57,6 +67,19 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
+    var target = mesh.position;
+    var up = Vector3.up()
+    mesh.computeWorldMatrix()
+    var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
+    var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
+    var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
+    var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
+    for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6))-1; i++) {
+        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
+    }
+}
+
+function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, material) {
     var vertexShader = createShader(gl, gl.VERTEX_SHADER, material.vertexShader)
     var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, material.fragmentShader)
     
@@ -86,20 +109,115 @@ function draw() {
     var vertexBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
 
-    gl.bufferData(gl.ARRAY_BUFFER, mesh.geometry.getAttribute('position').data, gl.STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
     
     var size = 3          // 3 components per iteration
     var type = gl.FLOAT   // the data is 32bit floats
     var normalize = false // don't normalize the data
-    var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
-    var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
+    
     gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
     
     // Draw
     var primitiveType = gl.TRIANGLES
-    var count = mesh.geometry.getAttribute('position').length / size // number of vertices
+    var count = position.length / size // number of vertices
     gl.drawArrays(primitiveType, offset, count)
+    gl.disableVertexAttribArray(positionAttributeLocation);
+}
 
+function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, material) {
+    var vertexShader = createShader(gl, gl.VERTEX_SHADER, material.vertexShader);
+    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, material.fragmentShader);
+    
+    var program = createProgram(gl, vertexShader, fragmentShader);
+    console.log(program)
+    
+    gl.useProgram(program);
+    
+    // Get attribute locations
+    var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos');
+    var colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
+    var normalAttributeLocation = gl.getAttribLocation(program, 'a_normal');
+    
+    // Get uniform locations
+    var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat');
+    var uniformViewMatLoc = gl.getUniformLocation(program, 'viewMat');
+    var uniformResolutionLoc = gl.getUniformLocation(program, 'resolution');
+    var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
+    var uniformAmbientColorLoc = gl.getUniformLocation(program, 'ambientColor');
+    var uniformShininessLoc = gl.getUniformLocation(program, 'shininess');
+    var uniformDiffuseColorLoc = gl.getUniformLocation(program, 'diffuseColor');
+    var uniformSpecularColorLoc = gl.getUniformLocation(program, 'specularColor');
+    var uniformLightPosLoc = gl.getUniformLocation(program, 'lightPos');
+    var uniformCamPosLoc = gl.getUniformLocation(program, 'camPos');
+    
+    // Set uniform values
+    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
+    gl.uniformMatrix4fv(uniformViewMatLoc, false, viewMatrix);
+    gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height]);
+    gl.uniform1i(uniformVertexColorLoc, true); // Assuming you want to use vertex color
+    gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient']);
+    gl.uniform1f(uniformShininessLoc, material.uniforms['shininess']);
+    gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse']);
+    gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular']);
+    gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray());
+    gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray());
+
+    // Enable vertex attributes
+    gl.enableVertexAttribArray(positionAttributeLocation);
+    gl.enableVertexAttribArray(colorAttributeLocation);
+    gl.enableVertexAttribArray(normalAttributeLocation);
+
+    // Create and bind the buffer for position
+    var positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW);
+
+    // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
+    var size = 3;          // 3 components per iteration
+    var type = gl.FLOAT;   // the data is 32bit floats
+    var normalize = false; // don't normalize the data
+    gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
+
+    // Create and bind the buffer for color
+    const colors = new Float32Array([
+        ...material.uniforms['color'],
+        ...material.uniforms['color'],
+        ...material.uniforms['color'],
+        ...material.uniforms['color'],
+        ...material.uniforms['color'],
+        ...material.uniforms['color']
+    ])
+    var colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
+
+    gl.vertexAttribPointer(colorAttributeLocation, 4, gl.FLOAT, false, 0, 0);
+
+    // calculate normals
+    const normal = Vector3.calculateNormal(position)
+    const normals = new Float32Array([
+        ...normal,
+        ...normal,
+        ...normal,
+        ...normal,
+        ...normal,
+        ...normal
+    ])
+    // Create and bind the buffer for normal
+    var normalBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
+
+    gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
+
+    // Draw
+    var primitiveType = gl.TRIANGLES;
+    var count = position.length / size; // number of vertices
+    gl.drawArrays(primitiveType, offset, count);
+
+    gl.disableVertexAttribArray(positionAttributeLocation);
+    gl.disableVertexAttribArray(colorAttributeLocation);
+    gl.disableVertexAttribArray(normalAttributeLocation);
 }
 
 init()
