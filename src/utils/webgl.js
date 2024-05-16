@@ -14,11 +14,11 @@ canvas.height = 600
         
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(0, 0, 1)
-const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
-const red = new PhongMaterial("red", [1, 0, 0, 1], camera.position)
-const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
-const yellow = new PhongMaterial("yellow", [1, 1, 0, 1], camera.position)
-const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
+const green = new BasicMaterial("green", [0, 1, 0, 1], camera.position)
+const red = new BasicMaterial("red", [1, 0, 0, 1], camera.position)
+const blue = new BasicMaterial("blue", [0, 0, 1, 1], camera.position)
+const yellow = new BasicMaterial("yellow", [1, 1, 0, 1], camera.position)
+const purple = new BasicMaterial("purple", [1, 0, 1, 1], camera.position)
 const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
 const materials = [green, purple, yellow, blue, cyan, red]
 
@@ -61,7 +61,7 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
-    var target = mesh.position;
+    var target = mesh.getWorldPosition();
     var up = Vector3.up()
     mesh.computeWorldMatrix()
     var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
