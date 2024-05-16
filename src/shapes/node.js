@@ -31,6 +31,11 @@ class NodeScene {
         return this.worldMatrix
     }
 
+    getWorldPosition(){
+        this.computeWorldMatrix(true, false);
+        return Matrix4x4.getTranslation(this.worldMatrix);
+    }
+
     getParent(){
         return this.parent
     }

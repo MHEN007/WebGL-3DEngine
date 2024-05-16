@@ -96,9 +96,9 @@ class Matrix4x4{
     static createTranslationMatrix(transformation){
         var transformationMatrix = this.mat4Identity.slice()
 
-        transformationMatrix[3] = transformation.x
-        transformationMatrix[7] = transformation.y
-        transformationMatrix[11] = transformation.z
+        transformationMatrix[12] = transformation.x
+        transformationMatrix[13] = transformation.y
+        transformationMatrix[14] = transformation.z
 
         return transformationMatrix
     }
@@ -181,6 +181,19 @@ class Matrix4x4{
         return this.createRotationMatrixFromQuaternion(quaternion.setEuler(yaw, roll, pitch))
     }
 
+    /**
+     * 
+     * @param {number[]} m 
+     * @param {Vector3} v 
+     * @returns {Vector3}
+     */
+    static getTranslation(m, v = null){
+        if (!v){
+            v = new Vector3()
+            return v.set(...m.slice(12,15))
+        }
+    }
+
     static multiply(matrix1, matrix2) {
         let m1 = []
         let m2 = []
@@ -253,7 +266,7 @@ class Matrix4x4{
             [
                 1, 0, 0, 0,
                 0, 1, 0, 0,
-                -scale * Math.cos(angle), scale * Math.sin(angle), 1, 0,
+                -scale * Math.cos(angle), scale * Math.sin(angle), 0, 0,
                 0, 0, 0, 1,
             ],
             this.ortoProj(left, right, bottom, top, near, far),

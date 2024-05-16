@@ -5,12 +5,16 @@ const gl = canvas.getContext("webgl")
 const projectionSelector = document.getElementById("projection")
 const distanceSlider = document.getElementById("distance")
 const resetButton = document.getElementById("reset")
+const angleSlider = document.getElementById("angle")
+const xPos = document.getElementById("x")
+const yPos = document.getElementById("y")
+const zPos = document.getElementById("z")
 canvas.width = 600
 canvas.height = 600
 
+        
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-camera.position = new Vector3(1, 1, 1)
-
+camera.position = new Vector3(0, 0, 1)
 const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
 const red = new PhongMaterial("red", [1, 0, 0, 1], camera.position)
 const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
@@ -29,6 +33,11 @@ const bottom = -mesh.getGeometry().height
 const topp = mesh.getGeometry().height
 const near = -1000;
 const far = 1000;
+
+
+
+// camera.position = new Vector3(1, -3, 0) # Lihat bagian bawah dari quad
+
 
 function init(){
     if(!gl){
@@ -84,8 +93,15 @@ function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, materi
     var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
         
-    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
-    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
+    let target = mesh.getWorldPosition();
+    var up = Vector3.up()
+    console.log(target)
+    camera.updateProjectionMatrix()
+    mesh.computeWorldMatrix()
+    
+    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, mesh.worldMatrix)
+    var viewMatrix = Matrix4x4.inverse(camera.lookAt(target, up))
+    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, Matrix4x4.multiply(viewMatrix, camera.projectionMatrix))
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
 
     gl.enableVertexAttribArray(positionAttributeLocation)
@@ -215,7 +231,7 @@ projectionSelector.addEventListener('change', function(){
         camera = new Orthographic(left, right, topp, bottom, near, far);
         distanceSlider.value = -1
     }else if (projectionSelector.value === 'oblique'){
-        camera = new Oblique(left, right, topp, bottom, near, far);
+        camera = new Oblique(left, right, topp, bottom, near, far, 45);
         distanceSlider.value = -1
     }
     camera.position = new Vector3(1, 1, 1)
@@ -234,9 +250,34 @@ distanceSlider.addEventListener('input', function(){
     draw()
 })
 
+angleSlider.addEventListener('input', function(){
+    mesh.rotation.y = parseFloat(angleSlider.value)
+    // console.log(camera.angle)
+    camera.updateProjectionMatrix()
+    draw()
+})
+
 resetButton.addEventListener('click', function(){
     camera.position = new Vector3(1, 1, 1)
     distanceSlider.value = -1
     camera.far = parseFloat(distanceSlider.value)
+    camera.updateProjectionMatrix()
+    draw()
+})
+
+xPos.addEventListener('input', function(){
+    mesh.position.x = parseFloat(xPos.value)
+    console.log(mesh.position)
+    draw()
+})
+
+yPos.addEventListener('input', function(){
+    mesh.position.y = parseFloat(yPos.value)
+    console.log(mesh.position)
+    draw()
+})
+
+zPos.addEventListener('input', function(){
+    mesh.position.z = parseFloat(zPos.value)
     draw()
 })
