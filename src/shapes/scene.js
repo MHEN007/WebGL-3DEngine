@@ -52,7 +52,7 @@ class Scene{
     }
     
     drawAllMesh(){
-        this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT
+        this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
         for (let i = 0; i < this.#meshes.length; i++) {
             let mesh = this.#meshes[i]
             let target = mesh.position
