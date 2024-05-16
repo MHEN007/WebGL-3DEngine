@@ -55,7 +55,7 @@ class PhongMaterial extends ShaderMaterial {
         gl_FragColor = v_color * vec4(0.5 * ambientColor.a * ambientColor.rgb + diffuseColor.a * diffuse + specularColor.a * specular, 1.0 );
     }`
 
-    constructor(name, color, camPosition, ambient = [0.05,0.05,0.05,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
+    constructor(name, color, camPosition, ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
         const uniform = {
             color: color,
             ambient: ambient,

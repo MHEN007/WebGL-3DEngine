@@ -1,4 +1,5 @@
-const plane = new BoxGeometry(0.5,0.5,0.5);
+const box = new BoxGeometry(0.1,0.1,0.1);
+const plane = new PlaneGeometry(1,1);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
@@ -14,24 +15,34 @@ canvas.height = 600
         
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(0, 0, 1)
-const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
-const red = new PhongMaterial("red", [1, 0, 0, 1], camera.position)
-const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
-const yellow = new PhongMaterial("yellow", [1, 1, 0, 1], camera.position)
-const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
-const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
+const green = new BasicMaterial("green", [0, 1, 0], camera.position)
+const red = new BasicMaterial("red", [1, 0, 0], camera.position)
+const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
+const yellow = new BasicMaterial("yellow", [1, 1, 0], camera.position)
+const purple = new BasicMaterial("purple", [1, 0, 1], camera.position)
+const cyan = new BasicMaterial("cyan", [0, 1, 1], camera.position)
 const materials = [green, purple, yellow, blue, cyan, red]
 
-const mesh = new Mesh(plane, green)
-mesh.position = new Vector3(0, 0, 0)
-mesh.rotation = new Vector3(0,0,0)
+const mesh1 = new Mesh(box, materials, [0, 1, 2, 3, 4, 5])
+mesh1.position = new Vector3(0, 0, 0)
+mesh1.rotation = new Vector3(0, 0, 0)
 
-const left = -mesh.getGeometry().width
-const right = mesh.getGeometry().width
-const bottom = -mesh.getGeometry().height
-const topp = mesh.getGeometry().height
+
+const left = -mesh1.getGeometry().width
+const right = mesh1.getGeometry().width
+const bottom = -mesh1.getGeometry().height
+const topp = mesh1.getGeometry().height
 const near = -1000;
 const far = 1000;
+
+const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+mesh2.position = new Vector3(0.5, 0, 0.5)
+mesh2.rotation = new Vector3(0, 0, 0)
+// const meshes = [mesh1, mesh2]
+// for (let i = 0; i < 6; i ++) {
+//     Scene.materials.push(materials[i])
+// }
+
 
 function init(){
     if(!gl){
@@ -49,6 +60,10 @@ function createShader(gl, type, source){
     var shader = gl.createShader(type)
     gl.shaderSource(shader, source)
     gl.compileShader(shader)
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        var compilationLog = gl.getShaderInfoLog(shader);
+        throw new Error('Shader compilation failed: ' + compilationLog);
+    }
     return shader
 }
 
@@ -61,18 +76,18 @@ function createProgram(gl, vertexShader, fragmentShader){
 }
 
 function draw() {
-    var target = mesh.position;
+    var target = mesh1.position;
     var up = Vector3.up()
-    mesh.computeWorldMatrix()
+    mesh1.computeWorldMatrix()
     var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
     var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
-    var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
-    var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
-    for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
+    var stride = mesh1.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
+    var offset = mesh1.geometry.getAttribute('position').offset        // start at the beginning of the buffer
+    for (let i = 0; i < (mesh1.geometry.getAttribute('position').length / (3*6)); i++) {
         if(materials[i % materials.length].type == 'BASIC'){
-            drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
+            drawBasicSide(mesh1.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh1.worldMatrix, viewProjMat, materials[i%materials.length])
         }else if(materials[i % materials.length].type == 'PHONG'){
-            drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
+            drawPhongSide(mesh1.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh1.worldMatrix, viewProjMat, materials[i%materials.length])
         }
     }
 }
@@ -90,10 +105,12 @@ function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, materi
     var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
     var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
+    var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
     
     gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
     gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
-    gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
+    gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
+    gl.uniform1i(uniformVertexColorLoc, true)
 
     gl.enableVertexAttribArray(positionAttributeLocation)
     
@@ -145,7 +162,7 @@ function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, materi
     gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
     gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix);
     gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height]);
-    gl.uniform1i(uniformVertexColorLoc, true); // Assuming you want to use vertex color
+    gl.uniform1i(uniformVertexColorLoc, false); // Assuming you want to use vertex color
     gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient']);
     gl.uniform1f(uniformShininessLoc, material.uniforms['shininess']);
     gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse']);
@@ -212,7 +229,10 @@ function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, materi
 }
 
 init()
-draw()
+
+const scene = new Scene(gl, [mesh1, mesh2], [camera])
+scene.drawAllMesh()
+// draw()
 
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
@@ -226,7 +246,8 @@ projectionSelector.addEventListener('change', function(){
         distanceSlider.value = -1
     }
     camera.position = new Vector3(0, 0, 1)
-    draw()
+    scene.drawAllMesh()
+
 })
 
 distanceSlider.addEventListener('input', function(){
@@ -238,14 +259,17 @@ distanceSlider.addEventListener('input', function(){
     } else if (camera.type === 'ObliqueCamera'){
         camera.far = parseFloat(distanceSlider.value)
     }
-    draw()
+    scene.drawAllMesh()
+
 })
 
 angleSlider.addEventListener('input', function(){
-    mesh.rotation.y = parseFloat(angleSlider.value)
+    mesh1.rotation.y = parseFloat(angleSlider.value)
+    mesh2.rotation.y = parseFloat(angleSlider.value)
     // console.log(camera.angle)
     camera.updateProjectionMatrix()
-    draw()
+    scene.drawAllMesh()
+
 })
 
 resetButton.addEventListener('click', function(){
@@ -253,22 +277,33 @@ resetButton.addEventListener('click', function(){
     distanceSlider.value = -1
     camera.far = parseFloat(distanceSlider.value)
     camera.updateProjectionMatrix()
-    draw()
+    scene.drawAllMesh()
+
 })
 
 xPos.addEventListener('input', function(){
-    mesh.position.x = parseFloat(xPos.value)
-    console.log(mesh.position)
-    draw()
+    mesh1.position.x = parseFloat(xPos.value)
+    mesh2.position.x = parseFloat(xPos.value)
+    console.log(mesh1.position)
+    
+    scene.drawAllMesh()
+
 })
 
 yPos.addEventListener('input', function(){
-    mesh.position.y = parseFloat(yPos.value)
-    console.log(mesh.position)
-    draw()
+    mesh1.position.y = parseFloat(yPos.value)
+    mesh2.position.y = parseFloat(yPos.value)
+    console.log("MESH 1")
+    console.log(mesh1.position)
+    console.log("MESH 2")
+    console.log(mesh2.position)
+    scene.drawAllMesh()
+
 })
 
 zPos.addEventListener('input', function(){
-    mesh.position.z = parseFloat(zPos.value)
-    draw()
+    mesh1.position.z = parseFloat(zPos.value)
+    mesh2.position.z = parseFloat(zPos.value)
+    scene.drawAllMesh()
+
 })

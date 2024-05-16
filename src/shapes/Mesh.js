@@ -2,19 +2,29 @@ class Mesh extends NodeScene {
     /**
      * 
      * @param {BufferGeometry} geometry 
-     * @param {ShaderMaterial | TexturedMaterial} material 
+     * @param {ShaderMaterial[]} material 
      */
-    constructor(geometry, material){
+    constructor(geometry, material, assignMaterial){
         super()
         this.geometry = geometry
         this.material = material
+        this.materialMap = {}
+        for (let i = 0; i < assignMaterial.length; i++)
+        {
+            this.materialMap[i.toString()] = assignMaterial[i]   
+        }
+
     }
 
     getGeometry(){
         return this.geometry
     }
 
-    getMaterial(){
+    getMaterial(index){
+        return this.material[this.materialMap[index.toString()]]
+    }
+
+    getMaterials(){
         return this.material
     }
 
