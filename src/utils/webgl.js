@@ -15,7 +15,8 @@ canvas.height = 600
         
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(0, 0, 1)
-const green = new BasicMaterial("green", [0, 1, 0], camera.position)
+// const green = new BasicMaterial("green", [0, 1, 0], camera.position)
+const green = new Texture('green', './utils/texture.png')
 const red = new BasicMaterial("red", [1, 0, 0], camera.position)
 const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], camera.position)
@@ -38,11 +39,6 @@ const far = 1000;
 const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.2, 0, 0.1)
 mesh2.rotation = new Vector3(0, 0, 0)
-// const meshes = [mesh1, mesh2]
-// for (let i = 0; i < 6; i ++) {
-//     Scene.materials.push(materials[i])
-// }
-
 
 function init(){
     if(!gl){
@@ -92,147 +88,10 @@ function draw() {
     }
 }
 
-function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, material) {
-    var vertexShader = createShader(gl, gl.VERTEX_SHADER, material.vertexShader)
-    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, material.fragmentShader)
-    
-    var program = createProgram(gl, vertexShader, fragmentShader)
-    
-    gl.useProgram(program)
-    
-    // BasicMaterial
-    var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos')
-    var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
-    var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
-    var uniformColorLoc = gl.getUniformLocation(program, 'color')
-    var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
-    
-    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
-    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
-    gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
-    gl.uniform1i(uniformVertexColorLoc, true)
-
-    gl.enableVertexAttribArray(positionAttributeLocation)
-    
-    var vertexBuffer = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-
-    gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
-    
-    var size = 3          // 3 components per iteration
-    var type = gl.FLOAT   // the data is 32bit floats
-    var normalize = false // don't normalize the data
-    
-    gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
-    
-    // Draw
-    var primitiveType = gl.TRIANGLES
-    var count = position.length / size // number of vertices
-    gl.drawArrays(primitiveType, offset, count)
-    gl.disableVertexAttribArray(positionAttributeLocation);
-}
-
-function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, material) {
-    var vertexShader = createShader(gl, gl.VERTEX_SHADER, material.vertexShader);
-    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, material.fragmentShader);
-    
-    var program = createProgram(gl, vertexShader, fragmentShader);
-    console.log(program)
-    
-    gl.useProgram(program);
-    
-    // Get attribute locations
-    var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos');
-    var colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
-    var normalAttributeLocation = gl.getAttribLocation(program, 'a_normal');
-    
-    // Get uniform locations
-    var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat');
-    var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat');
-    var uniformResolutionLoc = gl.getUniformLocation(program, 'resolution');
-    var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
-    var uniformAmbientColorLoc = gl.getUniformLocation(program, 'ambientColor');
-    var uniformShininessLoc = gl.getUniformLocation(program, 'shininess');
-    var uniformDiffuseColorLoc = gl.getUniformLocation(program, 'diffuseColor');
-    var uniformSpecularColorLoc = gl.getUniformLocation(program, 'specularColor');
-    var uniformLightPosLoc = gl.getUniformLocation(program, 'lightPos');
-    var uniformCamPosLoc = gl.getUniformLocation(program, 'camPos');
-    
-    // Set uniform values
-    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
-    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix);
-    gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height]);
-    gl.uniform1i(uniformVertexColorLoc, false); // Assuming you want to use vertex color
-    gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient']);
-    gl.uniform1f(uniformShininessLoc, material.uniforms['shininess']);
-    gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse']);
-    gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular']);
-    gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray());
-    gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray());
-
-    // Enable vertex attributes
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.enableVertexAttribArray(colorAttributeLocation);
-    gl.enableVertexAttribArray(normalAttributeLocation);
-
-    // Create and bind the buffer for position
-    var positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW);
-
-    // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-    var size = 3;          // 3 components per iteration
-    var type = gl.FLOAT;   // the data is 32bit floats
-    var normalize = false; // don't normalize the data
-    gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
-
-    // Create and bind the buffer for color
-    const colors = new Float32Array([
-        ...material.uniforms['color'],
-        ...material.uniforms['color'],
-        ...material.uniforms['color'],
-        ...material.uniforms['color'],
-        ...material.uniforms['color'],
-        ...material.uniforms['color']
-    ])
-    var colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
-
-    gl.vertexAttribPointer(colorAttributeLocation, 4, gl.FLOAT, false, 0, 0);
-
-    // calculate normals
-    const normal = Vector3.calculateNormal(position)
-    const normals = new Float32Array([
-        ...normal,
-        ...normal,
-        ...normal,
-        ...normal,
-        ...normal,
-        ...normal
-    ])
-    // Create and bind the buffer for normal
-    var normalBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
-
-    gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
-
-    // Draw
-    var primitiveType = gl.TRIANGLES;
-    var count = position.length / size; // number of vertices
-    gl.drawArrays(primitiveType, offset, count);
-
-    gl.disableVertexAttribArray(positionAttributeLocation);
-    gl.disableVertexAttribArray(colorAttributeLocation);
-    gl.disableVertexAttribArray(normalAttributeLocation);
-}
-
 init()
 
 const scene = new Scene(gl, [mesh1, mesh2], [camera])
 scene.drawAllMesh()
-// draw()
 
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
@@ -306,3 +165,7 @@ zPos.addEventListener('input', function(){
     scene.drawAllMesh()
 
 })
+
+function isPowerOf2(value) {
+    return (value & (value - 1)) === 0;
+  }

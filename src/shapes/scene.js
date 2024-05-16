@@ -7,8 +7,11 @@ class Scene{
     #basicFS
     #phongVS
     #phongFS
+    #textureVS
+    #textureFS
     basicProgram
     phongProgram
+    textureProgram
     #currentProgram = ""
     #meshes
     #camera
@@ -21,17 +24,17 @@ class Scene{
         this.#camera = camera;
         this.#lightsources = lightsources
         this.#materialMap = {}
-
+        
         this.#basicVS = this.createShader(gl.VERTEX_SHADER, BasicMaterial.vs)
         this.#basicFS = this.createShader(gl.FRAGMENT_SHADER, BasicMaterial.fs)
         this.#phongVS = this.createShader(gl.VERTEX_SHADER, PhongMaterial.vs)
-        this.#phongVS = this.createShader(gl.FRAGMENT_SHADER, PhongMaterial.fs)
+        this.#phongFS = this.createShader(gl.FRAGMENT_SHADER, PhongMaterial.fs)
+        this.#textureVS = this.createShader(gl.VERTEX_SHADER, Texture.vs)
+        this.#textureFS = this.createShader(gl.FRAGMENT_SHADER, Texture.fs)
 
-        console.log(this.#basicVS)
-        console.log(this.#basicFS)
-        this.basicProgram = this.createBasicProgram(this.#basicVS, this.#basicFS)
-        // this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
-        // var program = createProgram(gl, vertexShader, fragmentShader)
+        this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
+        this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
+        this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
     }
 
     get type()
@@ -74,42 +77,103 @@ class Scene{
         return shader
     }
     
-    createBasicProgram(){
+    createProgram(vertexShader, fragmentShader){
         var program = this.gl.createProgram()
-        console.log(this.#basicVS)
-        console.log(this.#basicFS)
-        this.gl.attachShader(program, this.#basicVS)
-        this.gl.attachShader(program, this.#basicFS)
+        this.gl.attachShader(program, vertexShader)
+        this.gl.attachShader(program, fragmentShader)
         this.gl.linkProgram(program)
         return program
     }
 
     draw(mesh, viewProjMat, stride, offset) {
-        console.log("DRAWING MESH")
-        console.log(mesh)
         for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
             if(mesh.getMaterial(i).type == 'BASIC'){
                 if (this.#currentProgram != "BASIC") {
                     this.gl.useProgram(this.basicProgram)
                 }
-                drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
             }else if(mesh.getMaterial(i).type == 'PHONG'){
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
-                drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+            }else if(mesh.getMaterial(i).type == 'TEXTURE'){
+                if (this.#currentProgram != "TEXTURE") {
+                    this.gl.useProgram(this.textureProgram)
+                }
+                this.drawTexture(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
             }
         }
     }
+
+    drawTexture(position, stride, offset, worldMatrix, viewMatrix, material) {
+        var positionAttributeLocation = gl.getAttribLocation(this.textureProgram, 'a_pos')
+        var textureAttributeLocation = gl.getAttribLocation(this.textureProgram, 'a_texcoord')
+    
+        var uniformWorldMatrixLoc = gl.getUniformLocation(this.textureProgram, 'worldMat')
+        var uniformViewProjMatLoc = gl.getUniformLocation(this.textureProgram, 'viewProjMat')
+        var uniformTextureLoc = gl.getUniformLocation(this.textureProgram, 'u_texture')
+    
+        gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
+        gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
+        gl.uniform1i(uniformTextureLoc, 0)
+    
+        gl.enableVertexAttribArray(positionAttributeLocation)
+        var vertexBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
+        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        var size = 3          // 3 components per iteration
+        var type = gl.FLOAT   // the data is 32bit floats
+        var normalize = false // don't normalize the data
+        gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
+        
+        var texture = gl.createTexture()
+        gl.bindTexture(gl.TEXTURE_2D, texture)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+        
+        var image = new Image()
+        image.src = material.source
+        // image.addEventListener('load', function(){
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+            
+            if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+        // })
+        
+        var texCoordBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
+        gl.enableVertexAttribArray(textureAttributeLocation)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            0, 1,
+            1, 0,
+            0, 0,
+            0, 1,
+            1, 1,
+            1, 0,
+        ]), gl.STATIC_DRAW)
+        var size = 2         // 2 components per iteration
+        var type = gl.FLOAT   // the data is 32bit floats
+        var normalize = false // don't normalize the data
+        gl.vertexAttribPointer(textureAttributeLocation, size, type, normalize, stride, offset)
+
+        var primitiveType = gl.TRIANGLES
+        var count = position.length / 3 // number of vertices
+        gl.drawArrays(primitiveType, offset, count)
+    }
     
     drawBasicSide(position, stride, offset, worldMatrix, viewProjMatrix, material) {
-        
-        // BasicMaterial
-        var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos')
-        var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
-        var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
-        var uniformColorLoc = gl.getUniformLocation(program, 'color')
-        var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
+       // BasicMaterial
+        var positionAttributeLocation = gl.getAttribLocation(this.basicProgram, 'a_pos')
+        var uniformWorldMatrixLoc = gl.getUniformLocation(this.basicProgram, 'worldMat')
+        var uniformViewProjMatLoc = gl.getUniformLocation(this.basicProgram, 'viewProjMat')
+        var uniformColorLoc = gl.getUniformLocation(this.basicProgram, 'color')
+        var uniformVertexColorLoc = gl.getUniformLocation(this.basicProgram, 'vertexColor');
     
         
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
@@ -140,21 +204,21 @@ class Scene{
     drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material) {
         
         // Get attribute locations
-        var positionAttributeLocation = gl.getAttribLocation(program, 'a_pos');
-        var colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
-        var normalAttributeLocation = gl.getAttribLocation(program, 'a_normal');
+        var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos');
+        var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color');
+        var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal');
         
         // Get uniform locations
-        var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat');
-        var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat');
-        var uniformResolutionLoc = gl.getUniformLocation(program, 'resolution');
-        var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
-        var uniformAmbientColorLoc = gl.getUniformLocation(program, 'ambientColor');
-        var uniformShininessLoc = gl.getUniformLocation(program, 'shininess');
-        var uniformDiffuseColorLoc = gl.getUniformLocation(program, 'diffuseColor');
-        var uniformSpecularColorLoc = gl.getUniformLocation(program, 'specularColor');
-        var uniformLightPosLoc = gl.getUniformLocation(program, 'lightPos');
-        var uniformCamPosLoc = gl.getUniformLocation(program, 'camPos');
+        var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat');
+        var uniformViewProjMatLoc = gl.getUniformLocation(this.phongProgram, 'viewProjMat');
+        var uniformResolutionLoc = gl.getUniformLocation(this.phongProgram, 'resolution');
+        var uniformVertexColorLoc = gl.getUniformLocation(this.phongProgram, 'vertexColor');
+        var uniformAmbientColorLoc = gl.getUniformLocation(this.phongProgram, 'ambientColor');
+        var uniformShininessLoc = gl.getUniformLocation(this.phongProgram, 'shininess');
+        var uniformDiffuseColorLoc = gl.getUniformLocation(this.phongProgram, 'diffuseColor');
+        var uniformSpecularColorLoc = gl.getUniformLocation(this.phongProgram, 'specularColor');
+        var uniformLightPosLoc = gl.getUniformLocation(this.phongProgram, 'lightPos');
+        var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos');
         
         // Set uniform values
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
