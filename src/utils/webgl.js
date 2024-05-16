@@ -3,6 +3,10 @@ const gl = canvas.getContext("webgl")
 const projectionSelector = document.getElementById("projection")
 const distanceSlider = document.getElementById("distance")
 const resetButton = document.getElementById("reset")
+const angleSlider = document.getElementById("angle")
+const xPos = document.getElementById("x")
+const yPos = document.getElementById("y")
+const zPos = document.getElementById("z")
 canvas.width = 600
 canvas.height = 600
 
@@ -20,9 +24,10 @@ const topp = mesh.getGeometry().height
 const near = -1000;
 const far = 1000;
 
-let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+let camera = new Oblique(left, right, topp, bottom, near, far, 63.4);
+
 // camera.position = new Vector3(1, -3, 0) # Lihat bagian bawah dari quad
-camera.position = new Vector3(1, 1, 1)
+camera.position = new Vector3(0, 0, 1)
 
 function init(){
     if(!gl){
@@ -65,9 +70,9 @@ function draw() {
     var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
         
-    var target = mesh.position;
+    let target = mesh.getWorldPosition();
     var up = Vector3.up()
-
+    console.log(target)
     camera.updateProjectionMatrix()
     mesh.computeWorldMatrix()
     
@@ -95,7 +100,6 @@ function draw() {
     var count = mesh.geometry.getAttribute('position').length / size // number of vertices
     gl.drawArrays(primitiveType, offset, count)
 
-    console.log(camera.far)
 }
 
 init()
@@ -109,7 +113,7 @@ projectionSelector.addEventListener('change', function(){
         camera = new Orthographic(left, right, topp, bottom, near, far);
         distanceSlider.value = -1
     }else if (projectionSelector.value === 'oblique'){
-        camera = new Oblique(left, right, topp, bottom, near, far);
+        camera = new Oblique(left, right, topp, bottom, near, far, 45);
         distanceSlider.value = -1
     }
     camera.position = new Vector3(1, 1, 1)
@@ -128,9 +132,34 @@ distanceSlider.addEventListener('input', function(){
     draw()
 })
 
+angleSlider.addEventListener('input', function(){
+    mesh.rotation.y = parseFloat(angleSlider.value)
+    // console.log(camera.angle)
+    camera.updateProjectionMatrix()
+    draw()
+})
+
 resetButton.addEventListener('click', function(){
     camera.position = new Vector3(1, 1, 1)
     distanceSlider.value = -1
     camera.far = parseFloat(distanceSlider.value)
+    camera.updateProjectionMatrix()
+    draw()
+})
+
+xPos.addEventListener('input', function(){
+    mesh.position.x = parseFloat(xPos.value)
+    console.log(mesh.position)
+    draw()
+})
+
+yPos.addEventListener('input', function(){
+    mesh.position.y = parseFloat(yPos.value)
+    console.log(mesh.position)
+    draw()
+})
+
+zPos.addEventListener('input', function(){
+    mesh.position.z = parseFloat(zPos.value)
     draw()
 })

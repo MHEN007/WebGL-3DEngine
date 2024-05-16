@@ -37,15 +37,31 @@
             <div>Camera</div>
             <label for="projection">Projection :</label>
             <select name="projection" id="projection">
+                <option value="oblique">Oblique</option>
                 <option value="perspective">Perspective</option>
                 <option value="orthographic">Orthographic</option>
-                <option value="oblique">Oblique</option>
             </select>
             <br/>
             <label for="distance">Distance :</label>
-            <input type="range" min="-1" max="-0.3" value="-1" step="0.01" id="distance">
+            <input type="range" min="-100" max="1000" value="-1" step="0.01" id="distance">
             <br/>
             <button id="reset">Reset</button>
+            <br/>
+            <label for="angle">Angle :</label>
+            <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="angle">
+            <br/>
+            <br/>
+            <label for="angle">X-Pos :</label>
+            <input type="range" min="-1" max="1" value="0" step="0.01" id="x">
+            <br/>
+            <br/>
+            <label for="angle">Y-Pos :</label>
+            <input type="range" min="-1" max="1" value="0" step="0.01" id="y">
+            <br/>
+            <br/>
+            <label for="angle">Z-Pos :</label>
+            <input type="range" min="-1" max="1" value="0" step="0.01" id="z">
+            <br/>
         </div>
     </div>
 
