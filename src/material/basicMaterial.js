@@ -1,4 +1,9 @@
 class BasicMaterial extends ShaderMaterial {
+    
+    get type(){
+        return "BASIC"
+    }
+
     static vs = `
     attribute vec4 a_pos;
 

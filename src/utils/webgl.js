@@ -11,7 +11,6 @@ const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
 canvas.width = 600
 canvas.height = 600
-
         
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 camera.position = new Vector3(0, 0, 1)
@@ -21,7 +20,7 @@ const blue = new PhongMaterial("blue", [0, 0, 1, 1], camera.position)
 const yellow = new PhongMaterial("yellow", [1, 1, 0, 1], camera.position)
 const purple = new PhongMaterial("purple", [1, 0, 1, 1], camera.position)
 const cyan = new PhongMaterial("cyan", [0, 1, 1, 1], camera.position)
-const materials = [green, purple, yellow, blue, cyan]
+const materials = [green, purple, yellow, blue, cyan, red]
 
 const mesh = new Mesh(plane, green)
 mesh.position = new Vector3(0, 0, 0)
@@ -33,11 +32,6 @@ const bottom = -mesh.getGeometry().height
 const topp = mesh.getGeometry().height
 const near = -1000;
 const far = 1000;
-
-
-
-// camera.position = new Vector3(1, -3, 0) # Lihat bagian bawah dari quad
-
 
 function init(){
     if(!gl){
@@ -74,8 +68,12 @@ function draw() {
     var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
     var stride = mesh.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
     var offset = mesh.geometry.getAttribute('position').offset        // start at the beginning of the buffer
-    for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6))-1; i++) {
-        drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
+    for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
+        if(materials[i % materials.length].type == 'BASIC'){
+            drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
+        }else if(materials[i % materials.length].type == 'PHONG'){
+            drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, materials[i%materials.length])
+        }
     }
 }
 
@@ -92,16 +90,9 @@ function drawBasicSide(position, stride, offset, worldMatrix, viewMatrix, materi
     var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat')
     var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat')
     var uniformColorLoc = gl.getUniformLocation(program, 'color')
-        
-    let target = mesh.getWorldPosition();
-    var up = Vector3.up()
-    console.log(target)
-    camera.updateProjectionMatrix()
-    mesh.computeWorldMatrix()
     
-    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, mesh.worldMatrix)
-    var viewMatrix = Matrix4x4.inverse(camera.lookAt(target, up))
-    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, Matrix4x4.multiply(viewMatrix, camera.projectionMatrix))
+    gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
+    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
     gl.uniform4fv(uniformColorLoc, material.uniforms['color'])
 
     gl.enableVertexAttribArray(positionAttributeLocation)
@@ -140,7 +131,7 @@ function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, materi
     
     // Get uniform locations
     var uniformWorldMatrixLoc = gl.getUniformLocation(program, 'worldMat');
-    var uniformViewMatLoc = gl.getUniformLocation(program, 'viewMat');
+    var uniformViewProjMatLoc = gl.getUniformLocation(program, 'viewProjMat');
     var uniformResolutionLoc = gl.getUniformLocation(program, 'resolution');
     var uniformVertexColorLoc = gl.getUniformLocation(program, 'vertexColor');
     var uniformAmbientColorLoc = gl.getUniformLocation(program, 'ambientColor');
@@ -152,7 +143,7 @@ function drawPhongSide(position, stride, offset, worldMatrix, viewMatrix, materi
     
     // Set uniform values
     gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
-    gl.uniformMatrix4fv(uniformViewMatLoc, false, viewMatrix);
+    gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix);
     gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height]);
     gl.uniform1i(uniformVertexColorLoc, true); // Assuming you want to use vertex color
     gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient']);
@@ -234,7 +225,7 @@ projectionSelector.addEventListener('change', function(){
         camera = new Oblique(left, right, topp, bottom, near, far, 45);
         distanceSlider.value = -1
     }
-    camera.position = new Vector3(1, 1, 1)
+    camera.position = new Vector3(0, 0, 1)
     draw()
 })
 

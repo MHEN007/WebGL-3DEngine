@@ -6,6 +6,10 @@ class ShaderMaterial {
         this.uniforms = uniforms
     }
 
+    get type(){
+        return "NOT IMPLEMENTED"
+    }
+
     toJSON(){
         return JSON.stringify(
             {

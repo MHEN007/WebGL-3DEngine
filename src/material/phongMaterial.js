@@ -1,11 +1,16 @@
 class PhongMaterial extends ShaderMaterial {
+
+    get type(){
+        return "PHONG"
+    }
+    
     static vs = `
     attribute vec4 a_pos;
     attribute vec4 a_color;
     attribute vec3 a_normal;
 
     uniform mat4 worldMat;
-    uniform mat4 viewMat;
+    uniform mat4 viewProjMat;
     uniform vec2 resolution;
     uniform bool vertexColor;
 
@@ -14,7 +19,7 @@ class PhongMaterial extends ShaderMaterial {
     varying vec3 v_pos;
 
     void main() {
-        gl_Position = viewMat * worldMat * a_pos;
+        gl_Position = viewProjMat * worldMat * a_pos;
         
         v_pos = gl_Position.xyz / gl_Position.w;
         v_normal = mat3(worldMat) * a_normal;
