@@ -11,6 +11,10 @@ class NodeScene {
         this.visible = true
     }
 
+    get type(){
+        return "node"
+    }
+
     getPosition(){
         return this.position
     }
