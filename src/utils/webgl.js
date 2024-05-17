@@ -90,8 +90,8 @@ function draw() {
 
 init()
 
-const scene = new Scene(gl, [mesh1, mesh2], [camera])
-scene.drawAllMesh()
+const scene = new Scene(gl, [camera]).add(mesh1, mesh2);
+scene.drawAll()
 
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
@@ -105,7 +105,7 @@ projectionSelector.addEventListener('change', function(){
         distanceSlider.value = -1
     }
     camera.position = new Vector3(0, 0, 1)
-    scene.drawAllMesh()
+    scene.drawAll()
 
 })
 
@@ -118,7 +118,7 @@ distanceSlider.addEventListener('input', function(){
     } else if (camera.type === 'ObliqueCamera'){
         camera.far = parseFloat(distanceSlider.value)
     }
-    scene.drawAllMesh()
+    scene.drawAll()
 
 })
 
@@ -127,7 +127,7 @@ angleSlider.addEventListener('input', function(){
     mesh2.rotation.y = parseFloat(angleSlider.value)
     // console.log(camera.angle)
     camera.updateProjectionMatrix()
-    scene.drawAllMesh()
+    scene.drawAll()
 
 })
 
@@ -136,33 +136,29 @@ resetButton.addEventListener('click', function(){
     distanceSlider.value = -1
     camera.far = parseFloat(distanceSlider.value)
     camera.updateProjectionMatrix()
-    scene.drawAllMesh()
+    scene.drawAll()
 
 })
 
 xPos.addEventListener('input', function(){
-    mesh1.position.x = parseFloat(xPos.value)
-    mesh2.position.x = parseFloat(xPos.value)
+    scene.position.x = parseFloat(xPos.value)
     console.log(mesh1.position)
     
-    scene.drawAllMesh()
+    scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
-    mesh1.position.y = parseFloat(yPos.value)
-    mesh2.position.y = parseFloat(yPos.value)
+    scene.position.y = parseFloat(yPos.value)
     console.log("MESH 1")
     console.log(mesh1.position)
     console.log("MESH 2")
     console.log(mesh2.position)
-    scene.drawAllMesh()
-
+    scene.drawAll()
 })
 
 zPos.addEventListener('input', function(){
-    mesh1.position.z = parseFloat(zPos.value)
-    mesh2.position.z = parseFloat(zPos.value)
-    scene.drawAllMesh()
+    scene.position.z = parseFloat(zPos.value)
+    scene.drawAll()
 
 })
 

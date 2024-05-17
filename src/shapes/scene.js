@@ -1,4 +1,4 @@
-class Scene{
+class Scene extends NodeScene{
 
     static materials = []
 
@@ -13,14 +13,13 @@ class Scene{
     phongProgram
     textureProgram
     #currentProgram = ""
-    #meshes
     #camera
     #materialMap
     #lightsources
 
-    constructor(gl, meshes, camera, lightsources = []) {
+    constructor(gl, camera, lightsources = []) {
+        super()
         this.gl = gl
-        this.#meshes = meshes;
         this.#camera = camera;
         this.#lightsources = lightsources
         this.#materialMap = {}
@@ -42,22 +41,14 @@ class Scene{
         return "scene"
     }
 
-    addMesh(mesh){
-        this.meshes.push(mesh)
-        for (let i = 0; i < mesh.getMaterials(); i++) {
-            this.materials.push(mesh.getMaterial(i))
-            this.materialMap[mesh.getMaterial(i).name] = (this.materials.length)-1
-        }
-    }
-
     setCamera(camera){
         this.camera = camera
     }
     
-    drawAllMesh(){
+    drawAll(){
         this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
-        for (let i = 0; i < this.#meshes.length; i++) {
-            let mesh = this.#meshes[i]
+        for (let i = 0; i < this.children.length; i++) {
+            let mesh = this.children[i]
             let target = mesh.getWorldPosition();
             var up = Vector3.up()
             mesh.computeWorldMatrix()
