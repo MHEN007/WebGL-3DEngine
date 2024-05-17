@@ -8,6 +8,7 @@ class PhongMaterial extends ShaderMaterial {
     attribute vec4 a_pos;
     attribute vec4 a_color;
     attribute vec3 a_normal;
+    attribute vec2 a_texcoord;
 
     uniform mat4 worldMat;
     uniform mat4 viewProjMat;
@@ -17,6 +18,7 @@ class PhongMaterial extends ShaderMaterial {
     varying vec4 v_color;
     varying vec3 v_normal;
     varying vec3 v_pos;
+    varying vec2 v_texcoord;
 
     void main() {
         gl_Position = viewProjMat * worldMat * a_pos;
@@ -24,6 +26,7 @@ class PhongMaterial extends ShaderMaterial {
         v_pos = gl_Position.xyz / gl_Position.w;
         v_normal = mat3(worldMat) * a_normal;
         v_color = mix(vec4(1, 1, 1, 1), a_color, float(vertexColor));
+        v_texcoord = a_texcoord;
     }
     `
 
@@ -40,20 +43,42 @@ class PhongMaterial extends ShaderMaterial {
     varying vec4 v_color;
     varying vec3 v_normal;
     varying vec3 v_pos;
+    varying vec2 v_texcoord;
+
+    uniform sampler2D u_texture;
+    uniform bool useTexture;
 
     void main() {
+        // Normalize the vectors
         vec3 normal = normalize(v_normal);
-        vec3 light = normalize(normalize(lightPos)-v_pos);
-        vec3 halfway = normalize(light + normalize(camPos));
-
+        vec3 light = normalize(lightPos - v_pos);
+        vec3 viewDir = normalize(camPos - v_pos);
+        vec3 halfway = normalize(light + viewDir);
+    
+        // Sample the texture
+        vec4 texColor = texture2D(u_texture, v_texcoord);
+    
+        // Calculate diffuse lighting
         float diffuseFactor = max(dot(light, normal), 0.0);
         vec3 diffuse = diffuseFactor * diffuseColor.rgb;
-
+    
+        // Calculate specular lighting
         float specularFactor = pow(max(dot(normal, halfway), 0.0), shininess);
         vec3 specular = specularFactor * specularColor.rgb;
-
-        gl_FragColor = v_color * vec4(0.5 * ambientColor.a * ambientColor.rgb + diffuseColor.a * diffuse + specularColor.a * specular, 1.0 );
-    }`
+    
+        // Calculate ambient lighting
+        vec3 ambient = ambientColor.rgb * ambientColor.a;
+    
+        // Combine all lighting components
+        vec3 lighting = ambient + diffuseColor.a * diffuse + specularColor.a * specular;
+    
+        // Blend the texture and vertex color based on useTexture
+        vec4 baseColor = mix(v_color, texColor, float(useTexture));
+        
+        // Apply the lighting to the base color
+        gl_FragColor = vec4(lighting, 1.0) * baseColor * v_color;
+    }
+    `
 
     constructor(name, color, camPosition, ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
         const uniform = {
