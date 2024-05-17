@@ -59,13 +59,13 @@ class Scene extends NodeScene{
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
         }
+        console.log(this.position)
     }
 
     createShader(type, source){
         var shader = this.gl.createShader(type)
         this.gl.shaderSource(shader, source)
         this.gl.compileShader(shader)
-        console.log(shader)
         return shader
     }
     

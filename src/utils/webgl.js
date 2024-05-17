@@ -6,7 +6,7 @@ const gl = canvas.getContext("webgl")
 const projectionSelector = document.getElementById("projection")
 const distanceSlider = document.getElementById("distance")
 const resetButton = document.getElementById("reset")
-const angleSlider = document.getElementById("angle")
+const angleObliqueSlider = document.getElementById("angleOblique")
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
@@ -31,12 +31,6 @@ mesh1.position = new Vector3(0, 0, 0)
 mesh1.rotation = new Vector3(0, 0, 0)
 
 
-const left = -mesh1.getGeometry().width
-const right = mesh1.getGeometry().width
-const bottom = -mesh1.getGeometry().height
-const topp = mesh1.getGeometry().height
-const near = -1000;
-const far = 1000;
 
 const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.2, 0, 0.1)
@@ -57,6 +51,14 @@ function init(){
 init()
 
 const scene = new Scene(gl, [camera]).add(mesh1, mesh2);
+
+const left = -0.5
+const right = 0.5
+const bottom = -0.5
+const topp = 0.5
+const near = -1000;
+const far = 1000;
+
 scene.drawAll()
 
 projectionSelector.addEventListener('change', function(){
@@ -67,7 +69,7 @@ projectionSelector.addEventListener('change', function(){
         camera = new Orthographic(left, right, topp, bottom, near, far);
         distanceSlider.value = -1
     }else if (projectionSelector.value === 'oblique'){
-        camera = new Oblique(left, right, topp, bottom, near, far, 45);
+        camera = new Oblique(left, right, topp, bottom, near, far, -45);
         distanceSlider.value = -1
     }
     camera.position = new Vector3(0, 0, 1)
@@ -88,13 +90,13 @@ distanceSlider.addEventListener('input', function(){
 
 })
 
-angleSlider.addEventListener('input', function(){
-    mesh1.rotation.y = parseFloat(angleSlider.value)
-    mesh2.rotation.y = parseFloat(angleSlider.value)
-    // console.log(camera.angle)
+angleObliqueSlider.addEventListener('input', function(){
+    if (camera.type === 'ObliqueCamera'){
+        camera.angle = parseFloat(-angleObliqueSlider.value)
+    }
+    console.log(camera.angle)
     camera.updateProjectionMatrix()
     scene.drawAll()
-
 })
 
 resetButton.addEventListener('click', function(){
