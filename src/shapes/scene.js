@@ -50,8 +50,13 @@ class Scene extends NodeScene{
     }
     
     drawAll(){
+        this.computeWorldMatrix(false, true)
+        let target = new Vector3(0,0,0) // Center of World
+        var up = Vector3.up()
+        var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
+        var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
         this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
-        let target = new Vector3(0,0,0);
+
         for (let i = 0; i < this.children.length; i++) {
             let mesh = this.children[i]
             var up = Vector3.up()
@@ -245,12 +250,12 @@ class Scene extends NodeScene{
     
         // Create and bind the buffer for color
         const colors = new Float32Array([
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color']
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
         ])
         var colorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);

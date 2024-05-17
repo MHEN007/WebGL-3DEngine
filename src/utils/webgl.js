@@ -12,11 +12,14 @@ const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
 canvas.width = 600
 canvas.height = 600
-        
+
+
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-camera.position = new Vector3(0, 0, 1)
-// const green = new BasicMaterial("green", [0, 1, 0], camera.position)
-const green = new Texture('green', './utils/texture.png')
+camera.position = new Vector3(0, 1, 1)
+camera.rotation = new Vector3(0, 0, 0)
+
+const green = new PhongMaterial("green", [0, 1, 0], camera.position)
+// const green = new Texture('green', './utils/texture.png')
 const red = new BasicMaterial("red", [1, 0, 0], camera.position)
 const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], camera.position)
@@ -34,6 +37,8 @@ const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.2, 0, 0.1)
 mesh2.rotation = new Vector3(0, 0, 0)
 
+let isAnimating = false; // Variable to keep track of animation state
+
 function init(){
     if(!gl){
         console.log("WEBGL not available on your browser!")
@@ -43,42 +48,6 @@ function init(){
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         gl.enable(gl.CULL_FACE)
         gl.enable(gl.DEPTH_TEST)
-    }
-}
-
-function createShader(gl, type, source){
-    var shader = gl.createShader(type)
-    gl.shaderSource(shader, source)
-    gl.compileShader(shader)
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        var compilationLog = gl.getShaderInfoLog(shader);
-        throw new Error('Shader compilation failed: ' + compilationLog);
-    }
-    return shader
-}
-
-function createProgram(gl, vertexShader, fragmentShader){
-    var program = gl.createProgram()
-    gl.attachShader(program, vertexShader)
-    gl.attachShader(program, fragmentShader)
-    gl.linkProgram(program)
-    return program
-}
-
-function draw() {
-    var target = mesh1.getWorldPosition();
-    var up = Vector3.up()
-    mesh1.computeWorldMatrix()
-    var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
-    var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
-    var stride = mesh1.geometry.getAttribute('position').stride        // move forward size * sizeof(type) each iteration to get the next position
-    var offset = mesh1.geometry.getAttribute('position').offset        // start at the beginning of the buffer
-    for (let i = 0; i < (mesh1.geometry.getAttribute('position').length / (3*6)); i++) {
-        if(materials[i % materials.length].type == 'BASIC'){
-            drawBasicSide(mesh1.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh1.worldMatrix, viewProjMat, materials[i%materials.length])
-        }else if(materials[i % materials.length].type == 'PHONG'){
-            drawPhongSide(mesh1.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh1.worldMatrix, viewProjMat, materials[i%materials.length])
-        }
     }
 }
 
@@ -128,6 +97,9 @@ distanceSlider.addEventListener('input', function(){
     } else if (camera.type === 'ObliqueCamera'){
         camera.far = parseFloat(distanceSlider.value)
     }
+
+    mesh1.rotation.y = parseFloat(distanceSlider.value)
+    mesh2.rotation.y = parseFloat(distanceSlider.value)
     scene.drawAll()
 
 })
@@ -174,11 +146,38 @@ yPos.addEventListener('input', function(){
 })
 
 zPos.addEventListener('input', function(){
+    mesh.position.z = parseFloat(zPos.value)
+    draw()
     scene.position.z = parseFloat(zPos.value)
     scene.drawAll()
-
 })
+
+
+let rotationAngle = 0; // Variable to keep track of rotation angle
+function animate() {
+    if (isAnimating) {
+        rotationAngle += 0.01;
+        if (rotationAngle>3.14){
+            rotationAngle = -3.14
+        }
+        // set distanceSlider value
+        distanceSlider.value = rotationAngle
+        scene.rotation.y = rotationAngle; // Update rotation of the mesh
+        scene.computeWorldMatrix(false, true);
+        scene.drawAll(); // Redraw the scene
+    }
+    requestAnimationFrame(animate); // Call animate function again in next frame
+}
+// Add event listener to the checkbox
+const anim = document.getElementById('anim');
+anim.addEventListener('change', function() {
+    isAnimating = anim.checked; // Update animation state based on checkbox state
+    if (isAnimating) {
+        animate(); // Start animation if checkbox is checked
+    }
+});
+
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
-  }
+}

@@ -43,7 +43,7 @@
             </select>
             <br/>
             <label for="distance">Distance :</label>
-            <input type="range" min="-100" max="1000" value="-1" step="0.01" id="distance">
+            <input type="range" min="-3.14" max="3.14" value="-1" step="0.01" id="distance">
             <br/>
             <button id="reset">Reset</button>
             <br/>
@@ -65,6 +65,12 @@
             <label for="angle">Z-Pos :</label>
             <input type="range" min="-1" max="1" value="0" step="0.01" id="z">
             <br/>
+            <br/>
+            <label for="angle">anim :</label>
+            <label class="switch">
+                <input type="checkbox" id="anim">
+            </label>
+
         </div>
     </div>
   
@@ -87,5 +93,6 @@
     <script src="./utils/Matrix4x4.js"></script>
     <script src="./utils/vector.js"></script>
     <script src="./utils/webgl.js"></script>
+    <script src="./utils/animRunner.js"></script>
 </body>
 </html>
