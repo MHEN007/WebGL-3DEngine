@@ -25,7 +25,7 @@ class Scene extends NodeScene{
     constructor(gl, camera, lightsources = []) {
         super()
         this.gl = gl
-        this.#camera = camera;
+        this.#camera = camera
         this.#lightsources = lightsources
         this.#materialMap = {}
         
@@ -52,7 +52,7 @@ class Scene extends NodeScene{
     }
 
     get camera(){
-        return this.#camera;
+        return this.#camera
     }
     
     drawAll(){
@@ -62,7 +62,7 @@ class Scene extends NodeScene{
         var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
         var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
 
-        for (let i = 0; i < this.children.length; i++) {
+        for (let i = 0 i < this.children.length i++) {
             this.children[i].drawAll()
             let mesh = this.children[i]
             var up = Vector3.up()
@@ -81,9 +81,9 @@ class Scene extends NodeScene{
         this.gl.shaderSource(shader, source)
         this.gl.compileShader(shader)
         if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            console.error("Error compiling shader:", gl.getShaderInfoLog(shader));
-            gl.deleteShader(shader);
-            return null;
+            console.error("Error compiling shader:", gl.getShaderInfoLog(shader))
+            gl.deleteShader(shader)
+            return null
         }
         return shader
     }
@@ -97,7 +97,7 @@ class Scene extends NodeScene{
     }
 
     draw(mesh, viewProjMat, stride, offset) {
-        for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
+        for (let i = 0 i < (mesh.geometry.getAttribute('position').length / (3*6)) i++) {
             if(mesh.getMaterial(i).type == 'BASIC'){
                 if (this.#currentProgram != "BASIC") {
                     this.gl.useProgram(this.basicProgram)
@@ -119,8 +119,8 @@ class Scene extends NodeScene{
         var uniformWorldMatrixLoc = gl.getUniformLocation(this.basicProgram, 'worldMat')
         var uniformViewProjMatLoc = gl.getUniformLocation(this.basicProgram, 'viewProjMat')
         var uniformColorLoc = gl.getUniformLocation(this.basicProgram, 'color')
-        var uniformVertexColorLoc = gl.getUniformLocation(this.basicProgram, 'vertexColor');
-        var uniformUseTexture = gl.getUniformLocation(this.basicProgram, 'useTexture');
+        var uniformVertexColorLoc = gl.getUniformLocation(this.basicProgram, 'vertexColor')
+        var uniformUseTexture = gl.getUniformLocation(this.basicProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.basicProgram, 'u_texture')
         
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
@@ -179,61 +179,59 @@ class Scene extends NodeScene{
         var primitiveType = gl.TRIANGLES
         var count = position.length / size // number of vertices
         gl.drawArrays(primitiveType, offset, count)
-        gl.disableVertexAttribArray(positionAttributeLocation);
+        gl.disableVertexAttribArray(positionAttributeLocation)
     }
     
     drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material) {
-        
         // Get attribute locations
-        var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos');
-        var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color');
-        var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal');
+        var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos')
+        var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
+        var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal')
         var texCoordAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_texcoord')
-
+    
         // Get uniform locations
-        var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat');
-        var uniformViewProjMatLoc = gl.getUniformLocation(this.phongProgram, 'viewProjMat');
-        var uniformResolutionLoc = gl.getUniformLocation(this.phongProgram, 'resolution');
-        var uniformVertexColorLoc = gl.getUniformLocation(this.phongProgram, 'vertexColor');
-        var uniformAmbientColorLoc = gl.getUniformLocation(this.phongProgram, 'ambientColor');
-        var uniformShininessLoc = gl.getUniformLocation(this.phongProgram, 'shininess');
-        var uniformDiffuseColorLoc = gl.getUniformLocation(this.phongProgram, 'diffuseColor');
-        var uniformSpecularColorLoc = gl.getUniformLocation(this.phongProgram, 'specularColor');
-        var uniformLightPosLoc = gl.getUniformLocation(this.phongProgram, 'lightPos');
-        var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos');
-        var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture');
+        var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat')
+        var uniformViewProjMatLoc = gl.getUniformLocation(this.phongProgram, 'viewProjMat')
+        var uniformResolutionLoc = gl.getUniformLocation(this.phongProgram, 'resolution')
+        var uniformVertexColorLoc = gl.getUniformLocation(this.phongProgram, 'vertexColor')
+        var uniformAmbientColorLoc = gl.getUniformLocation(this.phongProgram, 'ambientColor')
+        var uniformShininessLoc = gl.getUniformLocation(this.phongProgram, 'shininess')
+        var uniformDiffuseColorLoc = gl.getUniformLocation(this.phongProgram, 'diffuseColor')
+        var uniformSpecularColorLoc = gl.getUniformLocation(this.phongProgram, 'specularColor')
+        var uniformLightPosLoc = gl.getUniformLocation(this.phongProgram, 'lightPos')
+        var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos')
+        var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
-
+    
         // Set uniform values
-        gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
-        gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix);
-        gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height]);
-        gl.uniform1i(uniformVertexColorLoc, true); // Assuming you want to use vertex color
-        gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient']);
-        gl.uniform1f(uniformShininessLoc, material.uniforms['shininess']);
-        gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse']);
-        gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular']);
-        gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray());
-        gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray());
-        gl.uniform1f(uniformUseTexture, material.uniforms['useTexture'])
-        gl.uniform1f(uniformTextureLoc, 0)
+        gl.useProgram(this.phongProgram)
+        gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
+        gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
+        gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height])
+        gl.uniform1i(uniformVertexColorLoc, true) // Assuming you want to use vertex color
+        gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
+        gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
+        gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
+        gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
+        gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray())
+        gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
+        gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
     
         // Enable vertex attributes
-        gl.enableVertexAttribArray(positionAttributeLocation);
-        gl.enableVertexAttribArray(colorAttributeLocation);
-        gl.enableVertexAttribArray(normalAttributeLocation);
-        gl.enableVertexAttribArray(texCoordAttributeLocation)
+        gl.enableVertexAttribArray(positionAttributeLocation)
+        gl.enableVertexAttribArray(colorAttributeLocation)
+        gl.enableVertexAttribArray(normalAttributeLocation)
     
         // Create and bind the buffer for position
-        var positionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW);
+        var positionBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
+        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
     
         // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-        var size = 3;          // 3 components per iteration
-        var type = gl.FLOAT;   // the data is 32bit floats
-        var normalize = false; // don't normalize the data
-        gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
+        var size = 3          // 3 components per iteration
+        var type = gl.FLOAT   // the data is 32bit floats
+        var normalize = false // don't normalize the data
+        gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
     
         // Create and bind the buffer for color
         const colors = new Float32Array([
@@ -244,13 +242,13 @@ class Scene extends NodeScene{
             ...material.uniforms['color'], 1,
             ...material.uniforms['color'], 1,
         ])
-        var colorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
+        var colorBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
+        gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW)
     
-        gl.vertexAttribPointer(colorAttributeLocation, 4, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(colorAttributeLocation, 4, gl.FLOAT, false, 0, 0)
     
-        // calculate normals
+        // Calculate normals
         const normal = Vector3.calculateNormal(position)
         const normals = new Float32Array([
             ...normal,
@@ -258,36 +256,36 @@ class Scene extends NodeScene{
             ...normal,
             ...normal,
             ...normal,
-            ...normal
+            ...normal,
         ])
-        // Create and bind the buffer for normal
-        var normalBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
     
-        gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
-
-        if(material.uniforms['useTexture']) {
+        // Create and bind the buffer for normal
+        var normalBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer)
+        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+    
+        gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
+    
+        if (material.uniforms['useTexture']) {
+            gl.enableVertexAttribArray(texCoordAttributeLocation)
+    
             var texObj = material.uniforms['sourceTexture']
             var texCoordBuffer = gl.createBuffer()
-            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
-            gl.enableVertexAttribArray(texCoordAttributeLocation)
-            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
-            var size = 2         // 2 components per iteration
-            var type = gl.FLOAT   // the data is 32bit floats
-            var normalize = false // don't normalize the data
-            gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
+            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
+            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
+            
+            gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
     
             var texture = gl.createTexture()
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
-            
+    
             var image = new Image()
             image.src = texObj.source
-            // image.addEventListener('load', function(){
+            image.addEventListener('load', function() {
                 gl.bindTexture(gl.TEXTURE_2D, texture)
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-                
+    
                 if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
@@ -295,31 +293,37 @@ class Scene extends NodeScene{
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
-            // })
+            })
         }
     
         // Draw
-        var primitiveType = gl.TRIANGLES;
-        var count = position.length / size; // number of vertices
-        gl.drawArrays(primitiveType, offset, count);
+        var primitiveType = gl.TRIANGLES
+        var count = position.length / size // number of vertices
+        gl.drawArrays(primitiveType, offset, count)
     
-        gl.disableVertexAttribArray(positionAttributeLocation);
-        gl.disableVertexAttribArray(colorAttributeLocation);
-        gl.disableVertexAttribArray(normalAttributeLocation);
+        // Disable vertex attributes
+        gl.disableVertexAttribArray(positionAttributeLocation)
+        gl.disableVertexAttribArray(colorAttributeLocation)
+        gl.disableVertexAttribArray(normalAttributeLocation)
+    
+        if (material.uniforms['useTexture']) {
+            gl.disableVertexAttribArray(texCoordAttributeLocation)
+        }
     }
+    
     
 
     toJSON() {
         return { 
             ...super.toJSON(),
             type: this.type,
-        };
+        }
     }
 
     static fromJSON(json, obj=null) {
-        if (!obj) obj = new Scene();
-        super.fromJSON(json, obj);
-        return obj;
+        if (!obj) obj = new Scene()
+        super.fromJSON(json, obj)
+        return obj
     }
 
 }
