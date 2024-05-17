@@ -31,13 +31,60 @@ class Texture extends ShaderMaterial {
         return "TEXTURE"
     }
 
-    constructor(name, source)
+    constructor(name, source, assignSide)
     {
         const uniform = {
 
         }
         super(name, Texture.vs, Texture.fs, uniform)
         this.source = source
+        this.assignSide = assignSide
+
+        this.assignSide = new Float32Array([
+            
+            // DEPAN
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // BELAKANG
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // ATAS
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // BAWAH
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KANAN
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KIRI
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+        ])
     }
 
 }

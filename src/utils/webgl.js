@@ -18,7 +18,7 @@ let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.hei
 camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
-const green = new PhongMaterial("green", [0, 1, 0], camera.position)
+const green = new BasicMaterial("green", [0, 1, 0], camera.position)
 // const green = new Texture('green', './utils/texture.png')
 const red = new BasicMaterial("red", [1, 0, 0], camera.position)
 const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
@@ -26,7 +26,7 @@ const yellow = new BasicMaterial("yellow", [1, 1, 0], camera.position)
 const purple = new BasicMaterial("purple", [1, 0, 1], camera.position)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], camera.position)
 const materials = [green, purple, yellow, blue, cyan, red]
-
+// depan belakang atas bawah kanan kiri
 const mesh1 = new Mesh(box, materials, [0, 1, 2, 3, 4, 5])
 mesh1.position = new Vector3(0, 0, 0)
 mesh1.rotation = new Vector3(0, 0, 0)
