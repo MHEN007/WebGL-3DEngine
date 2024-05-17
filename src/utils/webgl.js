@@ -227,7 +227,7 @@ distanceSlider.addEventListener('input', function(){
     //     camera.far = parseFloat(distanceSlider.value)
     // }
     // console.log(camera.type)
-    camera.position.z = parseFloat(distanceSlider.value)
+    camera.position.z = 2-parseFloat(distanceSlider.value)
     camera.position.y = camera.position.z
     scene.drawAll()
 })
@@ -275,9 +275,9 @@ xPos.addEventListener('input', function(){
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
     // scene.children[0].children[0].children[0].position.x = parseFloat(xPos.value)
-    scene.children[0].position.x = parseFloat(xPos.value)
+    scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.children[0].drawAll()
+    scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
@@ -361,3 +361,39 @@ function isPowerOf2(value) {
 }
 
 console.log(camera);
+
+canvas.addEventListener('mousemove', onMouseMove)
+canvas.addEventListener('mousedown', onMouseDown)
+canvas.addEventListener('mouseup', onMouseUp)
+canvas.addEventListener('wheel', onMouseWheel)
+
+let isMoving = false
+
+function mod(a, b) {
+    return ((a % b) + b) % b
+}
+
+function onMouseDown(event){
+    isMoving = true
+}
+function onMouseUp(event){
+    isMoving = false
+}
+function onMouseMove(event){
+    const dx = event.movementX
+    const dy = event.movementY
+
+    if(isMoving){
+        camera.rotation.set(
+            mod(camera.rotation.x - dy * Math.PI/180, Math.PI*2), 
+            mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
+            0)
+        console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
+        scene.drawAll()
+    }
+        // console.log(camera)
+}
+function onMouseWheel(event){
+    camera.position.z += event.deltaY * 0.001
+    scene.drawAll()
+}
