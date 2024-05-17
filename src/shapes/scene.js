@@ -242,12 +242,12 @@ class Scene extends NodeScene{
     
         // Create and bind the buffer for color
         const colors = new Float32Array([
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color'],
-            ...material.uniforms['color']
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
+            ...material.uniforms['color'], 1,
         ])
         var colorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);

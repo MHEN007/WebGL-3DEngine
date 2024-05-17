@@ -17,7 +17,7 @@ let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.hei
 camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
-const green = new PhongMaterial("green", [0, 1, 0, 1], camera.position)
+const green = new PhongMaterial("green", [0, 1, 0], camera.position)
 // const green = new Texture('green', './utils/texture.png')
 const red = new BasicMaterial("red", [1, 0, 0], camera.position)
 const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
@@ -86,6 +86,9 @@ distanceSlider.addEventListener('input', function(){
     } else if (camera.type === 'ObliqueCamera'){
         camera.far = parseFloat(distanceSlider.value)
     }
+
+    mesh1.rotation.y = parseFloat(distanceSlider.value)
+    mesh2.rotation.y = parseFloat(distanceSlider.value)
     scene.drawAll()
 
 })
