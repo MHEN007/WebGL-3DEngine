@@ -1,11 +1,7 @@
-class Mesh extends NodeScene {
-    /**
-     * 
-     * @param {BufferGeometry} geometry 
-     * @param {ShaderMaterial[]} material 
-     */
-    constructor(geometry, material, assignMaterial){
-        super()
+class Mesh extends Scene {
+    
+    constructor(gl, camera, ligthsource = [], geometry, material, assignMaterial){
+        super(gl, camera, ligthsource)
         this.geometry = geometry
         this.material = material
         this.materialMap = {}
