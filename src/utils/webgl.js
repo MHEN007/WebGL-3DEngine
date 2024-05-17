@@ -8,7 +8,11 @@ const distanceLabel = document.getElementById("distanceLabel")
 const distanceSlider = document.getElementById("distance")
 const resetButton = document.getElementById("reset")
 const camRotationXSlider = document.getElementById("rotationX")
+const camRotationXLabel = document.getElementById("rotationXLabel")
 const camRotationYSlider = document.getElementById("rotationY")
+const camRotationYLabel = document.getElementById("rotationYLabel")
+const camRotationZSlider = document.getElementById("rotationZ")
+const camRotationZLabel = document.getElementById("rotationZLabel")
 const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
 const viewAngleLabel = document.getElementById("viewAngleLabel")
@@ -46,6 +50,10 @@ const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.2, 0, 0.1)
 mesh2.rotation = new Vector3(0, 0, 0)
 
+const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+mesh3.position = new Vector3(0.4, 0, 0.2)
+mesh3.rotation = new Vector3(0, 0, 0)
+
 let isAnimating = false; // Variable to keep track of animation state
 
 function init(){
@@ -62,7 +70,7 @@ function init(){
 
 init()
 
-const scene = new Scene(gl, [camera]).add(mesh1, mesh2);
+const scene = new Scene(gl, [camera]).add(mesh1, mesh2, mesh3);
 
 const left = -0.5
 const right = 0.5
@@ -85,6 +93,7 @@ projectionSelector.addEventListener('change', function(){
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 1, 1)
         camera.rotation = new Vector3(0, 0, 0)
+        selectAll()
     }else if (projectionSelector.value === 'orthographic'){
         camera = new Orthographic(left, right, topp, bottom, near, far);
         angleObliqueLabel.style.display = 'none'
@@ -96,6 +105,7 @@ projectionSelector.addEventListener('change', function(){
         viewAngleSelector.style.display = 'block'
         viewAngleSelector.value = 'front'
         camera.position = new Vector3(0, 0, 1)
+        selectNoZ()
     }else if (projectionSelector.value === 'oblique'){
         camera = new Oblique(left, right, topp, bottom, near, far, -45);
         angleObliqueLabel.style.display = 'block'
@@ -106,6 +116,7 @@ projectionSelector.addEventListener('change', function(){
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
+        selectAll()
     }
     console.log(camera)
     scene.drawAll()
@@ -127,6 +138,11 @@ camRotationXSlider.addEventListener('input', function(){
     scene.drawAll()
 })
 
+camRotationZSlider.addEventListener('input', function(){
+    camera.rotation.z = parseFloat(camRotationZSlider.value)
+    scene.drawAll()
+})
+
 distanceSlider.addEventListener('input', function(){
     // console.log(distanceSlider.value)
     // if (camera.type === 'PerspectiveCamera'){
@@ -138,7 +154,7 @@ distanceSlider.addEventListener('input', function(){
     // }
     // console.log(camera.type)
     camera.position.z = parseFloat(distanceSlider.value)
-    // camera.position.z = camera.position.z
+    camera.position.y = camera.position.z
     scene.drawAll()
 })
 
@@ -155,9 +171,11 @@ viewAngleSelector.addEventListener('change', function(){
     if (viewAngleSelector.value === 'front'){
         camera.position = new Vector3(0, 0, 1)
         camera.rotation = new Vector3(0, 0, 0)
+        selectNoZ()
     } else if (viewAngleSelector.value === 'back'){
         camera.position = new Vector3(0, 0, -1)
         camera.rotation = new Vector3(0, 0, 0)
+        selectNoZ()
     // } else if (viewAngleSelector.value === 'top'){
     //     camera.position = new Vector3(0.5, 1, 0)
     //     camera.rotation = new Vector3(0, 0, 0)
@@ -167,18 +185,25 @@ viewAngleSelector.addEventListener('change', function(){
     } else if (viewAngleSelector.value === 'left'){
         camera.position = new Vector3(-1, 0, 0)
         camera.rotation = new Vector3(0, 0, 0)
+        selectNoX()
     } else if (viewAngleSelector.value === 'right'){
         camera.position = new Vector3(1, 0, 0)
         camera.rotation = new Vector3(0, 0, 0)
+        selectNoX()
     }
     scene.drawAll()
 })
 
 resetButton.addEventListener('click', function(){
-    camera.position = new Vector3(1, 1, 1)
-    // distanceSlider.value = -1
-    camera.far = parseFloat(distanceSlider.value)
-    camera.updateProjectionMatrix()
+    camRotationXSlider.value = 0
+    camRotationYSlider.value = 0
+    if (camera.type === 'PerspectiveCamera'){
+        distanceSlider.value = 1
+    } else if (camera.type === 'ObliqueCamera'){
+        angleObliqueSlider.value = 0
+    } else if (camera.type === 'Orthographic'){
+        viewAngleSelector.value = 'front'
+    }
     scene.drawAll()
 
 })
@@ -205,6 +230,41 @@ zPos.addEventListener('input', function(){
     scene.position.z = parseFloat(zPos.value)
     scene.drawAll()
 })
+
+function selectNoZ(){
+    camRotationXSlider.style.display = 'block'
+    camRotationXLabel.style.display = 'block'
+    camRotationXSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationYSlider.value = 0
+    camRotationZSlider.style.display = 'none'
+    camRotationZLabel.style.display = 'none'
+}
+
+function selectNoX(){
+    camRotationXSlider.style.display = 'none'
+    camRotationXLabel.style.display = 'none'
+    camRotationYSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationZSlider.value = 0    
+    camRotationZSlider.style.display = 'block'
+    camRotationZLabel.style.display = 'block'
+}
+
+function selectAll(){
+    camRotationXSlider.style.display = 'block'
+    camRotationXLabel.style.display = 'block'
+    camRotationXSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationYSlider.value = 0
+    camRotationZSlider.style.display = 'block'
+    camRotationZLabel.style.display = 'block'
+    camRotationZSlider.value = 0
+
+}
 
 
 let rotationAngle = 0; // Variable to keep track of rotation angle
