@@ -98,13 +98,21 @@ scene.drawAll()
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
         camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+        scene.setCamera(camera)
         distanceSlider.value = -1
     }else if (projectionSelector.value === 'orthographic'){
         camera = new Orthographic(left, right, topp, bottom, near, far);
+        scene.setCamera(camera)
         distanceSlider.value = -1
     }else if (projectionSelector.value === 'oblique'){
-        camera = new Oblique(left, right, topp, bottom, near, far, -45);
+        camera = new Oblique(left, right, topp, bottom, near, far, 45);
+        scene.setCamera(camera)
         distanceSlider.value = -1
+        scene.position.set(
+            -(scene.camera.cameraScale * scene.camera.getAngleValue().x).toFixed(2),
+            +(scene.camera.cameraScale * scene.camera.getAngleValue().y).toFixed(2),
+            scene.position.z
+        )
     }
     camera.position = new Vector3(0, 0, 1)
     scene.drawAll()
@@ -126,11 +134,24 @@ distanceSlider.addEventListener('input', function(){
 
 angleObliqueSlider.addEventListener('input', function(){
     if (camera.type === 'ObliqueCamera'){
-        camera.angle = parseFloat(-angleObliqueSlider.value)
+        camera.setAngle(parseFloat(angleObliqueSlider.value))
+        
+        scene.position.set(
+            -(scene.camera.cameraScale * scene.camera.getAngleValue().x).toFixed(2),
+            +(scene.camera.cameraScale * scene.camera.getAngleValue().y).toFixed(2),
+            scene.position.z
+        )         
+
+        console.log(scene.camera.angle)
+        console.log("SIN: "+ scene.camera.cameraScale * Math.cos(scene.camera.angle * Math.PI / 180).toFixed(1))
+        console.log("COS: "+ scene.camera.cameraScale * Math.sin(scene.camera.angle * Math.PI / 180).toFixed(1))
+    } else {
+        scene.position.x = 0;
+        scene.position.y = 0;
     }
+    scene.drawAll()
     console.log(camera.angle)
     camera.updateProjectionMatrix()
-    scene.drawAll()
 })
 
 resetButton.addEventListener('click', function(){
@@ -144,17 +165,11 @@ resetButton.addEventListener('click', function(){
 
 xPos.addEventListener('input', function(){
     scene.position.x = parseFloat(xPos.value)
-    console.log(mesh1.position)
-    
     scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
     scene.position.y = parseFloat(yPos.value)
-    console.log("MESH 1")
-    console.log(mesh1.position)
-    console.log("MESH 2")
-    console.log(mesh2.position)
     scene.drawAll()
 })
 

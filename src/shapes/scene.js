@@ -42,14 +42,18 @@ class Scene extends NodeScene{
     }
 
     setCamera(camera){
-        this.camera = camera
+        this.#camera = camera
+    }
+
+    get camera(){
+        return this.#camera;
     }
     
     drawAll(){
         this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
+        let target = new Vector3(0,0,0);
         for (let i = 0; i < this.children.length; i++) {
             let mesh = this.children[i]
-            let target = mesh.getWorldPosition();
             var up = Vector3.up()
             mesh.computeWorldMatrix()
             var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
@@ -58,7 +62,7 @@ class Scene extends NodeScene{
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
         }
-        console.log(this.position)
+        console.log(this.position);
     }
 
     createShader(type, source){
