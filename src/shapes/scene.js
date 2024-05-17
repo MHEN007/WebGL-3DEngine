@@ -84,64 +84,57 @@ class Scene extends NodeScene{
     }
 
     draw(mesh, viewProjMat, stride, offset) {
-        var test = [
-            0, 1,
-            1, 0,
-            0, 0,
-            0, 1,
-            1, 1,
-            1, 0,]
-        var assignSide = new Float32Array([
+        assignSide = new Float32Array([
             
-            // depan
-            0, 1,
-            1, 0,
+            // DEPAN
             0, 0,
             0, 1,
-            1, 1,
             1, 0,
-            // belakang
-            1, 0,
-            1, 1,
             1, 0,
             0, 1,
             1, 1,
-            0, 0,
-            // atas
-            0, 0,
-            0, 1,
-            1, 1,
-            1, 0,
-            0, 0,
-            1, 1,
-            // bawah
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
-            0, 0,
-            1, 1,
-            // kanan
-            0, 0,
-            1, 1,
-            0, 1,
-            0, 0,
-            1, 0,
-            1, 1,
-            // kiri
-            0, 0,
-            1, 1,
-            1, 0,
+            // BELAKANG
             0, 0,
             0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
             1, 1,
-        ])
+            // ATAS
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // BAWAH
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KANAN
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KIRI
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+        ]) 
         for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
             if(mesh.getMaterial(i).type == 'BASIC'){
                 if (this.#currentProgram != "BASIC") {
                     this.gl.useProgram(this.basicProgram)
                 }
-                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), assignSide.slice(i*3*6, (i+1)*3*6), mesh.getMaterialstride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), assignSide.slice(i*2*6, (i+1)*2*6), mesh.getMaterialstride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
             }else if(mesh.getMaterial(i).type == 'PHONG'){
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)

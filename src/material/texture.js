@@ -41,46 +41,47 @@ class Texture extends ShaderMaterial {
         this.assignSide = assignSide
 
         this.assignSide = new Float32Array([
-            // depan
-            0, 1,
-            1, 0,
+            
+            // DEPAN
             0, 0,
             0, 1,
-            1, 1,
             1, 0,
-            // belakang
-            0, 1,
-            1, 0,
-            0, 0,
-            1, 1,
             1, 0,
             0, 1,
-            // atas
+            1, 1,
+            // BELAKANG
             0, 0,
             0, 1,
-            1, 1,
             1, 0,
-            0, 0,
-            1, 1,
-            // bawah
-            0, 0,
             1, 0,
-            1, 1,
             0, 1,
-            0, 0,
             1, 1,
-            // kanan
+            // ATAS
             0, 0,
-            1, 1,
             0, 1,
-            0, 0,
             1, 0,
-            1, 1,
-            // kiri
-            0, 0,
-            1, 1,
             1, 0,
+            0, 1,
+            1, 1,
+            // BAWAH
             0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KANAN
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KIRI
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
             0, 1,
             1, 1,
         ])
