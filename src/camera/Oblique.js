@@ -7,6 +7,7 @@ class Oblique extends Camera{
     near;
     far;
     angle;
+    cameraScale
     /**
      * 
      * @param {number} left 
@@ -17,7 +18,7 @@ class Oblique extends Camera{
      * @param {number} far 
      * @param {number} angle 
      */
-    constructor(left, right, top, bottom, near, far, angle=45) {
+    constructor(left, right, top, bottom, near, far, angle=45, cameraScale=0.5) {
         super();
         this.top = top;
         this.bottom = bottom;
@@ -26,11 +27,22 @@ class Oblique extends Camera{
         this.near = near;
         this.far = far;
         this.angle = angle;
+        this.cameraScale = cameraScale
         this.updateProjectionMatrix();
     }
 
     get type(){
         return "ObliqueCamera";
+    }
+    setAngle(angle){
+        this.angle = angle
+    }
+
+    getAngleValue(){
+        const value = new Vector3(0,0,0)
+        value.x = Math.cos(this.angle * Math.PI / 180);
+        value.y = Math.sin(this.angle * Math.PI / 180);
+        return value;
     }
 
     updateProjectionMatrix(){
@@ -46,9 +58,8 @@ class Oblique extends Camera{
             -(d[1] + d[3])/2,
             (d[1] + d[3])/2,
         ]
-
         this.projectionMatrix = Matrix4x4.obliProj(
-            border[0], border[1], border[2], border[3], this.near, this.far, this.angle, 0.5
+            border[0], border[1], border[2], border[3], this.near, this.far, this.angle, this.cameraScale
         );
     }
 }

@@ -16,7 +16,12 @@ class Scene extends NodeScene{
     #camera
     #materialMap
     #lightsources
-
+    /**
+     * 
+     * @param {WebGLRenderingContext} gl 
+     * @param {Camera} camera 
+     * @param {} lightsources 
+     */
     constructor(gl, camera, lightsources = []) {
         super()
         this.gl = gl
@@ -34,6 +39,7 @@ class Scene extends NodeScene{
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
         this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
+        
     }
 
     get type()
@@ -42,7 +48,11 @@ class Scene extends NodeScene{
     }
 
     setCamera(camera){
-        this.camera = camera
+        this.#camera = camera
+    }
+
+    get camera(){
+        return this.#camera;
     }
     
     drawAll(){
@@ -51,21 +61,30 @@ class Scene extends NodeScene{
         var up = Vector3.up()
         var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
         var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
-        this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
 
         for (let i = 0; i < this.children.length; i++) {
+            this.children[i].drawAll()
             let mesh = this.children[i]
+            var up = Vector3.up()
+            mesh.computeWorldMatrix()
+            var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
+            var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
         }
-        console.log(this.position)
     }
 
     createShader(type, source){
+        console.log(source)
         var shader = this.gl.createShader(type)
         this.gl.shaderSource(shader, source)
         this.gl.compileShader(shader)
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error("Error compiling shader:", gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
         return shader
     }
     
@@ -78,100 +97,83 @@ class Scene extends NodeScene{
     }
 
     draw(mesh, viewProjMat, stride, offset) {
+        var assignSide = new Float32Array([
+            
+            // DEPAN
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // BELAKANG
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // ATAS
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // BAWAH
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KANAN
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+            // KIRI
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 0,
+            0, 1,
+            1, 1,
+        ]) 
         for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
             if(mesh.getMaterial(i).type == 'BASIC'){
                 if (this.#currentProgram != "BASIC") {
                     this.gl.useProgram(this.basicProgram)
                 }
-                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), assignSide.slice(i*2*6, (i+1)*2*6), mesh.getMaterialstride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
             }else if(mesh.getMaterial(i).type == 'PHONG'){
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
                 this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
-            }else if(mesh.getMaterial(i).type == 'TEXTURE'){
-                if (this.#currentProgram != "TEXTURE") {
-                    this.gl.useProgram(this.textureProgram)
-                }
-                this.drawTexture(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
             }
         }
     }
-
-    drawTexture(position, stride, offset, worldMatrix, viewMatrix, material) {
-        var positionAttributeLocation = gl.getAttribLocation(this.textureProgram, 'a_pos')
-        var textureAttributeLocation = gl.getAttribLocation(this.textureProgram, 'a_texcoord')
     
-        var uniformWorldMatrixLoc = gl.getUniformLocation(this.textureProgram, 'worldMat')
-        var uniformViewProjMatLoc = gl.getUniformLocation(this.textureProgram, 'viewProjMat')
-        var uniformTextureLoc = gl.getUniformLocation(this.textureProgram, 'u_texture')
-    
-        gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
-        gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewMatrix)
-        gl.uniform1i(uniformTextureLoc, 0)
-    
-        gl.enableVertexAttribArray(positionAttributeLocation)
-        var vertexBuffer = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
-        var size = 3          // 3 components per iteration
-        var type = gl.FLOAT   // the data is 32bit floats
-        var normalize = false // don't normalize the data
-        gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
-        
-        var texture = gl.createTexture()
-        gl.bindTexture(gl.TEXTURE_2D, texture)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-        
-        var image = new Image()
-        image.src = material.source
-        // image.addEventListener('load', function(){
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-            
-            if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-                gl.generateMipmap(gl.TEXTURE_2D)
-            } else {
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-            }
-        // })
-        
-        var texCoordBuffer = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
-        gl.enableVertexAttribArray(textureAttributeLocation)
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-            0, 1,
-            1, 0,
-            0, 0,
-            0, 1,
-            1, 1,
-            1, 0,
-        ]), gl.STATIC_DRAW)
-        var size = 2         // 2 components per iteration
-        var type = gl.FLOAT   // the data is 32bit floats
-        var normalize = false // don't normalize the data
-        gl.vertexAttribPointer(textureAttributeLocation, size, type, normalize, stride, offset)
-
-        var primitiveType = gl.TRIANGLES
-        var count = position.length / 3 // number of vertices
-        gl.drawArrays(primitiveType, offset, count)
-    }
-    
-    drawBasicSide(position, stride, offset, worldMatrix, viewProjMatrix, material) {
+    drawBasicSide(position, assignSide = [], stride, offset, worldMatrix, viewProjMatrix, material) {
        // BasicMaterial
         var positionAttributeLocation = gl.getAttribLocation(this.basicProgram, 'a_pos')
+        var texCoordAttributeLocation = gl.getAttribLocation(this.basicProgram, 'a_texcoord')
         var uniformWorldMatrixLoc = gl.getUniformLocation(this.basicProgram, 'worldMat')
         var uniformViewProjMatLoc = gl.getUniformLocation(this.basicProgram, 'viewProjMat')
         var uniformColorLoc = gl.getUniformLocation(this.basicProgram, 'color')
         var uniformVertexColorLoc = gl.getUniformLocation(this.basicProgram, 'vertexColor');
-    
+        var uniformUseTexture = gl.getUniformLocation(this.basicProgram, 'useTexture');
+        var uniformTextureLoc = gl.getUniformLocation(this.basicProgram, 'u_texture')
         
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
         gl.uniform1i(uniformVertexColorLoc, true)
+        this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
+        this.gl.uniform1i(uniformTextureLoc, 0)
     
         gl.enableVertexAttribArray(positionAttributeLocation)
         
@@ -186,6 +188,47 @@ class Scene extends NodeScene{
         
         gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
         
+        var texCoordBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
+        gl.enableVertexAttribArray(texCoordAttributeLocation)
+        if (assignSide.length == 0)
+        {
+            assignSide = new Float32Array([
+                0, 1,
+                1, 0,
+                0, 0,
+                0, 1,
+                1, 1,
+                1, 0
+            ])
+        }
+        gl.bufferData(gl.ARRAY_BUFFER, assignSide, gl.STATIC_DRAW)
+        var size = 2         // 2 components per iteration
+        var type = gl.FLOAT   // the data is 32bit floats
+        var normalize = false // don't normalize the data
+        gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
+
+        var texture = gl.createTexture()
+        gl.bindTexture(gl.TEXTURE_2D, texture)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+        
+        if(material.uniforms['useTexture']) {
+            var image = new Image()
+            image.src = material.uniforms['sourceTexture']
+            // image.addEventListener('load', function(){
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                
+                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
+            // })
+        }
+
         // Draw
         var primitiveType = gl.TRIANGLES
         var count = position.length / size // number of vertices
@@ -199,7 +242,8 @@ class Scene extends NodeScene{
         var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos');
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color');
         var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal');
-        
+        var texCoordAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_texcoord')
+
         // Get uniform locations
         var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat');
         var uniformViewProjMatLoc = gl.getUniformLocation(this.phongProgram, 'viewProjMat');
@@ -211,7 +255,9 @@ class Scene extends NodeScene{
         var uniformSpecularColorLoc = gl.getUniformLocation(this.phongProgram, 'specularColor');
         var uniformLightPosLoc = gl.getUniformLocation(this.phongProgram, 'lightPos');
         var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos');
-        
+        var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture');
+        var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
+
         // Set uniform values
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix);
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix);
@@ -223,11 +269,14 @@ class Scene extends NodeScene{
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular']);
         gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray());
         gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray());
+        gl.uniform1f(uniformUseTexture, material.uniforms['useTexture'])
+        gl.uniform1f(uniformTextureLoc, 0)
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation);
         gl.enableVertexAttribArray(colorAttributeLocation);
         gl.enableVertexAttribArray(normalAttributeLocation);
+        gl.enableVertexAttribArray(texCoordAttributeLocation)
     
         // Create and bind the buffer for position
         var positionBuffer = gl.createBuffer();
@@ -271,6 +320,43 @@ class Scene extends NodeScene{
         gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
     
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
+
+        var texCoordBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            0, 1,
+            1, 0,
+            0, 0,
+            0, 1,
+            1, 1,
+            1, 0,
+        ]), gl.STATIC_DRAW)
+        var size = 2         // 2 components per iteration
+        var type = gl.FLOAT   // the data is 32bit floats
+        var normalize = false // don't normalize the data
+        gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
+
+        var texture = gl.createTexture()
+        gl.bindTexture(gl.TEXTURE_2D, texture)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+        
+        console.log(material.uniforms['useTexture'])
+        if(material.uniforms['useTexture']) {
+            var image = new Image()
+            image.src = material.uniforms['sourceTexture']
+            // image.addEventListener('load', function(){
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                
+                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
+            // })
+        }
     
         // Draw
         var primitiveType = gl.TRIANGLES;

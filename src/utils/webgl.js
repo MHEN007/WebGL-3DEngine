@@ -36,7 +36,7 @@ distanceLabel.style.display = 'block'
 camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
-const green = new PhongMaterial("green", [0, 1, 0], camera.position)
+const green = new BasicMaterial("green", [0, 1, 0], camera.position)
 // const green = new Texture('green', './utils/texture.png')
 const red = new BasicMaterial("red", [1, 0, 0], camera.position)
 const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
@@ -45,63 +45,73 @@ const purple = new BasicMaterial("purple", [1, 0, 1], camera.position)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], camera.position)
 const materials = [green, purple, yellow, blue, cyan, red]
 
-// const mesh1 = new Mesh(box, materials, [0, 1, 2, 3, 4, 5])
-// mesh1.position = new Vector3(-0.1, 0, 0)
-// mesh1.rotation = new Vector3(0, 0, 0)
+const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
+mesh1.position = new Vector3(0.2, 0, 0)
+mesh1.rotation = new Vector3(0, 0, 0)
 
+const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+mesh2.position = new Vector3(0.2, 0, 0.1)
+mesh2.rotation = new Vector3(0, 0, 0)
 
+const mesh3 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+mesh3.position = new Vector3(-0.2, 0, 0.1)
+mesh3.rotation = new Vector3(0, 0, 0)
 
-// const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-// mesh2.position = new Vector3(0.2, 0, 0.1)
-// mesh2.rotation = new Vector3(0, 0, 0)
+// mesh1: add children mesh2, mesh3
+mesh1.add(mesh2,mesh3)
+const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
+root.position = new Vector3(0,0,0)
+root.rotation = new Vector3(0,0,0)
+root.add(mesh1)
+// root: add children mesh1 YANG punya children mesh2, mesh3
 
 // const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 // mesh3.position = new Vector3(0.4, 0, 0.2)
 // mesh3.rotation = new Vector3(0, 0, 0)
 
-const neckMesh = new Mesh(neck, materials, [0, 0, 0, 0, 0, 0])
-neckMesh.position = new Vector3(0, 0, 0)
-neckMesh.rotation = new Vector3(0, 0, 0)
+// const neckMesh = new Mesh(neck, materials, [0, 0, 0, 0, 0, 0])
+// neckMesh.position = new Vector3(0, 0, 0)
+// neckMesh.rotation = new Vector3(0, 0, 0)
 
-const bodyMesh = new Mesh(body, materials, [0, 0, 0, 0, 0, 0])
-bodyMesh.position = new Vector3(0, -0.1, 0)
-bodyMesh.rotation = new Vector3(0, 0, 0)
+// const bodyMesh = new Mesh(body, materials, [0, 0, 0, 0, 0, 0])
+// bodyMesh.position = new Vector3(0, -0.1, 0)
+// bodyMesh.rotation = new Vector3(0, 0, 0)
 
-const bone1LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
-bone1LeftMesh.rotation = new Vector3(0, 0, 0)
+// const bone1LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+// bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
+// bone1LeftMesh.rotation = new Vector3(0, 0, 0)
 
-const bone2LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
-bone2LeftMesh.rotation = new Vector3(0, 0, 0)
+// const bone2LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+// bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
+// bone2LeftMesh.rotation = new Vector3(0, 0, 0)
 
-const bone3LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
-bone3LeftMesh.rotation = new Vector3(0, 0, 0)
+// const bone3LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+// bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
+// bone3LeftMesh.rotation = new Vector3(0, 0, 0)
 
-const bone1RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
-bone1RightMesh.rotation = new Vector3(0, 0, 0)
+// const bone1RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+// bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
+// bone1RightMesh.rotation = new Vector3(0, 0, 0)
 
-const bone2RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
-bone2RightMesh.rotation = new Vector3(0, 0, 0)
+// const bone2RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+// bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
+// bone2RightMesh.rotation = new Vector3(0, 0, 0)
 
-const bone3RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
-bone3RightMesh.rotation = new Vector3(0, 0, 0)
+// const bone3RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+// bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
+// bone3RightMesh.rotation = new Vector3(0, 0, 0)
 
-const headLeftMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
-headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
-headLeftMesh.rotation = new Vector3(0, 0, 0)
+// const headLeftMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
+// headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
+// headLeftMesh.rotation = new Vector3(0, 0, 0)
 
-const headRightMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
-headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
-headRightMesh.rotation = new Vector3(0, 0, 0)
+// const headRightMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
+// headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
+// headRightMesh.rotation = new Vector3(0, 0, 0)
 
-const centerHeadMesh = new Mesh(centerHead, materials, [0, 0, 0, 0, 0, 0])
-centerHeadMesh.position = new Vector3(0, 0.04, 0)
-centerHeadMesh.rotation = new Vector3(0, 0, 0)
+// const centerHeadMesh = new Mesh(centerHead, materials, [0, 0, 0, 0, 0, 0])
+// centerHeadMesh.position = new Vector3(0, 0.04, 0)
+// centerHeadMesh.rotation = new Vector3(0, 0, 0)
 
 let isAnimating = false; // Variable to keep track of animation state
 
@@ -119,9 +129,8 @@ function init(){
 
 init()
 
-const scene = new Scene(gl, [camera]).add(neckMesh, bodyMesh, bone1LeftMesh, bone2LeftMesh, bone3LeftMesh, bone1RightMesh, bone2RightMesh, bone3RightMesh, headLeftMesh, headRightMesh, centerHeadMesh);
-// const scene = new Scene(gl, [camera]).add(mesh1, mesh2, mesh3);
-
+// scene add root buat jadi 'world'nya root
+const scene = new Scene(gl, [camera]).add(root);
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
@@ -134,6 +143,7 @@ scene.drawAll()
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
         camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+        scene.setCamera(camera)
         angleObliqueLabel.style.display = 'none'
         angleObliqueSlider.style.display = 'none'
         distanceSlider.style.display = 'block'
@@ -144,8 +154,10 @@ projectionSelector.addEventListener('change', function(){
         camera.position = new Vector3(0, 1, 1)
         camera.rotation = new Vector3(0, 0, 0)
         selectAll()
+        scene.children[0].position.set(0,0,0)
     }else if (projectionSelector.value === 'orthographic'){
         camera = new Orthographic(left, right, topp, bottom, near, far);
+        scene.setCamera(camera)
         angleObliqueLabel.style.display = 'none'
         angleObliqueSlider.style.display = 'none'
         distanceSlider.style.display = 'none'
@@ -156,16 +168,28 @@ projectionSelector.addEventListener('change', function(){
         viewAngleSelector.value = 'front'
         camera.position = new Vector3(0, 0, 1)
         selectNoZ()
+        scene.children[0].position.set(0,0,0)
     }else if (projectionSelector.value === 'oblique'){
-        camera = new Oblique(left, right, topp, bottom, near, far, -45);
+        camera = new Oblique(left, right, topp, bottom, near, far, 45);
+        scene.setCamera(camera)
         angleObliqueLabel.style.display = 'block'
         angleObliqueSlider.style.display = 'block'
         distanceSlider.style.display = 'none'
         distanceLabel.style.display = 'none'
         distanceSlider.value = 1
+        scene.children[0].position.set(
+            scene.position.x + (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+        console.log(camera.angle)
+        camera.updateProjectionMatrix()
+        console.log(scene.children[0].position)
+        scene.children[0].drawAll()
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         selectAll()
     }
     console.log(camera)
@@ -210,37 +234,19 @@ distanceSlider.addEventListener('input', function(){
 
 angleObliqueSlider.addEventListener('input', function(){
     if (camera.type === 'ObliqueCamera'){
-        camera.angle = parseFloat(-angleObliqueSlider.value)
+        camera.setAngle(parseFloat(angleObliqueSlider.value))
+        
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+        console.log(camera.angle)
+        camera.updateProjectionMatrix()
+        console.log(scene.children[0].position)
+        scene.children[0].drawAll()
     }
-    console.log(camera.angle)
-    camera.updateProjectionMatrix()
-    scene.drawAll()
-})
-
-viewAngleSelector.addEventListener('change', function(){
-    if (viewAngleSelector.value === 'front'){
-        camera.position = new Vector3(0, 0, 1)
-        camera.rotation = new Vector3(0, 0, 0)
-        selectNoZ()
-    } else if (viewAngleSelector.value === 'back'){
-        camera.position = new Vector3(0, 0, -1)
-        camera.rotation = new Vector3(0, 0, 0)
-        selectNoZ()
-    // } else if (viewAngleSelector.value === 'top'){
-    //     camera.position = new Vector3(0.5, 1, 0)
-    //     camera.rotation = new Vector3(0, 0, 0)
-    // } else if (viewAngleSelector.value === 'bottom'){
-    //     camera.position = new Vector3(0, -1, 0)
-    //     camera.rotation = new Vector3(0, 0, 0)
-    } else if (viewAngleSelector.value === 'left'){
-        camera.position = new Vector3(-1, 0, 0)
-        camera.rotation = new Vector3(0, 0, 0)
-        selectNoX()
-    } else if (viewAngleSelector.value === 'right'){
-        camera.position = new Vector3(1, 0, 0)
-        camera.rotation = new Vector3(0, 0, 0)
-        selectNoX()
-    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -254,23 +260,30 @@ resetButton.addEventListener('click', function(){
     } else if (camera.type === 'Orthographic'){
         viewAngleSelector.value = 'front'
     }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 
 })
 
 xPos.addEventListener('input', function(){
-    scene.position.x = parseFloat(xPos.value)
-    console.log(mesh1.position)
-    
-    scene.drawAll()
+    /**
+     * struktur anaknya
+     * scene.children[] => root
+     *  scene.children[].children[] => mesh1
+     *  scene.children[].children[].children[] => mesh2,mesh3
+     * 
+     * dibawah contoh code kalo misalkan mau ngubah si mesh2
+     */
+    // scene.children[0].children[0].children[0].position.x = parseFloat(xPos.value)
+    scene.children[0].position.x = parseFloat(xPos.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.children[0].drawAll()
 })
 
 yPos.addEventListener('input', function(){
     scene.position.y = parseFloat(yPos.value)
-    console.log("MESH 1")
-    console.log(mesh1.position)
-    console.log("MESH 2")
-    console.log(mesh2.position)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
     scene.drawAll()
 })
 
@@ -278,6 +291,7 @@ zPos.addEventListener('input', function(){
     mesh.position.z = parseFloat(zPos.value)
     draw()
     scene.position.z = parseFloat(zPos.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
