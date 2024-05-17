@@ -36,15 +36,15 @@ class Mesh extends Scene {
         return "Mesh"
     }
 
-    toJSON(){
-        data = super.toJSON()
-        return {
-            ...data,
-            geometry: this.geometry.toJSON(),
-            material: this.material.toJSON(),
-            type: this.type,
-        }
-    }
+    // toJSON(){
+    //     data = super.toJSON()
+    //     return {
+    //         ...data,
+    //         geometry: this.geometry.toJSON(),
+    //         material: this.material.toJSON(),
+    //         type: this.type,
+    //     }
+    // }
 
     static fromJSON(json, object = null){
         if(!object){
