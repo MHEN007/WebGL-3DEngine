@@ -41,7 +41,7 @@ canvas.height = 600
 const phongUpdater = new Updater()
 
 /* LIGHT */
-const light1 = new DirectionalLight(30, [1,1,1,1], new Vector3(1, -1, 0))
+const light1 = new DirectionalLight(1, [1,1,1,1], new Vector3(1, -1, 0))
 
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
@@ -212,6 +212,7 @@ camRotationYSlider.addEventListener('input', function(){
     isAnimating = false;
     anim.checked = false;
     camera.rotation.y = parseFloat(camRotationYSlider.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
     
 })
@@ -219,11 +220,13 @@ camRotationYSlider.addEventListener('input', function(){
 camRotationXSlider.addEventListener('input', function(){
     camera.rotation.x = parseFloat(camRotationXSlider.value)
     console.log(camera.rotation)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 camRotationZSlider.addEventListener('input', function(){
     camera.rotation.z = parseFloat(camRotationZSlider.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
