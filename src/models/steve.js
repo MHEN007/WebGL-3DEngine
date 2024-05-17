@@ -5,9 +5,8 @@ class Steve{
     #lowerArmGeometry
     #upperLegGeometry
     #lowerLegGeometry
-    
-    get object() {
-        // Define parts
+
+    constructor(){
         this.#headGeometry = new BoxGeometry(0.15, 0.15, 0.15);
         this.#torsoGeometry = new BoxGeometry(0.2, 0.3, 0.1);
         this.#upperArmGeometry = new BoxGeometry(0.05, 0.15, 0.05);
@@ -57,7 +56,9 @@ class Steve{
         this.root = new Mesh(gl, [camera], null, new BoxGeometry(0, 0, 0), materials, [0, 0, 0, 0, 0, 0]);
         this.root.position = new Vector3(0,-0.2,0)
         this.root.add(this.torsoMesh)
-
+    }
+    
+    get object() {
         return this.root;
     }
 }

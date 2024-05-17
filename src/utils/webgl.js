@@ -37,9 +37,9 @@ camera.position = new Vector3(0, 0, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
+const green = new BasicMaterial("green", [0, 1, 0], false, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
-const blue = new BasicMaterial("blue", [0, 0, 1], true, tex1)
+const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
 const purple = new BasicMaterial("purple", [1, 0, 1], true, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
@@ -130,8 +130,9 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya root
-const steve = new Steve()
+const steve = new Glass()
 const scene = new Scene(gl, [camera]).add(steve.object);
+scene.isHollow = true;
 scene.position = new Vector3(0,0,0)
 const left = -0.5
 const right = 0.5
@@ -190,9 +191,9 @@ projectionSelector.addEventListener('change', function(){
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         selectAll()
     }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     console.log(camera)
     scene.drawAll()
 
@@ -203,6 +204,7 @@ camRotationYSlider.addEventListener('input', function(){
     isAnimating = false;
     anim.checked = false;
     camera.rotation.y = parseFloat(camRotationYSlider.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
     
 })
@@ -210,11 +212,13 @@ camRotationYSlider.addEventListener('input', function(){
 camRotationXSlider.addEventListener('input', function(){
     camera.rotation.x = parseFloat(camRotationXSlider.value)
     console.log(camera.rotation)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 camRotationZSlider.addEventListener('input', function(){
     camera.rotation.z = parseFloat(camRotationZSlider.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -230,6 +234,7 @@ distanceSlider.addEventListener('input', function(){
     // console.log(camera.type)
     camera.position.z = parseFloat(distanceSlider.value)
     camera.position.y = camera.position.z
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -339,6 +344,7 @@ function animate() {
         camRotationYSlider.value = rotationAngle
         camera.rotation.y = rotationAngle; // Update rotation of the mesh
         // scene.computeWorldMatrix(false, true);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll(); // Redraw the scene
     }
     requestAnimationFrame(animate); // Call animate function again in next frame
@@ -356,5 +362,3 @@ anim.addEventListener('change', function() {
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
 }
-
-console.log(camera);
