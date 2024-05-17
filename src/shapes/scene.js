@@ -41,7 +41,6 @@ class Scene extends NodeScene{
         this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
 
         this.init()
-        
     }
 
     get type()
@@ -62,7 +61,7 @@ class Scene extends NodeScene{
             console.log("WEBGL not available on your browser!")
         }else{
             gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(0.0, 0.0, 0.0, 1.0)
+            gl.clearColor(1.0, 1.0, 1.0, 1.0)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
             gl.enable(gl.CULL_FACE)
             gl.enable(gl.DEPTH_TEST)
@@ -70,8 +69,6 @@ class Scene extends NodeScene{
     }
     
     drawAll(){
-        gl.clearColor(0.0, 0.0, 0.0, 0.5)
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         this.computeWorldMatrix(false, true)
         let target = new Vector3(0,0,0) // Center of World
         var up = Vector3.up()
@@ -81,6 +78,7 @@ class Scene extends NodeScene{
         for (let i = 0; i < this.children.length; i++) {
             this.children[i].drawAll()
             let mesh = this.children[i]
+            mesh.computeWorldMatrix()
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)

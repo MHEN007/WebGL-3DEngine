@@ -72,16 +72,15 @@ const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
 mesh1.position = new Vector3(0, 0, 0)
 mesh1.rotation = new Vector3(0, 0, 0)
 
-scene.add(mesh1)
+const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+mesh2.position = new Vector3(0.2, 0, 0.1)
+mesh2.rotation = new Vector3(0, 0, 0)
 
-// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-// mesh2.position = new Vector3(0.2, 0, 0.1)
-// mesh2.rotation = new Vector3(0, 0, 0)
+const mesh3 = new Mesh(gl, [camera],null,plane, materials, [1])
+mesh3.position = new Vector3(0, 0.2, 0)
+mesh3.rotation = new Vector3(3.15, 0, 0)
 
-// const mesh3 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-// mesh3.position = new Vector3(-0.2, 0, 0.1)
-// mesh3.rotation = new Vector3(0, 0, 0)
-
+scene.add(mesh1.add(mesh2,mesh3))
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
@@ -200,6 +199,7 @@ projectionSelector.addEventListener('change', function(){
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         selectAll()
     }
     console.log(camera)
@@ -256,6 +256,7 @@ angleObliqueSlider.addEventListener('input', function(){
         console.log(scene.children[0].position)
         scene.children[0].drawAll()
     }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -269,6 +270,7 @@ resetButton.addEventListener('click', function(){
     } else if (camera.type === 'Orthographic'){
         viewAngleSelector.value = 'front'
     }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 
 })
@@ -284,16 +286,19 @@ xPos.addEventListener('input', function(){
      */
     // scene.children[0].children[0].children[0].position.x = parseFloat(xPos.value)
     scene.position.x = parseFloat(xPos.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
     scene.position.y = parseFloat(yPos.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 zPos.addEventListener('input', function(){
     scene.position.z = parseFloat(zPos.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
