@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=2048, initial-scale=1.0">
     <title>ABA Engine</title>
     <style>
         body {
@@ -42,13 +42,32 @@
                 <option value="orthographic">Orthographic</option>
             </select>
             <br/>
-            <label for="distance">Distance :</label>
-            <input type="range" min="-3.14" max="3.14" value="-1" step="0.01" id="distance">
+            <label for="viewAngle" id="viewAngleLabel" hidden>View Angle :</label>
+            <select name="viewAngle" id="viewAngle" hidden>
+                <option value="front">Front</option>
+                <option value="back">Back</option>
+                <!-- <option value="top">Top</option> -->
+                <!-- <option value="bottom">Bottom</option> -->
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
             <br/>
+            <label for="rotationXLabel">Rotation x :</label>
+            <input type="range" min="-3.14" max="3.14" value="-1" step="0.01" id="rotationX">
+            <br/>
+            <label for="rotationYLabel">Rotation y :</label>
+            <input type="range" min="-3.14" max="3.14" value="-1" step="0.01" id="rotationY">
+            <br/>
+            <label for="distance" id="distanceLabel" hidden>Distance :</label>
+            <input type="range" min="0" max="2" value="1" step="0.01" id="distance" hidden>
+            <br/>
+            
+
+
             <button id="reset">Reset</button>
             <br/>
-            <label for="angle">Oblique Angle :</label>
-            <input type="range" min="0" max="360" value="0" step="0.01" id="angleOblique">
+            <label for="angle" id="angleObliqueLabel" hidden>Oblique Angle :</label>
+            <input type="range" min="0" max="360" value="0" step="0.01" id="angleOblique" hidden>
             <br/>
             <!-- <label for="angle">Angle :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="angle">
