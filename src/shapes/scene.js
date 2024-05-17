@@ -62,7 +62,7 @@ class Scene extends NodeScene{
         var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
         var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
 
-        for (let i = 0 i < this.children.length i++) {
+        for (let i = 0; i < this.children.length; i++) {
             this.children[i].drawAll()
             let mesh = this.children[i]
             var up = Vector3.up()
@@ -97,7 +97,7 @@ class Scene extends NodeScene{
     }
 
     draw(mesh, viewProjMat, stride, offset) {
-        for (let i = 0 i < (mesh.geometry.getAttribute('position').length / (3*6)) i++) {
+        for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
             if(mesh.getMaterial(i).type == 'BASIC'){
                 if (this.#currentProgram != "BASIC") {
                     this.gl.useProgram(this.basicProgram)
@@ -182,7 +182,7 @@ class Scene extends NodeScene{
         gl.disableVertexAttribArray(positionAttributeLocation)
     }
     
-    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material) {
+    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i) {
         // Get attribute locations
         var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos')
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
