@@ -80,15 +80,17 @@ class PhongMaterial extends ShaderMaterial {
     }
     `
 
-    constructor(name, color, camPosition, ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
+    constructor(name, color, camPosition, useTexture = false, sourceTexture = '', ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
         const uniform = {
             color: color,
-            ambient: ambient,
-            shininess: shininess,
-            diffuse: diffuse,
-            specular: specular,
-            lightPosition: lightPosition,
-            camPosition: camPosition
+            ambient: ambient ||  [0.6,0.6,0.6,1],
+            shininess: shininess || 20,
+            diffuse: diffuse || [1,1,1,1],
+            specular: specular || [1,1,1,1],
+            lightPosition: lightPosition || new Vector3(300,300,400),
+            camPosition: camPosition,
+            useTexture: useTexture,
+            sourceTexture: sourceTexture
         }
         
         super(name, PhongMaterial.vs, PhongMaterial.fs, uniform)        
