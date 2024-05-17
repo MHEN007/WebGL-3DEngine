@@ -29,25 +29,29 @@ const anim = document.getElementById('anim');
 canvas.width = 600
 canvas.height = 600
 
-
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+const scene = new Scene(gl, [camera]);
+const light1 = new DirectionalLight(30, [1,1,1,1], new Vector3(1, -1, 0))
+
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
 camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
-const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
-const blue = new BasicMaterial("blue", [0, 0, 1], true, tex1)
+const green = new PhongMaterial("green", [0, 1, 0], camera.position, false, tex1, light1.calculatePosition(scene.position))
+const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
+const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
-const purple = new BasicMaterial("purple", [1, 0, 1], true, tex1)
+const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
 const materials = [green, purple, yellow, blue, cyan, red]
 
-const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
+const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
 mesh1.position = new Vector3(0.2, 0, 0)
 mesh1.rotation = new Vector3(0, 0, 0)
+
+scene.add(mesh1)
 
 // const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
 // mesh2.position = new Vector3(0.2, 0, 0.1)
@@ -130,7 +134,6 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya root
-const scene = new Scene(gl, [camera]).add(mesh1);
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
@@ -275,9 +278,9 @@ xPos.addEventListener('input', function(){
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
     // scene.children[0].children[0].children[0].position.x = parseFloat(xPos.value)
-    scene.children[0].position.x = parseFloat(xPos.value)
+    scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.children[0].drawAll()
+    scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
@@ -288,8 +291,6 @@ yPos.addEventListener('input', function(){
 })
 
 zPos.addEventListener('input', function(){
-    mesh.position.z = parseFloat(zPos.value)
-    draw()
     scene.position.z = parseFloat(zPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
