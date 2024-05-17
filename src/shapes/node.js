@@ -121,18 +121,18 @@ class NodeScene {
         return Matrix4x4.lookAt(this.getWorldPosition(), target, up)
     }
 
-    toJSON(){
-        return JSON.stringify({
-            position: this.position.toArray(),
-            rotation: this.rotation.toArray(),
-            scale: this.scale.toArray(),
-            localMatrix: this.localMatrix,
-            worldMatrix: this.worldMatrix,
-            parent: this.parent ? this.parent.serialize() : null,
-            children: this.children.map(child => child.serialize()),
-            visible: this.visible
-        })
-    }
+    // toJSON(){
+    //     return JSON.stringify({
+    //         position: this.position.toArray(),
+    //         rotation: this.rotation.toArray(),
+    //         scale: this.scale.toArray(),
+    //         localMatrix: this.localMatrix,
+    //         worldMatrix: this.worldMatrix,
+    //         parent: this.parent ? this.parent.serialize() : null,
+    //         children: this.children.map(child => child.serialize()),
+    //         visible: this.visible
+    //     })
+    // }
 
     static fromJSON(jsonString){
         const data = JSON.parse(jsonString)

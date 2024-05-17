@@ -316,17 +316,17 @@ class Scene extends NodeScene{
     
     
 
-    toJSON() {
-        return { 
-            ...super.toJSON(),
-            type: this.type,
-        }
-    }
+    // toJSON() {
+    //     return { 
+    //         ...super.toJSON(),
+    //         type: this.type,
+    //     };
+    // }
 
-    static fromJSON(json, obj=null) {
-        if (!obj) obj = new Scene()
-        super.fromJSON(json, obj)
-        return obj
-    }
+    // static fromJSON(json, obj=null) {
+    //     if (!obj) obj = new Scene();
+    //     super.fromJSON(json, obj);
+    //     return obj;
+    // }
 
 }
