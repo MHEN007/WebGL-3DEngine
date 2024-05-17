@@ -190,7 +190,8 @@ class Matrix4x4{
     static getTranslation(m, v = null){
         if (!v){
             v = new Vector3()
-            return v.set(...m.slice(12,15))
+            v.set(...m.slice(12,15))
+            return v
         }
     }
 

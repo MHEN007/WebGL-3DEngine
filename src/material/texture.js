@@ -1,20 +1,43 @@
-class Texture {
-    constructor(source, sampler){
-        this.source = source || null// image url
-        this.sampler = sampler // array of [magFilter, minFilter, wrapS, wrapT]
+class Texture extends ShaderMaterial {
+
+    static vs = `
+    attribute vec4 a_pos;
+    attribute vec2 a_texcoord;
+    
+    uniform mat4 worldMat;
+    uniform mat4 viewProjMat;
+
+    varying vec2 v_texcoord;
+
+    void main(){
+        gl_Position = viewProjMat * worldMat * a_pos;
+        v_texcoord = a_texcoord;
+    }
+    `
+
+    static fs = `
+    precision mediump float;
+
+    varying vec2 v_texcoord;
+
+    uniform sampler2D u_texture;
+
+    void main(){
+        gl_FragColor = texture2D(u_texture, v_texcoord);
+    }
+    `
+
+    get type(){
+        return "TEXTURE"
     }
 
-    toJSON(){
-        return JSON.stringify({
-            source: this.source,
-            sampler: this.sampler
-        })
+    constructor(name, source)
+    {
+        const uniform = {
+
+        }
+        super(name, Texture.vs, Texture.fs, uniform)
+        this.source = source
     }
 
-    static fromJSON(jsonString){
-        const data = JSON.parse(jsonString)
-        const Texture = new Texture(data.source, data.sampler)
-
-        return Texture
-    }
 }

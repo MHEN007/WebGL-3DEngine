@@ -72,7 +72,7 @@ class NodeScene {
 
         if(updateChild){
             for(let i = 0 ; i < this.children.length; i++){
-                this.children.computeWorldMatrix()
+                this.children[i].computeWorldMatrix()
             }
         }
     }
@@ -118,7 +118,7 @@ class NodeScene {
     }
     
     lookAt(target, up){
-        return Matrix4x4.lookAt(this.position, target, up)
+        return Matrix4x4.lookAt(this.getWorldPosition(), target, up)
     }
 
     toJSON(){
