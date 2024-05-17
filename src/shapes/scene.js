@@ -216,11 +216,13 @@ class Scene extends NodeScene{
         gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray())
         gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
+        gl.uniform1i(uniformTextureLoc, 0)
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation)
         gl.enableVertexAttribArray(colorAttributeLocation)
         gl.enableVertexAttribArray(normalAttributeLocation)
+        gl.enableVertexAttribArray(texCoordAttributeLocation)
     
         // Create and bind the buffer for position
         var positionBuffer = gl.createBuffer()
@@ -267,7 +269,6 @@ class Scene extends NodeScene{
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
         if (material.uniforms['useTexture']) {
-            gl.enableVertexAttribArray(texCoordAttributeLocation)
     
             var texObj = material.uniforms['sourceTexture']
             var texCoordBuffer = gl.createBuffer()
@@ -282,7 +283,7 @@ class Scene extends NodeScene{
     
             var image = new Image()
             image.src = texObj.source
-            image.addEventListener('load', function() {
+            // image.addEventListener('load', function() {
                 gl.bindTexture(gl.TEXTURE_2D, texture)
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
     
@@ -293,7 +294,9 @@ class Scene extends NodeScene{
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
-            })
+            // })
+        } else {
+            gl.disableVertexAttribArray(texCoordAttributeLocation)
         }
     
         // Draw
