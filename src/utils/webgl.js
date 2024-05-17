@@ -33,7 +33,7 @@ canvas.height = 600
 let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
-camera.position = new Vector3(0, 1, 1)
+camera.position = new Vector3(0, 0, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 const tex1 = new Texture('tex1', './utils/texture.png')
@@ -45,9 +45,9 @@ const purple = new BasicMaterial("purple", [1, 0, 1], true, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
 const materials = [green, purple, yellow, blue, cyan, red]
 
-const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
-mesh1.position = new Vector3(0.2, 0, 0)
-mesh1.rotation = new Vector3(0, 0, 0)
+// const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
+// mesh1.position = new Vector3(0.2, 0, 0)
+// mesh1.rotation = new Vector3(0, 0, 0)
 
 // const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
 // mesh2.position = new Vector3(0.2, 0, 0.1)
@@ -63,7 +63,7 @@ mesh1.rotation = new Vector3(0, 0, 0)
 // root.position = new Vector3(0,0,0)
 // root.rotation = new Vector3(0,0,0)
 // root.add(mesh1)
-// root: add children mesh1 YANG punya children mesh2, mesh3
+// // root: add children mesh1 YANG punya children mesh2, mesh3
 
 // const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 // mesh3.position = new Vector3(0.4, 0, 0.2)
@@ -130,7 +130,9 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya root
-const scene = new Scene(gl, [camera]).add(mesh1);
+const steve = new Steve()
+const scene = new Scene(gl, [camera]).add(steve.object);
+scene.position = new Vector3(0,0,0)
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
@@ -178,14 +180,13 @@ projectionSelector.addEventListener('change', function(){
         distanceLabel.style.display = 'none'
         distanceSlider.value = 1
         scene.children[0].position.set(
-            scene.position.x + (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
             scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
             scene.position.z
         )
         console.log(camera.angle)
         camera.updateProjectionMatrix()
         console.log(scene.children[0].position)
-        scene.children[0].drawAll()
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
@@ -243,8 +244,6 @@ angleObliqueSlider.addEventListener('input', function(){
         )
         console.log(camera.angle)
         camera.updateProjectionMatrix()
-        console.log(scene.children[0].position)
-        scene.children[0].drawAll()
     }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
@@ -274,10 +273,10 @@ xPos.addEventListener('input', function(){
      * 
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
-    // scene.children[0].children[0].children[0].position.x = parseFloat(xPos.value)
-    scene.children[0].position.x = parseFloat(xPos.value)
+    scene.getObject(steve.root).position.x = parseFloat(xPos.value)
+    // scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.children[0].drawAll()
+    scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
@@ -288,8 +287,6 @@ yPos.addEventListener('input', function(){
 })
 
 zPos.addEventListener('input', function(){
-    mesh.position.z = parseFloat(zPos.value)
-    draw()
     scene.position.z = parseFloat(zPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
