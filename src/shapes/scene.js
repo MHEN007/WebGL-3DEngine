@@ -159,7 +159,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
         gl.uniform1i(uniformVertexColorLoc, true)
-        this.gl.uniform1i(uniformUseTexture, true)
+        this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         this.gl.uniform1i(uniformTextureLoc, 0)
     
         gl.enableVertexAttribArray(positionAttributeLocation)
@@ -199,20 +199,22 @@ class Scene extends NodeScene{
         gl.bindTexture(gl.TEXTURE_2D, texture)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
         
-        var image = new Image()
-        image.src = './utils/texture.png'
-        // image.addEventListener('load', function(){
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-            
-            if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-                gl.generateMipmap(gl.TEXTURE_2D)
-            } else {
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-            }
-        // })
+        if(material.uniforms['useTexture']) {
+            var image = new Image()
+            image.src = material.uniforms['sourceTexture']
+            // image.addEventListener('load', function(){
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                
+                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
+            // })
+        }
 
         // Draw
         var primitiveType = gl.TRIANGLES
@@ -254,7 +256,7 @@ class Scene extends NodeScene{
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular']);
         gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray());
         gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray());
-        gl.uniform1f(uniformUseTexture, true)
+        gl.uniform1f(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1f(uniformTextureLoc, 0)
     
         // Enable vertex attributes
@@ -325,20 +327,23 @@ class Scene extends NodeScene{
         gl.bindTexture(gl.TEXTURE_2D, texture)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
         
-        var image = new Image()
-        image.src = './utils/texture.png'
-        // image.addEventListener('load', function(){
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-            
-            if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-                gl.generateMipmap(gl.TEXTURE_2D)
-            } else {
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-            }
-        // })
+        console.log(material.uniforms['useTexture'])
+        if(material.uniforms['useTexture']) {
+            var image = new Image()
+            image.src = material.uniforms['sourceTexture']
+            // image.addEventListener('load', function(){
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                
+                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
+            // })
+        }
     
         // Draw
         var primitiveType = gl.TRIANGLES;

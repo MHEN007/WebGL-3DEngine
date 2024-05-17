@@ -39,9 +39,11 @@ class BasicMaterial extends ShaderMaterial {
         gl_FragColor = finalColor * v_color;
     }`
     
-    constructor(name, color){        
+    constructor(name, color, useTexture = false, sourceTexture = ''){        
         const uniform = {
-            color: color
+            color: color,
+            useTexture: useTexture,
+            sourceTexture: sourceTexture,
         }
 
         super(name, BasicMaterial.vs, BasicMaterial.fs, uniform)        
@@ -51,7 +53,9 @@ class BasicMaterial extends ShaderMaterial {
         return JSON.stringify({
             name: this.name,
             uniform: {
-                color: this.uniforms['color']
+                color: this.uniforms['color'],
+                useTexture: false,
+                sourceTexture: sourceTexture
             }
         })
     }
