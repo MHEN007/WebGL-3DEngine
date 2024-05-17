@@ -45,9 +45,9 @@ const purple = new BasicMaterial("purple", [1, 0, 1], true, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
 const materials = [green, purple, yellow, blue, cyan, red]
 
-const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
-mesh1.position = new Vector3(0.2, 0, 0)
-mesh1.rotation = new Vector3(0, 0, 0)
+// const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
+// mesh1.position = new Vector3(0.2, 0, 0)
+// mesh1.rotation = new Vector3(0, 0, 0)
 
 // const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
 // mesh2.position = new Vector3(0.2, 0, 0.1)
@@ -69,49 +69,52 @@ mesh1.rotation = new Vector3(0, 0, 0)
 // mesh3.position = new Vector3(0.4, 0, 0.2)
 // mesh3.rotation = new Vector3(0, 0, 0)
 
-// const neckMesh = new Mesh(neck, materials, [0, 0, 0, 0, 0, 0])
-// neckMesh.position = new Vector3(0, 0, 0)
-// neckMesh.rotation = new Vector3(0, 0, 0)
+const neckMesh = new Mesh(gl, [camera], null,neck, materials, [0, 0, 0, 0, 0, 0])
+neckMesh.position = new Vector3(0, 0, 0)
+neckMesh.rotation = new Vector3(0, 0, 0)
 
-// const bodyMesh = new Mesh(body, materials, [0, 0, 0, 0, 0, 0])
-// bodyMesh.position = new Vector3(0, -0.1, 0)
-// bodyMesh.rotation = new Vector3(0, 0, 0)
+const bodyMesh = new Mesh(gl, [camera], null,body, materials, [0, 0, 0, 0, 0, 0])
+bodyMesh.position = new Vector3(0, -0.1, 0)
+bodyMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone1LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
-// bone1LeftMesh.rotation = new Vector3(0, 0, 0)
+const bone1LeftMesh = new Mesh(gl, [camera], null,bone, materials, [0, 0, 0, 0, 0, 0])
+bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
+bone1LeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone2LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
-// bone2LeftMesh.rotation = new Vector3(0, 0, 0)
+const bone2LeftMesh = new Mesh(gl, [camera], null,bone, materials, [0, 0, 0, 0, 0, 0])
+bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
+bone2LeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone3LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
-// bone3LeftMesh.rotation = new Vector3(0, 0, 0)
+const bone3LeftMesh = new Mesh(gl, [camera], null,bone, materials, [0, 0, 0, 0, 0, 0])
+bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
+bone3LeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone1RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
-// bone1RightMesh.rotation = new Vector3(0, 0, 0)
+const bone1RightMesh = new Mesh(gl, [camera], null,bone, materials, [0, 0, 0, 0, 0, 0])
+bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
+bone1RightMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone2RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
-// bone2RightMesh.rotation = new Vector3(0, 0, 0)
+const bone2RightMesh = new Mesh(gl, [camera], null,bone, materials, [0, 0, 0, 0, 0, 0])
+bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
+bone2RightMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone3RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
-// bone3RightMesh.rotation = new Vector3(0, 0, 0)
+const bone3RightMesh = new Mesh(gl, [camera], null,bone, materials, [0, 0, 0, 0, 0, 0])
+bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
+bone3RightMesh.rotation = new Vector3(0, 0, 0)
 
-// const headLeftMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
-// headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
-// headLeftMesh.rotation = new Vector3(0, 0, 0)
+const headLeftMesh = new Mesh(gl, [camera], null, sideHead, materials, [0, 0, 0, 0, 0, 0])
+headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
+headLeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const headRightMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
-// headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
-// headRightMesh.rotation = new Vector3(0, 0, 0)
+const headRightMesh = new Mesh(gl, [camera], null, sideHead, materials, [0, 0, 0, 0, 0, 0])
+headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
+headRightMesh.rotation = new Vector3(0, 0, 0)
 
-// const centerHeadMesh = new Mesh(centerHead, materials, [0, 0, 0, 0, 0, 0])
-// centerHeadMesh.position = new Vector3(0, 0.04, 0)
-// centerHeadMesh.rotation = new Vector3(0, 0, 0)
+const centerHeadMesh = new Mesh(gl, [camera], null, centerHead, materials, [0, 0, 0, 0, 0, 0])
+centerHeadMesh.position = new Vector3(0, 0.04, 0)
+centerHeadMesh.rotation = new Vector3(0, 0, 0)
+
+neckMesh.add(headLeftMesh, headRightMesh, centerHeadMesh)
+bodyMesh.add(bone1LeftMesh, bone2LeftMesh, bone3LeftMesh, bone1RightMesh, bone2RightMesh, bone3RightMesh, neckMesh)
 
 let isAnimating = false; // Variable to keep track of animation state
 
@@ -130,7 +133,7 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya root
-const scene = new Scene(gl, [camera]).add(mesh1);
+const scene = new Scene(gl, [camera]).add(bodyMesh);
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
