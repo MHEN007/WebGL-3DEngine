@@ -46,14 +46,15 @@ class Scene extends NodeScene{
     }
     
     drawAll(){
+        this.computeWorldMatrix(false, true)
+        let target = new Vector3(0,0,0) // Center of World
+        var up = Vector3.up()
+        var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
+        var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
         this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
+
         for (let i = 0; i < this.children.length; i++) {
             let mesh = this.children[i]
-            let target = mesh.getWorldPosition();
-            var up = Vector3.up()
-            mesh.computeWorldMatrix()
-            var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
-            var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
