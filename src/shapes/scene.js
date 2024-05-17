@@ -16,7 +16,12 @@ class Scene extends NodeScene{
     #camera
     #materialMap
     #lightsources
-
+    /**
+     * 
+     * @param {WebGLRenderingContext} gl 
+     * @param {Camera} camera 
+     * @param {} lightsources 
+     */
     constructor(gl, camera, lightsources = []) {
         super()
         this.gl = gl
@@ -34,6 +39,7 @@ class Scene extends NodeScene{
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
         this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
+        
     }
 
     get type()
@@ -42,7 +48,11 @@ class Scene extends NodeScene{
     }
 
     setCamera(camera){
-        this.camera = camera
+        this.#camera = camera
+    }
+
+    get camera(){
+        return this.#camera;
     }
     
     drawAll(){
@@ -51,15 +61,18 @@ class Scene extends NodeScene{
         var up = Vector3.up()
         var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
         var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
-        this.gl.clear(gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)
 
         for (let i = 0; i < this.children.length; i++) {
+            this.children[i].drawAll()
             let mesh = this.children[i]
+            var up = Vector3.up()
+            mesh.computeWorldMatrix()
+            var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
+            var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
         }
-        console.log(this.position)
     }
 
     createShader(type, source){
