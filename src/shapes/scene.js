@@ -84,7 +84,7 @@ class Scene extends NodeScene{
     }
 
     draw(mesh, viewProjMat, stride, offset) {
-        assignSide = new Float32Array([
+        var assignSide = new Float32Array([
             
             // DEPAN
             0, 0,
