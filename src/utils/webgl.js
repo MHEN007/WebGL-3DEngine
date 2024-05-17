@@ -36,33 +36,33 @@ distanceLabel.style.display = 'block'
 camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
-const green = new BasicMaterial("green", [0, 1, 0], camera.position)
-// const green = new Texture('green', './utils/texture.png')
-const red = new BasicMaterial("red", [1, 0, 0], camera.position)
-const blue = new BasicMaterial("blue", [0, 0, 1], camera.position)
-const yellow = new BasicMaterial("yellow", [1, 1, 0], camera.position)
-const purple = new BasicMaterial("purple", [1, 0, 1], camera.position)
-const cyan = new BasicMaterial("cyan", [0, 1, 1], camera.position)
+const tex1 = new Texture('tex1', './utils/texture.png')
+const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
+const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
+const blue = new BasicMaterial("blue", [0, 0, 1], true, tex1)
+const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
+const purple = new BasicMaterial("purple", [1, 0, 1], true, tex1)
+const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
 const materials = [green, purple, yellow, blue, cyan, red]
 
 const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 1, 2, 3, 4, 5])
 mesh1.position = new Vector3(0.2, 0, 0)
 mesh1.rotation = new Vector3(0, 0, 0)
 
-const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-mesh2.position = new Vector3(0.2, 0, 0.1)
-mesh2.rotation = new Vector3(0, 0, 0)
+// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+// mesh2.position = new Vector3(0.2, 0, 0.1)
+// mesh2.rotation = new Vector3(0, 0, 0)
 
-const mesh3 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-mesh3.position = new Vector3(-0.2, 0, 0.1)
-mesh3.rotation = new Vector3(0, 0, 0)
+// const mesh3 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+// mesh3.position = new Vector3(-0.2, 0, 0.1)
+// mesh3.rotation = new Vector3(0, 0, 0)
 
-// mesh1: add children mesh2, mesh3
-mesh1.add(mesh2,mesh3)
-const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
-root.position = new Vector3(0,0,0)
-root.rotation = new Vector3(0,0,0)
-root.add(mesh1)
+// // mesh1: add children mesh2, mesh3
+// mesh1.add(mesh2,mesh3)
+// const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
+// root.position = new Vector3(0,0,0)
+// root.rotation = new Vector3(0,0,0)
+// root.add(mesh1)
 // root: add children mesh1 YANG punya children mesh2, mesh3
 
 // const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
@@ -130,7 +130,7 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya root
-const scene = new Scene(gl, [camera]).add(root);
+const scene = new Scene(gl, [camera]).add(mesh1);
 const left = -0.5
 const right = 0.5
 const bottom = -0.5

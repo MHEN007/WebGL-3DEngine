@@ -97,67 +97,22 @@ class Scene extends NodeScene{
     }
 
     draw(mesh, viewProjMat, stride, offset) {
-        var assignSide = new Float32Array([
-            
-            // DEPAN
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
-            // BELAKANG
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
-            // ATAS
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
-            // BAWAH
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
-            // KANAN
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
-            // KIRI
-            0, 0,
-            0, 1,
-            1, 0,
-            1, 0,
-            0, 1,
-            1, 1,
-        ]) 
         for (let i = 0; i < (mesh.geometry.getAttribute('position').length / (3*6)); i++) {
             if(mesh.getMaterial(i).type == 'BASIC'){
                 if (this.#currentProgram != "BASIC") {
                     this.gl.useProgram(this.basicProgram)
                 }
-                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), assignSide.slice(i*2*6, (i+1)*2*6), mesh.getMaterialstride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+                this.drawBasicSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i)
             }else if(mesh.getMaterial(i).type == 'PHONG'){
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
-                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i))
+                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i)
             }
         }
     }
     
-    drawBasicSide(position, assignSide = [], stride, offset, worldMatrix, viewProjMatrix, material) {
+    drawBasicSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i) {
        // BasicMaterial
         var positionAttributeLocation = gl.getAttribLocation(this.basicProgram, 'a_pos')
         var texCoordAttributeLocation = gl.getAttribLocation(this.basicProgram, 'a_texcoord')
@@ -188,33 +143,24 @@ class Scene extends NodeScene{
         
         gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset)
         
-        var texCoordBuffer = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
-        gl.enableVertexAttribArray(texCoordAttributeLocation)
-        if (assignSide.length == 0)
-        {
-            assignSide = new Float32Array([
-                0, 1,
-                1, 0,
-                0, 0,
-                0, 1,
-                1, 1,
-                1, 0
-            ])
-        }
-        gl.bufferData(gl.ARRAY_BUFFER, assignSide, gl.STATIC_DRAW)
-        var size = 2         // 2 components per iteration
-        var type = gl.FLOAT   // the data is 32bit floats
-        var normalize = false // don't normalize the data
-        gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
-
-        var texture = gl.createTexture()
-        gl.bindTexture(gl.TEXTURE_2D, texture)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
         
         if(material.uniforms['useTexture']) {
+            var texObj = material.uniforms['sourceTexture']
+            var texCoordBuffer = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
+            gl.enableVertexAttribArray(texCoordAttributeLocation)
+            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
+            var size = 2         // 2 components per iteration
+            var type = gl.FLOAT   // the data is 32bit floats
+            var normalize = false // don't normalize the data
+            gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
+    
+            var texture = gl.createTexture()
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+            
             var image = new Image()
-            image.src = material.uniforms['sourceTexture']
+            image.src = texObj.source
             // image.addEventListener('load', function(){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
@@ -321,29 +267,23 @@ class Scene extends NodeScene{
     
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0);
 
-        var texCoordBuffer = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-            0, 1,
-            1, 0,
-            0, 0,
-            0, 1,
-            1, 1,
-            1, 0,
-        ]), gl.STATIC_DRAW)
-        var size = 2         // 2 components per iteration
-        var type = gl.FLOAT   // the data is 32bit floats
-        var normalize = false // don't normalize the data
-        gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
-
-        var texture = gl.createTexture()
-        gl.bindTexture(gl.TEXTURE_2D, texture)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-        
-        console.log(material.uniforms['useTexture'])
         if(material.uniforms['useTexture']) {
+            var texObj = material.uniforms['sourceTexture']
+            var texCoordBuffer = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
+            gl.enableVertexAttribArray(texCoordAttributeLocation)
+            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
+            var size = 2         // 2 components per iteration
+            var type = gl.FLOAT   // the data is 32bit floats
+            var normalize = false // don't normalize the data
+            gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
+    
+            var texture = gl.createTexture()
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+            
             var image = new Image()
-            image.src = material.uniforms['sourceTexture']
+            image.src = texObj.source
             // image.addEventListener('load', function(){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
