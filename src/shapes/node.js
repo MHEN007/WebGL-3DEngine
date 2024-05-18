@@ -75,7 +75,7 @@ class NodeScene {
         this.localMatrix = Matrix4x4.multiply(this.localMatrix, Matrix4x4.createScalingMatrix(this.scale))
     }
 
-    computeWorldMatrix(updateParent=true, updateChild = true){
+    computeWorldMatrix(updateParent=false, updateChild = true){
         if(updateParent && this.parent){
             this.parent.computeWorldMatrix(true, false)
         }
@@ -90,7 +90,7 @@ class NodeScene {
 
         if(updateChild){
             for(let i = 0 ; i < this.children.length; i++){
-                this.children[i].computeWorldMatrix()
+                this.children[i].computeWorldMatrix(updateParent, updateChild)
             }
         }
     }

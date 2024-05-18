@@ -37,7 +37,7 @@ camera.position = new Vector3(0, 0, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new BasicMaterial("green", [0, 1, 0], false, tex1)
+const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
@@ -132,8 +132,9 @@ function init(){
 
 init()
 
-// scene add root buat jadi 'world'nya root
-const scene = new Scene(gl, [camera]).add(bodyMesh);
+// scene add root buat jadi 'world'nya roo
+const object = new Glass()
+const scene = new Scene(gl, [camera]).add(object.object);
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
