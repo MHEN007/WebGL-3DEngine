@@ -68,7 +68,6 @@ class Scene extends NodeScene{
         var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
 
         for (let i = 0; i < this.children.length; i++) {
-            this.children[i].drawAll()
             let mesh = this.children[i]
             var up = Vector3.up()
             mesh.computeWorldMatrix()
@@ -114,6 +113,12 @@ class Scene extends NodeScene{
                 }
                 this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i)
             }
+        }
+
+        /* Draw for the Children */
+        for (let i = 0; i < mesh.children.length; i++){
+            console.log(mesh.children[i])
+            this.draw(mesh.children[i], viewProjMat, mesh.children[i].geometry.getAttribute('position').stride, mesh.children[i].geometry.getAttribute('position').offset)
         }
     }
     
