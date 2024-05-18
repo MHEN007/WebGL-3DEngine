@@ -1,7 +1,7 @@
-class Mesh extends Scene {
+class Mesh extends NodeScene {
     
-    constructor(gl, camera, ligthsource = [], geometry, material, assignMaterial){
-        super(gl, camera, ligthsource)
+    constructor(geometry, material, assignMaterial){
+        super()
         this.geometry = geometry
         this.material = material
         this.materialMap = {}
