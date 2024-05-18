@@ -283,13 +283,10 @@ xPos.addEventListener('input', function(){
 yPos.addEventListener('input', function(){
     scene.position.y = parseFloat(yPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-
     scene.drawAll()
 })
 
 zPos.addEventListener('input', function(){
-    mesh.position.z = parseFloat(zPos.value)
-    draw()
     scene.position.z = parseFloat(zPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
