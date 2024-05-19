@@ -6,8 +6,12 @@
 function readImage(file){
     const reader = new FileReader()
     reader.readAsDataURL(file)
-    const json = JSON.parse(file.text())
-    console.log(json)
-    return json
+
+    reader.onload = (event) => {
+        const result = event.target.result
+        const json = JSON.parse(atob(result.split(',')[1]))
+        console.log(json)
+        return json
+    }
 }
 
