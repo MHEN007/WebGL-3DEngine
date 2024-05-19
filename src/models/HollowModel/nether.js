@@ -386,10 +386,29 @@ class NetherPortal {
         portal.setAttribute('position', positionAttr);
 
         const black = new BasicMaterial("black", [0, 0, 0])
+        const grey = new BasicMaterial("grey", [0.5, 0.5, 0.5])
 
-        var materials = [...Array(6*10 + 1).fill(black)]
+        var materials = []
+        var assignSide = []
+        for(let i = 0; i < 10; i++){
+            materials.push(grey)
+            materials.push(black)
+            materials.push(black)
+            materials.push(grey)
+            materials.push(grey)
+            materials.push(black)
 
-        const mesh = new Mesh(portal, materials, [...Array(6*10).fill(1)]); // Assuming materials is defined somewhere
+            assignSide.push(0)
+            assignSide.push(0)
+            assignSide.push(1)
+            assignSide.push(1)
+            assignSide.push(1)
+            assignSide.push(1)
+        }
+
+        console.log(materials)
+
+        const mesh = new Mesh(portal, materials, assignSide); // Assuming materials is defined somewhere
         mesh.position.set(0, 0, 0);
 
         return mesh;
