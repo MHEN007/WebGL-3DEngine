@@ -174,6 +174,9 @@ const object = new Steve()
 let scene = new Scene(gl, [camera], [light1]).add(object.object);
 console.log(scene)
 // scene add root buat jadi 'world'nya root
+const steve = new NetherPortal()
+// const scene = new Scene(gl, [camera]).add(steve.object);
+scene.position = new Vector3(0,0,0)
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
