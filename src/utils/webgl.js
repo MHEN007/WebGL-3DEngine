@@ -35,7 +35,7 @@ const light1 = new DirectionalLight(30, [1,1,1,1], new Vector3(1, -1, 0))
 
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
-camera.position = new Vector3(0, 1, 1)
+camera.position = new Vector3(0, 0, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 const tex1 = new Texture('tex1', './utils/texture.png')
@@ -57,7 +57,7 @@ scene.add(mesh1)
 // mesh2.position = new Vector3(0.2, 0, 0.1)
 // mesh2.rotation = new Vector3(0, 0, 0)
 
-// const mesh3 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+// const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 // mesh3.position = new Vector3(-0.2, 0, 0.1)
 // mesh3.rotation = new Vector3(0, 0, 0)
 
@@ -67,7 +67,7 @@ scene.add(mesh1)
 // root.position = new Vector3(0,0,0)
 // root.rotation = new Vector3(0,0,0)
 // root.add(mesh1)
-// root: add children mesh1 YANG punya children mesh2, mesh3
+// // root: add children mesh1 YANG punya children mesh2, mesh3
 
 // const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 // mesh3.position = new Vector3(0.4, 0, 0.2)
@@ -181,14 +181,13 @@ projectionSelector.addEventListener('change', function(){
         distanceLabel.style.display = 'none'
         distanceSlider.value = 1
         scene.children[0].position.set(
-            scene.position.x + (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
             scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
             scene.position.z
         )
         console.log(camera.angle)
         camera.updateProjectionMatrix()
         console.log(scene.children[0].position)
-        scene.children[0].drawAll()
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
@@ -230,7 +229,7 @@ distanceSlider.addEventListener('input', function(){
     //     camera.far = parseFloat(distanceSlider.value)
     // }
     // console.log(camera.type)
-    camera.position.z = parseFloat(distanceSlider.value)
+    camera.position.z = 2-parseFloat(distanceSlider.value)
     camera.position.y = camera.position.z
     scene.drawAll()
 })
@@ -246,8 +245,6 @@ angleObliqueSlider.addEventListener('input', function(){
         )
         console.log(camera.angle)
         camera.updateProjectionMatrix()
-        console.log(scene.children[0].position)
-        scene.children[0].drawAll()
     }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
@@ -286,7 +283,6 @@ xPos.addEventListener('input', function(){
 yPos.addEventListener('input', function(){
     scene.position.y = parseFloat(yPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-
     scene.drawAll()
 })
 
@@ -362,3 +358,39 @@ function isPowerOf2(value) {
 }
 
 console.log(camera);
+
+canvas.addEventListener('mousemove', onMouseMove)
+canvas.addEventListener('mousedown', onMouseDown)
+canvas.addEventListener('mouseup', onMouseUp)
+canvas.addEventListener('wheel', onMouseWheel)
+
+let isMoving = false
+
+function mod(a, b) {
+    return ((a % b) + b) % b
+}
+
+function onMouseDown(event){
+    isMoving = true
+}
+function onMouseUp(event){
+    isMoving = false
+}
+function onMouseMove(event){
+    const dx = event.movementX
+    const dy = event.movementY
+
+    if(isMoving){
+        camera.rotation.set(
+            mod(camera.rotation.x - dy * Math.PI/180, Math.PI*2), 
+            mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
+            0)
+        console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
+        scene.drawAll()
+    }
+        // console.log(camera)
+}
+function onMouseWheel(event){
+    camera.position.z += event.deltaY * 0.001
+    scene.drawAll()
+}
