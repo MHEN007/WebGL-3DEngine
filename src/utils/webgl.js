@@ -8,6 +8,7 @@ const plane = new PlaneGeometry(1,1);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
+
 const projectionSelector = document.getElementById("projection")
 const distanceLabel = document.getElementById("distanceLabel")
 const distanceSlider = document.getElementById("distance")
@@ -20,8 +21,15 @@ const camRotationZSlider = document.getElementById("rotationZ")
 const camRotationZLabel = document.getElementById("rotationZLabel")
 const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
+
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
+
+const lightXPosition = document.getElementById('l-x')
+const lightYPosition = document.getElementById('l-y')
+const lightZPosition = document.getElementById('l-z')
+const lightIntensity = document.getElementById('l-intensity')
+
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
@@ -29,29 +37,44 @@ const anim = document.getElementById('anim');
 canvas.width = 600
 canvas.height = 600
 
-let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
-const scene = new Scene(gl, [camera]);
-const light1 = new DirectionalLight(30, [1,1,1,1], new Vector3(1, -1, 0))
+/* UPDATER */
+const phongUpdater = new Updater()
+
+/* LIGHT */
+const light1 = new DirectionalLight(1, [1,1,1,1], new Vector3(1, -1, 0))
 
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
-camera.position = new Vector3(0, 0, 1)
+
+/* CAMERA CREATION */
+let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
+/* SCENE CREATION */
+const scene = new Scene(gl, [camera]);
+
+/* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new PhongMaterial("green", [0, 1, 0], camera.position, false, tex1, light1.calculatePosition(scene.position))
+const green = new PhongMaterial("green", [0, 1, 0], camera.position, false, tex1, light1.calculatePosition(scene.position), light1.intesity)
 const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
 const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
+
+phongUpdater.subscribe(green)
+
 const materials = [green, purple, yellow, blue, cyan, red]
 
+/* MESH */
 const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
-mesh1.position = new Vector3(0.2, 0, 0)
+mesh1.position = new Vector3(0, 0, 0)
 mesh1.rotation = new Vector3(0, 0, 0)
 
-scene.add(mesh1)
+const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+mesh2.position = new Vector3(0.2, 0, 0.1)
+mesh2.rotation = new Vector3(0, 0, 0)
 
 // const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
 // mesh2.position = new Vector3(0.2, 0, 0.1)
@@ -61,6 +84,7 @@ scene.add(mesh1)
 // mesh3.position = new Vector3(-0.2, 0, 0.1)
 // mesh3.rotation = new Vector3(0, 0, 0)
 
+scene.add(mesh1)
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
@@ -119,20 +143,6 @@ scene.add(mesh1)
 
 let isAnimating = false; // Variable to keep track of animation state
 
-function init(){
-    if(!gl){
-        console.log("WEBGL not available on your browser!")
-    }else{
-        gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
-        gl.clearColor(1.0, 1.0, 1.0, 0.0)
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-        gl.enable(gl.CULL_FACE)
-        gl.enable(gl.DEPTH_TEST)
-    }
-}
-
-init()
-
 // scene add root buat jadi 'world'nya root
 const left = -0.5
 const right = 0.5
@@ -141,6 +151,7 @@ const topp = 0.5
 const near = -1000;
 const far = 1000;
 
+scene.add(mesh1)
 scene.drawAll()
 
 projectionSelector.addEventListener('change', function(){
@@ -191,7 +202,7 @@ projectionSelector.addEventListener('change', function(){
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         selectAll()
     }
     console.log(camera)
@@ -204,6 +215,7 @@ camRotationYSlider.addEventListener('input', function(){
     isAnimating = false;
     anim.checked = false;
     camera.rotation.y = parseFloat(camRotationYSlider.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
     
 })
@@ -211,11 +223,13 @@ camRotationYSlider.addEventListener('input', function(){
 camRotationXSlider.addEventListener('input', function(){
     camera.rotation.x = parseFloat(camRotationXSlider.value)
     console.log(camera.rotation)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 camRotationZSlider.addEventListener('input', function(){
     camera.rotation.z = parseFloat(camRotationZSlider.value)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -291,6 +305,35 @@ zPos.addEventListener('input', function(){
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
+
+lightXPosition.addEventListener('input', function() {
+    light1.direction.x = parseFloat(lightXPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    phongUpdater.update(updates)
+    scene.drawAll()
+})
+
+lightYPosition.addEventListener('input', function() {
+    light1.direction.y = parseFloat(lightYPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    phongUpdater.update(updates)
+    scene.drawAll()
+})
+
+lightZPosition.addEventListener('input', function() {
+    light1.direction.z = parseFloat(lightZPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    phongUpdater.update(updates)
+    scene.drawAll()
+})
+
+lightIntensity.addEventListener('input', function() {
+    light1.intensity = parseFloat(lightIntensity.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    phongUpdater.update(updates)
+    scene.drawAll()
+})
+
 
 function selectNoZ(){
     camRotationXSlider.style.display = 'block'

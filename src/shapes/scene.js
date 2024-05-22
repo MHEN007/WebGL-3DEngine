@@ -39,7 +39,8 @@ class Scene extends NodeScene{
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
         this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
-        
+
+        this.init()
     }
 
     get type()
@@ -54,6 +55,18 @@ class Scene extends NodeScene{
     get camera(){
         return this.#camera
     }
+
+    init(){
+        if(!gl){
+            console.log("WEBGL not available on your browser!")
+        }else{
+            gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
+            gl.clearColor(1.0, 1.0, 1.0, 1.0)
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+            gl.enable(gl.CULL_FACE)
+            gl.enable(gl.DEPTH_TEST)
+        }
+    }
     
     drawAll(){
         this.computeWorldMatrix(false, true)
@@ -64,10 +77,7 @@ class Scene extends NodeScene{
 
         for (let i = 0; i < this.children.length; i++) {
             let mesh = this.children[i]
-            var up = Vector3.up()
             mesh.computeWorldMatrix()
-            var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
-            var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
@@ -207,6 +217,7 @@ class Scene extends NodeScene{
         var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos')
         var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
+        var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
     
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -222,6 +233,7 @@ class Scene extends NodeScene{
         gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
+        gl.uniform3fv(uniformLightIntensityLoc, [material.uniforms['lightIntensity'], material.uniforms['lightIntensity'],material.uniforms['lightIntensity'],] )
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation)

@@ -88,6 +88,25 @@
             <input type="range" min="-1" max="1" value="0" step="0.01" id="z">
             <br/>
             <br/>
+            <label for="angle">Light Position :</label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-x">
+            </label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-y">
+            </label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-z">
+            </label>
+            <br />
+            <br />
+
+            <label for="angle">Light Intensity :</label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity">
+            </label>
+            <br />
+            <br />
             <label for="angle">anim :</label>
             <label class="switch">
                 <input type="checkbox" id="anim">
@@ -119,6 +138,7 @@
     <script src="./light/baseLight.js"></script>
     <script src="./light/directionalLight.js"></script>
 
+    <script src="./utils/updater.js"></script>
     <script src="./utils/Quarternion.js"></script>
     <script src="./utils/Matrix4x4.js"></script>
     <script src="./utils/vector.js"></script>

@@ -47,6 +47,7 @@ class PhongMaterial extends ShaderMaterial {
 
     uniform sampler2D u_texture;
     uniform bool useTexture;
+    uniform vec3 intensity;
 
     void main() {
         // Normalize the vectors
@@ -70,7 +71,7 @@ class PhongMaterial extends ShaderMaterial {
         vec3 ambient = ambientColor.rgb * ambientColor.a;
     
         // Combine all lighting components
-        vec3 lighting = ambient + diffuseColor.a * diffuse + specularColor.a * specular;
+        vec3 lighting = (ambient + diffuseColor.a * diffuse + specularColor.a * specular) * intensity;
     
         // Blend the texture and vertex color based on useTexture
         vec4 baseColor = mix(v_color, texColor, float(useTexture));
@@ -80,7 +81,7 @@ class PhongMaterial extends ShaderMaterial {
     }
     `
 
-    constructor(name, color, camPosition, useTexture = false, sourceTexture = '', lightPosition = new Vector3(300,300,400), ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1]){
+    constructor(name, color, camPosition, useTexture = false, sourceTexture = '', lightPosition = new Vector3(300,300,400), lightIntensity = 1, ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1]){
         const uniform = {
             color: color,
             ambient: ambient ||  [0.6,0.6,0.6,1],
@@ -88,12 +89,19 @@ class PhongMaterial extends ShaderMaterial {
             diffuse: diffuse || [1,1,1,1],
             specular: specular || [1,1,1,1],
             lightPosition: lightPosition || new Vector3(300,300,400),
+            lightIntensity: lightIntensity || 1,
             camPosition: camPosition,
             useTexture: useTexture,
             sourceTexture: sourceTexture
         }
         
         super(name, PhongMaterial.vs, PhongMaterial.fs, uniform)        
+    }
+
+    update(updates)
+    {
+        this.uniforms['lightPosition'] = updates['lightPosition']
+        this.uniforms['lightIntensity'] = updates['lightIntensity']
     }
 
     fromJSON(){
