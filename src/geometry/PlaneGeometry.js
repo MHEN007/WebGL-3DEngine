@@ -37,7 +37,6 @@ class PlaneGeometry extends BufferGeometry{
 
     toJSON(){
         const json = super.toJSON();
-        delete json.attributes.position;
         return {
             ...json,
             width: this.#width,

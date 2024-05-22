@@ -13,7 +13,7 @@ function removeCircularReferences() {
 }
 
 function save(scene, filename) {
-    const json = JSON.stringify(scene,removeCircularReferences(),2);
+    const json = JSON.stringify(scene.toJSON(),null,2);
     console.log(json);
     // save file to disk
     const blob = new Blob([json], { type: 'application/json' });

@@ -135,7 +135,8 @@ init()
 
 // scene add root buat jadi 'world'nya roo
 const object = new Steve()
-const scene = new Scene(gl, [camera]).add(object.object);
+let scene = new Scene(gl, [camera]).add(object.object);
+console.log(scene)
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
@@ -359,11 +360,6 @@ anim.addEventListener('change', function() {
     }
 });
 
-fileSelector.addEventListener('change', (e) => {
-    const files = e.target.files[0];
-    readImage(files)
-})
-
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
 }
@@ -405,3 +401,17 @@ function onMouseWheel(event){
     camera.position.z += event.deltaY * 0.001
     scene.drawAll()
 }
+
+fileSelector.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return
+
+    try{
+        json = await readFile(file)
+    } catch (error){
+        console.error(error);
+    }
+    scene = Scene.fromJSON(json)
+    console.log(scene)
+    scene.drawAll()
+})

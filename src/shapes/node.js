@@ -1,4 +1,14 @@
 class NodeScene {
+
+    position
+    rotation
+    scale
+    localMatrix
+    worldMatrix
+    parent
+    children
+    visible
+
     constructor(){
         this.position = new Vector3()
         this.rotation = new Vector3(0, 0, 0) // angles in radian
@@ -64,6 +74,10 @@ class NodeScene {
         }
 
         return null;
+    }
+
+    setChildren(children){
+        this.children = children
     }
 
     isVisible(){
@@ -139,37 +153,56 @@ class NodeScene {
         return Matrix4x4.lookAt(this.getWorldPosition(), target, up)
     }
 
-    // toJSON(){
-    //     return JSON.stringify({
-    //         position: this.position.toArray(),
-    //         rotation: this.rotation.toArray(),
-    //         scale: this.scale.toArray(),
-    //         localMatrix: this.localMatrix,
-    //         worldMatrix: this.worldMatrix,
-    //         parent: this.parent ? this.parent.serialize() : null,
-    //         children: this.children.map(child => child.serialize()),
-    //         visible: this.visible
-    //     })
-    // }
-
-    static fromJSON(jsonString){
-        const data = JSON.parse(jsonString)
-        const node = new NodeScene()
-
-        node.position = Vector3.fromJSON(data.position)
-        node.rotation = Vector3.fromJSON(data.rotation)
-        node.scale = Vector3.fromJSON(data.scale)
-
-        node.localMatrix = data.localMatrix
-        node.worldMatrix = data.worldMatrix
-        node.visible = data.visible
-
-        if (data.parent) {
-            node.parent = NodeScene.deserialize(data.parent)
+    toJSON(){
+        console.log(this.children)
+        return {
+            position: this.position,
+            rotation: this.rotation,
+            scale: this.scale,
+            localMatrix: this.localMatrix,
+            worldMatrix: this.worldMatrix,
+            children: this.children,
+            visible: this.visible
         }
-        
-        node.children = data.children.map(child => NodeScene.deserialize(child))
+    }
 
-        return node
+    static loadObject(data, type, object){
+        switch (type) {
+            case "Scene":
+                object = new Scene(gl, camera, null)
+                return object
+            case "Mesh":
+                return Mesh.fromJSON(data, object);
+            default:
+        }
+    }
+
+    /**
+     * 
+     * @param {string | JSON} jsonString 
+     * @param {NodeScene | null} obj 
+     * @returns 
+     */
+    static fromJSON(jsonString, object){
+        let data
+        if (typeof jsonString === "string"){
+            data = JSON.parse(jsonString)
+        } else {
+            data = jsonString
+        }
+        console.log(data)
+        console.log(data.children)
+        object = NodeScene.loadObject(data, data.type, object)
+        object.position = data.position
+        object.rotation = data.rotation
+        object.scale = data.scale
+        object.localMatrix = data.localMatrix
+        object.worldMatrix = data.worldMatrix
+        object.visible = data.visible
+        data.children.forEach(element => {
+            object.add(NodeScene.fromJSON(element))
+        });
+        console.log(object)
+        return object
     }
 }

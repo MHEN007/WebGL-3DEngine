@@ -20,14 +20,3 @@ function readFile(file) {
     });
   }
 
-// fileSelector.addEventListener('change', async (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return
-
-//     try{
-//         json = await readFile(file)
-//     } catch (error){
-//         console.error(error);
-//     }
-//     scene = Scene.fromJSON(json)
-// })

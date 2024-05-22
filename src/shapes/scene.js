@@ -45,7 +45,7 @@ class Scene extends NodeScene{
 
     get type()
     {
-        return "scene"
+        return "Scene"
     }
 
     setIsHollow(value){
@@ -80,7 +80,6 @@ class Scene extends NodeScene{
     }
 
     createShader(type, source){
-        console.log(source)
         var shader = this.gl.createShader(type)
         this.gl.shaderSource(shader, source)
         this.gl.compileShader(shader)
@@ -117,7 +116,6 @@ class Scene extends NodeScene{
 
         /* Draw for the Children */
         for (let i = 0; i < mesh.children.length; i++){
-            console.log(mesh.children[i])
             this.draw(mesh.children[i], viewProjMat, mesh.children[i].geometry.getAttribute('position').stride, mesh.children[i].geometry.getAttribute('position').offset)
         }
     }
@@ -350,17 +348,21 @@ class Scene extends NodeScene{
     
     
 
-    // toJSON() {
-    //     return { 
-    //         ...super.toJSON(),
-    //         type: this.type,
-    //     };
-    // }
+    toJSON() {
+        return { 
+            ...super.toJSON(),
+            type: this.type,
+        };
+    }
 
-    // static fromJSON(json, obj=null) {
-    //     if (!obj) obj = new Scene();
-    //     super.fromJSON(json, obj);
-    //     return obj;
+    // /**
+    //  * 
+    //  * @param {JSON} json 
+    //  * @param {Scene} object 
+    //  */
+    // static fromJSON(json, object){
+    //     object = object || new Scene(gl, camera, null)
+    //     return object
     // }
 
 }

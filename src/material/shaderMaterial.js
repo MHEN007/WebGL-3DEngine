@@ -14,17 +14,17 @@ class ShaderMaterial {
 
     toJSON(){
         return {
-            name: this.name,
+            type: this.type,
             baseColorFactor: this.baseColorFactor,
             metallicFactor: this.metallicFactor,
             roughnessFactor: this.roughnessFactor
         }
-        
     }
 
-    static fromJSON(jsonString){
-        const data = JSON.parse(jsonString)
-        const material = new ShaderMaterial(data.name, data.baseColorFactor, data.metallicFactor, data.roughnessFactor)
+    static fromJSON(jsonString, material){
+        const data = jsonString
+        if (!material)
+        material = new ShaderMaterial(data.name, data.baseColorFactor, data.metallicFactor, data.roughnessFactor)
 
         return material
     }

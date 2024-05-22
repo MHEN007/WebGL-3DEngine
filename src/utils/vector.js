@@ -73,6 +73,7 @@ class Vector3 {
     }
 
     static fromJSON(object){
+        console.log(object)
         return new Vector3(object.x, object.y, object.z)
     }
 }
