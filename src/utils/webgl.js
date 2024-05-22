@@ -59,7 +59,6 @@ camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 /* SCENE CREATION */
-const scene = new Scene(gl, [camera], [light1]);
 
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
@@ -95,7 +94,6 @@ const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.3, 0, 0)
 mesh2.rotation = new Vector3(0, 0, 0)
 
-scene.add(mesh3, mesh2)
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh( new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
@@ -173,7 +171,7 @@ init()
 
 // scene add root buat jadi 'world'nya roo
 const object = new Steve()
-let scene = new Scene(gl, [camera]).add(object.object);
+let scene = new Scene(gl, [camera], [light1]).add(object.object);
 console.log(scene)
 // scene add root buat jadi 'world'nya root
 const left = -0.5

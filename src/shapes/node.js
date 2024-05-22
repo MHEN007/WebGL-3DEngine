@@ -193,9 +193,9 @@ class NodeScene {
         console.log(data)
         console.log(data.children)
         object = NodeScene.loadObject(data, data.type, object)
-        object.position = data.position
-        object.rotation = data.rotation
-        object.scale = data.scale
+        object.position = new Vector3(data.position.x, data.position.y, data.position.z)
+        object.rotation = new Vector3(data.rotation.x, data.rotation.y, data.rotation.z)
+        object.scale = new Vector3(data.scale.x, data.scale.y, data.scale.z)
         object.localMatrix = data.localMatrix
         object.worldMatrix = data.worldMatrix
         object.visible = data.visible
