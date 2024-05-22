@@ -130,7 +130,7 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya root
-const steve = new NetherPortal()
+const steve = new hollowCube()
 const scene = new Scene(gl, [camera]).add(steve.object);
 scene.position = new Vector3(0,0,0)
 const left = -0.5
