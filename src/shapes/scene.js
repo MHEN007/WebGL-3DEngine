@@ -230,6 +230,7 @@ class Scene extends NodeScene{
         var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
         var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
+        var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
     
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -241,12 +242,21 @@ class Scene extends NodeScene{
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
-        console.log(this.#lightsources[0])
-        gl.uniform3fv(uniformLightPosLoc, this.#lightsources[0].calculatePosition(meshPosition).toArray())
-        gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
+        // gl.uniform3fv(uniformCamPosLoc, this.#camera.position.toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
-        gl.uniform3fv(uniformLightIntensityLoc, this.#lightsources[0].calculateIntensity(meshPosition).toArray())
+
+        let lightPos = []
+        let lightInt = []
+
+        this.#lightsources.forEach(light => {
+            lightPos.push(...light.calculatePosition(meshPosition).toArray())
+            lightInt.push(...light.calculateIntensity(meshPosition).toArray())
+        })
+
+        gl.uniform3fv(uniformLightPosLoc, new Float32Array(lightPos))
+        gl.uniform3fv(uniformLightIntensityLoc, new Float32Array(lightInt))
+        gl.uniform1i(uniformNumLightLoc, this.#lightsources.length)
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation)
