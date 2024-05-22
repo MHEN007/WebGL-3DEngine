@@ -497,6 +497,7 @@ fileSelector.addEventListener('change', async (e) => {
     scene.drawAll()
     
     /* LOAD VIEWER */
+    componentViewer.innerHTML = "<h2>Component Viewer</h2>"
     const ul = document.createElement("ul")
 
     ul.appendChild(componentViewLoader(scene))
