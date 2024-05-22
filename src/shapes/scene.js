@@ -22,7 +22,7 @@ class Scene extends NodeScene{
      * @param {Camera} camera 
      * @param {Light[]} lightsources 
      */
-    constructor(gl, camera, lightsources = []) {
+    constructor(gl, camera, lightsources = [new DirectionalLight(new Vector3(0, 0, 0), new Vector3(0, 0, 0))]) {
         super()
         this.gl = gl
         this.#camera = camera
