@@ -8,6 +8,7 @@ const plane = new PlaneGeometry(1,1);
 
 const canvas = document.getElementById("glCanvas")
 const gl = canvas.getContext("webgl")
+
 const projectionSelector = document.getElementById("projection")
 const distanceLabel = document.getElementById("distanceLabel")
 const distanceSlider = document.getElementById("distance")
@@ -20,8 +21,17 @@ const camRotationZSlider = document.getElementById("rotationZ")
 const camRotationZLabel = document.getElementById("rotationZLabel")
 const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
+
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
+
+const lightXPosition = document.getElementById('l-x')
+const lightYPosition = document.getElementById('l-y')
+const lightZPosition = document.getElementById('l-z')
+const lightIntensityR = document.getElementById('l-intensity-r')
+const lightIntensityG = document.getElementById('l-intensity-g')
+const lightIntensityB = document.getElementById('l-intensity-b')
+
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
@@ -30,34 +40,62 @@ const fileSelector = document.getElementById("file-selector");
 canvas.width = 600
 canvas.height = 600
 
+/* UPDATER */
+const phongUpdater = new Updater()
 
-let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+/* LIGHT */
+// const light1 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(1, -1, 0))
+// const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 1, 1))
+const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
+lightIntensityR.value = light1.intensity.x
+lightIntensityG.value = light1.intensity.y
+lightIntensityB.value = light1.intensity.z
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
-camera.position = new Vector3(0, 0, 1)
+
+/* CAMERA CREATION */
+let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.height, 0.1, 100)
+camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
+/* SCENE CREATION */
+const scene = new Scene(gl, [camera], [light1]);
+
+/* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
 const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
-const purple = new BasicMaterial("purple", [1, 0, 1], true, tex1)
+const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
+
+phongUpdater.subscribe(green)
+
 const materials = [green, purple, yellow, blue, cyan, red]
 
-// const mesh1 = new Mesh(box, materials, [0, 1, 2, 3, 4, 5])
-// mesh1.position = new Vector3(0.2, 0, 0)
+/* MESH */
+// const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
+// mesh1.position = new Vector3(0, 0, 0)
 // mesh1.rotation = new Vector3(0, 0, 0)
 
-// const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
 // mesh2.position = new Vector3(0.2, 0, 0.1)
 // mesh2.rotation = new Vector3(0, 0, 0)
 
-// const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-// mesh3.position = new Vector3(-0.2, 0, 0.1)
-// mesh3.rotation = new Vector3(0, 0, 0)
+// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+// mesh2.position = new Vector3(0.2, 0, 0.1)
+// mesh2.rotation = new Vector3(0, 0, 0)
 
+const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+mesh3.position = new Vector3(0, 0, 0)
+mesh3.rotation = new Vector3(0, 0, 0)
+
+const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+mesh2.position = new Vector3(0.3, 0, 0)
+mesh2.rotation = new Vector3(0, 0, 0)
+
+scene.add(mesh3, mesh2)
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh( new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
@@ -137,6 +175,7 @@ init()
 const object = new Steve()
 let scene = new Scene(gl, [camera]).add(object.object);
 console.log(scene)
+// scene add root buat jadi 'world'nya root
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
@@ -144,6 +183,7 @@ const topp = 0.5
 const near = -1000;
 const far = 1000;
 
+// scene.add(mesh1)
 scene.drawAll()
 
 projectionSelector.addEventListener('change', function(){
@@ -296,6 +336,47 @@ yPos.addEventListener('input', function(){
 zPos.addEventListener('input', function(){
     scene.position.z = parseFloat(zPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightXPosition.addEventListener('input', function() {
+    light1.position.x = parseFloat(lightXPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    scene.drawAll()
+})
+
+lightYPosition.addEventListener('input', function() {
+    light1.position.y = parseFloat(lightYPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    console.log(light1.position.y)
+    scene.drawAll()
+})
+
+lightZPosition.addEventListener('input', function() {
+    light1.position.z = parseFloat(lightZPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    scene.drawAll()
+})
+
+lightIntensityR.addEventListener('input', function() {
+    light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    scene.drawAll()
+})
+lightIntensityG.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    scene.drawAll()
+})
+lightIntensityB.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
     scene.drawAll()
 })
 

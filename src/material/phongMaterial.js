@@ -47,6 +47,7 @@ class PhongMaterial extends ShaderMaterial {
 
     uniform sampler2D u_texture;
     uniform bool useTexture;
+    uniform vec3 intensity;
 
     void main() {
         // Normalize the vectors
@@ -70,7 +71,7 @@ class PhongMaterial extends ShaderMaterial {
         vec3 ambient = ambientColor.rgb * ambientColor.a;
     
         // Combine all lighting components
-        vec3 lighting = ambient + diffuseColor.a * diffuse + specularColor.a * specular;
+        vec3 lighting = (ambient + diffuseColor.a * diffuse + specularColor.a * specular) * intensity;
     
         // Blend the texture and vertex color based on useTexture
         vec4 baseColor = mix(v_color, texColor, float(useTexture));
@@ -80,14 +81,15 @@ class PhongMaterial extends ShaderMaterial {
     }
     `
 
-    constructor(name, color, camPosition, useTexture = false, sourceTexture = '', ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
+    constructor(name, color, camPosition, useTexture = false, sourceTexture = '', ambient = [0.1,0.1,0.1,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1]){
         const uniform = {
             color: color,
             ambient: ambient ||  [0.6,0.6,0.6,1],
             shininess: shininess || 20,
             diffuse: diffuse || [1,1,1,1],
             specular: specular || [1,1,1,1],
-            lightPosition: lightPosition || new Vector3(300,300,400),
+            // lightPosition: lightPosition || new Vector3(300,300,400),
+            // lightIntensity: lightIntensity || 1,
             camPosition: camPosition,
             useTexture: useTexture,
             sourceTexture: sourceTexture
@@ -104,13 +106,12 @@ class PhongMaterial extends ShaderMaterial {
                 shininess: this.uniforms['shininess'],
                 diffuse: this.uniforms['diffues'],
                 specular: this.uniforms['specular'],
-                lightPosition: this.uniforms['lightPosition']
+                // lightPosition: this.uniforms['lightPosition']
             }
         }
     }
     
-    
     static fromJSON(object){
-        return new PhongMaterial(object.name, object.uniforms['ambient'], object.uniforms['shininess'], object.uniforms['diffuse'], object.uniforms['specular'], object.uniforms['lightPosition'])
+        return new PhongMaterial(object.name, object.uniforms['ambient'], object.uniforms['shininess'], object.uniforms['diffuse'], object.uniforms['specular'])
     }
 }
