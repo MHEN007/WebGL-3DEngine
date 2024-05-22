@@ -20,7 +20,7 @@ class Scene extends NodeScene{
      * 
      * @param {WebGLRenderingContext} gl 
      * @param {Camera} camera 
-     * @param {} lightsources 
+     * @param {Light[]} lightsources 
      */
     constructor(gl, camera, lightsources = []) {
         super()
@@ -116,7 +116,8 @@ class Scene extends NodeScene{
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
-                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i)
+                console.log(mesh.position)
+                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i, mesh.position)
             }
         }
 
@@ -197,8 +198,10 @@ class Scene extends NodeScene{
         gl.disableVertexAttribArray(positionAttributeLocation)
     }
     
-    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i) {
+    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i, meshPosition) {
         // Get attribute locations
+        console.log("MESH POSITION")
+        console.log(meshPosition)
         var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos')
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
         var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal')
@@ -229,11 +232,12 @@ class Scene extends NodeScene{
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
-        gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray())
+        console.log(this.#lightsources[0])
+        gl.uniform3fv(uniformLightPosLoc, this.#lightsources[0].calculatePosition(meshPosition).toArray())
         gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
-        gl.uniform3fv(uniformLightIntensityLoc, [material.uniforms['lightIntensity'], material.uniforms['lightIntensity'],material.uniforms['lightIntensity'],] )
+        gl.uniform3fv(uniformLightIntensityLoc, this.#lightsources[0].calculateIntensity(meshPosition).toArray())
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation)

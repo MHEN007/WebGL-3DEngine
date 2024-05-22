@@ -28,7 +28,9 @@ const viewAngleSelector = document.getElementById("viewAngle")
 const lightXPosition = document.getElementById('l-x')
 const lightYPosition = document.getElementById('l-y')
 const lightZPosition = document.getElementById('l-z')
-const lightIntensity = document.getElementById('l-intensity')
+const lightIntensityR = document.getElementById('l-intensity-r')
+const lightIntensityG = document.getElementById('l-intensity-g')
+const lightIntensityB = document.getElementById('l-intensity-b')
 
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
@@ -41,8 +43,12 @@ canvas.height = 600
 const phongUpdater = new Updater()
 
 /* LIGHT */
-const light1 = new DirectionalLight(1, [1,1,1,1], new Vector3(1, -1, 0))
-
+// const light1 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(1, -1, 0))
+// const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 1, 1))
+const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
+lightIntensityR.value = light1.intensity.x
+lightIntensityG.value = light1.intensity.y
+lightIntensityB.value = light1.intensity.z
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
 
@@ -52,11 +58,11 @@ camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 /* SCENE CREATION */
-const scene = new Scene(gl, [camera]);
+const scene = new Scene(gl, [camera], [light1]);
 
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new PhongMaterial("green", [0, 1, 0], camera.position, false, tex1, light1.calculatePosition(scene.position), light1.intesity)
+const green = new PhongMaterial("green", [0.1, 0.1, 0], camera.position, false, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
@@ -68,23 +74,27 @@ phongUpdater.subscribe(green)
 const materials = [green, purple, yellow, blue, cyan, red]
 
 /* MESH */
-const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
-mesh1.position = new Vector3(0, 0, 0)
-mesh1.rotation = new Vector3(0, 0, 0)
-
-const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-mesh2.position = new Vector3(0.2, 0, 0.1)
-mesh2.rotation = new Vector3(0, 0, 0)
+// const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
+// mesh1.position = new Vector3(0, 0, 0)
+// mesh1.rotation = new Vector3(0, 0, 0)
 
 // const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
 // mesh2.position = new Vector3(0.2, 0, 0.1)
 // mesh2.rotation = new Vector3(0, 0, 0)
 
-// const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-// mesh3.position = new Vector3(-0.2, 0, 0.1)
-// mesh3.rotation = new Vector3(0, 0, 0)
+// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
+// mesh2.position = new Vector3(0.2, 0, 0.1)
+// mesh2.rotation = new Vector3(0, 0, 0)
 
-scene.add(mesh1)
+const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+mesh3.position = new Vector3(0, 0, 0)
+mesh3.rotation = new Vector3(0, 0, 0)
+
+const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
+mesh2.position = new Vector3(0.3, 0, 0)
+mesh2.rotation = new Vector3(0, 0, 0)
+
+scene.add(mesh3, mesh2)
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
@@ -151,7 +161,7 @@ const topp = 0.5
 const near = -1000;
 const far = 1000;
 
-scene.add(mesh1)
+// scene.add(mesh1)
 scene.drawAll()
 
 projectionSelector.addEventListener('change', function(){
@@ -307,33 +317,45 @@ zPos.addEventListener('input', function(){
 })
 
 lightXPosition.addEventListener('input', function() {
-    light1.direction.x = parseFloat(lightXPosition.value)
+    light1.position.x = parseFloat(lightXPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    phongUpdater.update(updates)
+    // phongUpdater.update(updates)
     scene.drawAll()
 })
 
 lightYPosition.addEventListener('input', function() {
-    light1.direction.y = parseFloat(lightYPosition.value)
+    light1.position.y = parseFloat(lightYPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    phongUpdater.update(updates)
+    // phongUpdater.update(updates)
+    console.log(light1.position.y)
     scene.drawAll()
 })
 
 lightZPosition.addEventListener('input', function() {
-    light1.direction.z = parseFloat(lightZPosition.value)
+    light1.position.z = parseFloat(lightZPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    phongUpdater.update(updates)
+    // phongUpdater.update(updates)
     scene.drawAll()
 })
 
-lightIntensity.addEventListener('input', function() {
-    light1.intensity = parseFloat(lightIntensity.value)
+lightIntensityR.addEventListener('input', function() {
+    light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    phongUpdater.update(updates)
+    // phongUpdater.update(updates)
     scene.drawAll()
 })
-
+lightIntensityG.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    scene.drawAll()
+})
+lightIntensityB.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    scene.drawAll()
+})
 
 function selectNoZ(){
     camRotationXSlider.style.display = 'block'

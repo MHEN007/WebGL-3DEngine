@@ -1,9 +1,23 @@
 class Light extends NodeScene {
     
-    constructor(i = 1.0, color){
+    constructor(i = Vec3(1.0, 1.0, 1.0)){
         super()
         this.intensity = i
-        this.color = color // r, g, b
+        this.x = i.x
+        this.y = i.y
+        this.z = i.z
+    }
+
+    get type() {
+        return "Light"
+    }
+
+    calculatePosition(objPos) {
+        throw new Error("Must be called in derived class.");
+    }
+
+    calculateIntensity(objPos) {
+        throw new Error("Must be called in derived class.");
     }
 
 }

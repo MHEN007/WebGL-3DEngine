@@ -103,8 +103,15 @@
 
             <label for="angle">Light Intensity :</label>
             <label class="switch">
-                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-r">
             </label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-g">
+            </label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-b">
+            </label>
+            
             <br />
             <br />
             <label for="angle">anim :</label>
@@ -137,6 +144,8 @@
 
     <script src="./light/baseLight.js"></script>
     <script src="./light/directionalLight.js"></script>
+    <script src="./light/spotLight.js"></script>
+    <script src="./light/pointLight.js"></script>
 
     <script src="./utils/updater.js"></script>
     <script src="./utils/Quarternion.js"></script>
