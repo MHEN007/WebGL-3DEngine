@@ -7,6 +7,8 @@ const centerHead = new BoxGeometry(0.09, 0.09, 0.09);
 const plane = new PlaneGeometry(1,1);
 
 const canvas = document.getElementById("glCanvas")
+const componentViewer = document.getElementById("componentViewer")
+
 const gl = canvas.getContext("webgl")
 
 const projectionSelector = document.getElementById("projection")
@@ -493,4 +495,31 @@ fileSelector.addEventListener('change', async (e) => {
     scene = Scene.fromJSON(json)
     console.log(scene)
     scene.drawAll()
+    
+    /* LOAD VIEWER */
+    const ul = document.createElement("ul")
+
+    ul.appendChild(componentViewLoader(scene))
+
+    componentViewer.appendChild(ul)
 })
+
+function componentViewLoader(obj)
+{
+    const li = document.createElement('li')
+
+    li.textContent = obj.id
+
+    if(obj.children && obj.children != 0)
+    {
+        const ul = document.createElement('ul')
+        for(let i = 0; i < obj.children.length; i++)
+        {
+            ul.append(componentViewLoader(obj.children[i]))
+        }
+
+        li.appendChild(ul)
+    }
+
+    return li
+}

@@ -6,8 +6,8 @@ class Mesh extends NodeScene {
      * @param {ShaderMaterial[]} material 
      * @param {number[]} assignMaterial 
      */
-    constructor(geometry, material, assignMaterial){
-        super()
+    constructor(id = "Mesh", geometry, material, assignMaterial){
+        super(id)
         this.geometry = geometry
         this.material = material
         this.materialMap = {}
