@@ -154,7 +154,6 @@ class NodeScene {
     }
 
     toJSON(){
-        console.log(this.children)
         return {
             position: this.position,
             rotation: this.rotation,
@@ -169,7 +168,7 @@ class NodeScene {
     static loadObject(data, type, object){
         switch (type) {
             case "Scene":
-                object = new Scene(gl, camera, null)
+                object = Scene.fromJSON(data, object)
                 return object
             case "Mesh":
                 return Mesh.fromJSON(data, object);
@@ -199,6 +198,7 @@ class NodeScene {
         object.localMatrix = data.localMatrix
         object.worldMatrix = data.worldMatrix
         object.visible = data.visible
+        console.log(data.children)
         data.children.forEach(element => {
             object.add(NodeScene.fromJSON(element))
         });

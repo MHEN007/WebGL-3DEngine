@@ -120,7 +120,6 @@ class Scene extends NodeScene{
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
-                console.log(mesh.position)
                 this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i, mesh.position)
             }
         }
@@ -211,8 +210,6 @@ class Scene extends NodeScene{
     
     drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i, meshPosition) {
         // Get attribute locations
-        console.log("MESH POSITION")
-        console.log(meshPosition)
         var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos')
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
         var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal')
@@ -362,23 +359,28 @@ class Scene extends NodeScene{
         }
     }
     
+    setLightsource(lights){
+        this.#lightsources = lights
+    }
     
 
     toJSON() {
         return { 
             ...super.toJSON(),
             type: this.type,
+            lightsources: this.#lightsources,
         };
     }
 
-    // /**
-    //  * 
-    //  * @param {JSON} json 
-    //  * @param {Scene} object 
-    //  */
-    // static fromJSON(json, object){
-    //     object = object || new Scene(gl, camera, null)
-    //     return object
-    // }
+    /**
+     * 
+     * @param {JSON} json 
+     * @param {Scene} object 
+     */
+    static fromJSON(json, object){
+        object = object || new Scene(gl, camera, null)
+        object.setLightsource(json.lightsources)
+        return object
+    }
 
 }
