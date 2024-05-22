@@ -43,9 +43,10 @@ canvas.height = 600
 const phongUpdater = new Updater()
 
 /* LIGHT */
-// const light1 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(1, -1, 0))
-// const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 1, 1))
-const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
+const light2 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(0, 0, -1))
+const light3 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(0, 0, 1))
+const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 0.03, 0))
+// const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
 lightIntensityR.value = light1.intensity.x
 lightIntensityG.value = light1.intensity.y
 lightIntensityB.value = light1.intensity.z
@@ -58,12 +59,12 @@ camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 /* SCENE CREATION */
-const scene = new Scene(gl, [camera], [light1]);
+const scene = new Scene(gl, camera, [light2, light3]);
 
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new PhongMaterial("green", [0.1, 0.1, 0], camera.position, false, tex1)
-const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
+const green = new PhongMaterial("green", [0.1, 0.1, 0.1], false, tex1)
+const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
 const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
@@ -94,7 +95,9 @@ const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.3, 0, 0)
 mesh2.rotation = new Vector3(0, 0, 0)
 
-scene.add(mesh3, mesh2)
+let shulker = new Shulker()
+console.log(shulker)
+scene.add(shulker.object)
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
