@@ -27,12 +27,24 @@ class Vector3 {
         }
     }
 
+    euclideanDistance(vec){
+        return Math.sqrt((this.x - vec.x) ** 2 + (this.y - vec.y) ** 2 + (this.z - vec.z) ** 2)
+    }
+
     cross(vec){
         return this.set(
             this.y * vec.z - this.z * vec.y,
             this.z * vec.x - this.x * vec.z,
             this.x * vec.y - this.y * vec.x
         );
+    }
+
+    multiply(vec){
+        if(vec instanceof Vector3){
+            return this.set(this.x * vec.x, this.y * vec.y, this.z * vec.z)
+        }else if(typeof vec ==='number'){
+            return this.set(this.x * vec, this.y * vec, this.z * vec)
+        }
     }
 
     normalize(){
