@@ -15,6 +15,7 @@ class Scene extends NodeScene{
     #currentProgram = ""
     #camera
     #materialMap
+    /**@type {Light[]} */
     #lightsources
     #isHollow
     /**
@@ -368,7 +369,7 @@ class Scene extends NodeScene{
         return { 
             ...super.toJSON(),
             type: this.type,
-            lightsources: this.#lightsources,
+            lightsources: this.#lightsources.map(light => light.toJSON()),
         };
     }
 
@@ -379,7 +380,13 @@ class Scene extends NodeScene{
      */
     static fromJSON(json, object){
         object = object || new Scene(gl, camera, null)
-        object.setLightsource(json.lightsources)
+        const lights = []
+        json.lightsources.forEach(light => {
+            console.log(light)
+            lights.push(Light.fromJSON(light))
+            console.log(Light.fromJSON(light))
+        })
+        object.setLightsource(lights)
         return object
     }
 

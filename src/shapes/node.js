@@ -173,8 +173,11 @@ class NodeScene {
                 object = Scene.fromJSON(data, object)
                 return object
             case "Mesh":
-                return Mesh.fromJSON(data, object);
-            default:
+                object = Mesh.fromJSON(data, object);
+                return object
+            case "Light":
+                object = Light.fromJSON(data, object);
+                return object
         }
     }
 
@@ -191,8 +194,7 @@ class NodeScene {
         } else {
             data = jsonString
         }
-        console.log(data)
-        console.log(data.children)
+        
         object = NodeScene.loadObject(data, data.type, object)
         object.id = data.id
         object.position = new Vector3(data.position.x, data.position.y, data.position.z)
@@ -201,11 +203,9 @@ class NodeScene {
         object.localMatrix = data.localMatrix
         object.worldMatrix = data.worldMatrix
         object.visible = data.visible
-        console.log(data.children)
         data.children.forEach(element => {
             object.add(NodeScene.fromJSON(element))
         });
-        console.log(object)
         return object
     }
 }

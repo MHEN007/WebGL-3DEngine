@@ -495,7 +495,7 @@ fileSelector.addEventListener('change', async (e) => {
     } catch (error){
         console.error(error);
     }
-    scene = Scene.fromJSON(json)
+    scene = NodeScene.fromJSON(json)
     console.log(scene)
     scene.drawAll()
     
