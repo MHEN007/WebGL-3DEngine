@@ -36,6 +36,7 @@ const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
 const anim = document.getElementById('anim');
+const fileSelector = document.getElementById("file-selector");
 canvas.width = 600
 canvas.height = 600
 
@@ -58,12 +59,11 @@ camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 /* SCENE CREATION */
-const scene = new Scene(gl, [camera], [light1]);
 
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new PhongMaterial("green", [0.1, 0.1, 0], camera.position, false, tex1)
-const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
+const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
+const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
 const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
@@ -94,10 +94,9 @@ const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.3, 0, 0)
 mesh2.rotation = new Vector3(0, 0, 0)
 
-scene.add(mesh3, mesh2)
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
-// const root = new Mesh(gl, [camera], null, new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
+// const root = new Mesh( new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
 // root.position = new Vector3(0,0,0)
 // root.rotation = new Vector3(0,0,0)
 // root.add(mesh1)
@@ -107,52 +106,73 @@ scene.add(mesh3, mesh2)
 // mesh3.position = new Vector3(0.4, 0, 0.2)
 // mesh3.rotation = new Vector3(0, 0, 0)
 
-// const neckMesh = new Mesh(neck, materials, [0, 0, 0, 0, 0, 0])
-// neckMesh.position = new Vector3(0, 0, 0)
-// neckMesh.rotation = new Vector3(0, 0, 0)
+const neckMesh = new Mesh(neck, materials, [0, 0, 0, 0, 0, 0])
+neckMesh.position = new Vector3(0, 0, 0)
+neckMesh.rotation = new Vector3(0, 0, 0)
 
-// const bodyMesh = new Mesh(body, materials, [0, 0, 0, 0, 0, 0])
-// bodyMesh.position = new Vector3(0, -0.1, 0)
-// bodyMesh.rotation = new Vector3(0, 0, 0)
+const bodyMesh = new Mesh(body, materials, [0, 0, 0, 0, 0, 0])
+bodyMesh.position = new Vector3(0, -0.1, 0)
+bodyMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone1LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
-// bone1LeftMesh.rotation = new Vector3(0, 0, 0)
+const bone1LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
+bone1LeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone2LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
-// bone2LeftMesh.rotation = new Vector3(0, 0, 0)
+const bone2LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
+bone2LeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone3LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
-// bone3LeftMesh.rotation = new Vector3(0, 0, 0)
+const bone3LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
+bone3LeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone1RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
-// bone1RightMesh.rotation = new Vector3(0, 0, 0)
+const bone1RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
+bone1RightMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone2RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
-// bone2RightMesh.rotation = new Vector3(0, 0, 0)
+const bone2RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
+bone2RightMesh.rotation = new Vector3(0, 0, 0)
 
-// const bone3RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-// bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
-// bone3RightMesh.rotation = new Vector3(0, 0, 0)
+const bone3RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
+bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
+bone3RightMesh.rotation = new Vector3(0, 0, 0)
 
-// const headLeftMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
-// headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
-// headLeftMesh.rotation = new Vector3(0, 0, 0)
+const headLeftMesh = new Mesh( sideHead, materials, [0, 0, 0, 0, 0, 0])
+headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
+headLeftMesh.rotation = new Vector3(0, 0, 0)
 
-// const headRightMesh = new Mesh(sideHead, materials, [0, 0, 0, 0, 0, 0])
-// headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
-// headRightMesh.rotation = new Vector3(0, 0, 0)
+const headRightMesh = new Mesh( sideHead, materials, [0, 0, 0, 0, 0, 0])
+headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
+headRightMesh.rotation = new Vector3(0, 0, 0)
 
-// const centerHeadMesh = new Mesh(centerHead, materials, [0, 0, 0, 0, 0, 0])
-// centerHeadMesh.position = new Vector3(0, 0.04, 0)
-// centerHeadMesh.rotation = new Vector3(0, 0, 0)
+const centerHeadMesh = new Mesh( centerHead, materials, [0, 0, 0, 0, 0, 0])
+centerHeadMesh.position = new Vector3(0, 0.04, 0)
+centerHeadMesh.rotation = new Vector3(0, 0, 0)
+
+neckMesh.add(headLeftMesh, headRightMesh, centerHeadMesh)
+bodyMesh.add(bone1LeftMesh, bone2LeftMesh, bone3LeftMesh, bone1RightMesh, bone2RightMesh, bone3RightMesh, neckMesh)
 
 let isAnimating = false; // Variable to keep track of animation state
 
+function init(){
+    if(!gl){
+        console.log("WEBGL not available on your browser!")
+    }else{
+        gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
+        gl.clearColor(1.0, 1.0, 1.0, 0.0)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        gl.enable(gl.CULL_FACE)
+        gl.enable(gl.DEPTH_TEST)
+    }
+}
+
+init()
+
+// scene add root buat jadi 'world'nya roo
+const object = new Steve()
+let scene = new Scene(gl, [camera], [light1]).add(object.object);
+console.log(scene)
 // scene add root buat jadi 'world'nya root
 const left = -0.5
 const right = 0.5
@@ -212,9 +232,9 @@ projectionSelector.addEventListener('change', function(){
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         selectAll()
     }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     console.log(camera)
     scene.drawAll()
 
@@ -255,6 +275,7 @@ distanceSlider.addEventListener('input', function(){
     // console.log(camera.type)
     camera.position.z = 2-parseFloat(distanceSlider.value)
     camera.position.y = camera.position.z
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -298,8 +319,8 @@ xPos.addEventListener('input', function(){
      * 
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
-    // scene.children[0].children[0].children[0].position.x = parseFloat(xPos.value)
-    scene.position.x = parseFloat(xPos.value)
+    scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
+    // scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -404,6 +425,7 @@ function animate() {
         camRotationYSlider.value = rotationAngle
         camera.rotation.y = rotationAngle; // Update rotation of the mesh
         // scene.computeWorldMatrix(false, true);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll(); // Redraw the scene
     }
     requestAnimationFrame(animate); // Call animate function again in next frame
@@ -416,7 +438,6 @@ anim.addEventListener('change', function() {
         animate(); // Start animation if checkbox is checked
     }
 });
-
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
@@ -459,3 +480,17 @@ function onMouseWheel(event){
     camera.position.z += event.deltaY * 0.001
     scene.drawAll()
 }
+
+fileSelector.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return
+
+    try{
+        json = await readFile(file)
+    } catch (error){
+        console.error(error);
+    }
+    scene = Scene.fromJSON(json)
+    console.log(scene)
+    scene.drawAll()
+})

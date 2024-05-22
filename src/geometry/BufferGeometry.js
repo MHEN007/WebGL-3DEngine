@@ -81,15 +81,18 @@ class BufferGeometry{
     }
 
     toJSON(){
-        const json = {
+        let json = {
             type: this.type,
-            attributes: {}
+            attributes: {
+
+            }
         };
         for (const name in this.#attributes) {
             if (name === 'normal')
                 { continue; }
-            json.attributes[name] = this.#attributes[name].toJSON();
+            json.attributes[name] = this.#attributes[name]
         }
+        console.log(json.attributes)
         return json;
     }
 

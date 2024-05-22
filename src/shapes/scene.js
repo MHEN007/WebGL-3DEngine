@@ -16,6 +16,7 @@ class Scene extends NodeScene{
     #camera
     #materialMap
     #lightsources
+    #isHollow
     /**
      * 
      * @param {WebGLRenderingContext} gl 
@@ -45,7 +46,11 @@ class Scene extends NodeScene{
 
     get type()
     {
-        return "scene"
+        return "Scene"
+    }
+
+    setIsHollow(value){
+        this.#isHollow = value;
     }
 
     setCamera(camera){
@@ -85,7 +90,6 @@ class Scene extends NodeScene{
     }
 
     createShader(type, source){
-        console.log(source)
         var shader = this.gl.createShader(type)
         this.gl.shaderSource(shader, source)
         this.gl.compileShader(shader)
@@ -123,7 +127,6 @@ class Scene extends NodeScene{
 
         /* Draw for the Children */
         for (let i = 0; i < mesh.children.length; i++){
-            console.log(mesh.children[i])
             this.draw(mesh.children[i], viewProjMat, mesh.children[i].geometry.getAttribute('position').stride, mesh.children[i].geometry.getAttribute('position').offset)
         }
     }
@@ -151,7 +154,11 @@ class Scene extends NodeScene{
         var vertexBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
     
-        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        }
         
         var size = 3          // 3 components per iteration
         var type = gl.FLOAT   // the data is 32bit floats
@@ -165,7 +172,11 @@ class Scene extends NodeScene{
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
             gl.enableVertexAttribArray(texCoordAttributeLocation)
-            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
+            if (this.#isHollow){
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.DYNAMIC_DRAW)
+            } else {
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
+            }
             var size = 2         // 2 components per iteration
             var type = gl.FLOAT   // the data is 32bit floats
             var normalize = false // don't normalize the data
@@ -248,7 +259,11 @@ class Scene extends NodeScene{
         // Create and bind the buffer for position
         var positionBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        }
     
         // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
         var size = 3          // 3 components per iteration
@@ -267,7 +282,11 @@ class Scene extends NodeScene{
         ])
         var colorBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, colors, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW)
+        }
     
         gl.vertexAttribPointer(colorAttributeLocation, 4, gl.FLOAT, false, 0, 0)
     
@@ -285,7 +304,11 @@ class Scene extends NodeScene{
         // Create and bind the buffer for normal
         var normalBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, normals, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+        }
     
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
@@ -294,7 +317,11 @@ class Scene extends NodeScene{
             var texObj = material.uniforms['sourceTexture']
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
-            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
+            if (this.#isHollow){
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.DYNAMIC_DRAW)
+            } else {
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
+            }
             
             gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
     
@@ -341,13 +368,17 @@ class Scene extends NodeScene{
         return { 
             ...super.toJSON(),
             type: this.type,
-        }
+        };
     }
 
-    static fromJSON(json, obj=null) {
-        if (!obj) obj = new Scene()
-        super.fromJSON(json, obj)
-        return obj
-    }
+    // /**
+    //  * 
+    //  * @param {JSON} json 
+    //  * @param {Scene} object 
+    //  */
+    // static fromJSON(json, object){
+    //     object = object || new Scene(gl, camera, null)
+    //     return object
+    // }
 
 }

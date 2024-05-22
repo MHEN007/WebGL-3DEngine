@@ -267,7 +267,7 @@ class Matrix4x4{
             [
                 1, 0, 0, 0,
                 0, 1, 0, 0,
-                -scale * Math.cos(angle), scale * Math.sin(angle), 0, 0,
+                -scale * Math.cos(angle), scale * Math.sin(angle), 1, 0,
                 0, 0, 0, 1,
             ],
             this.ortoProj(left, right, bottom, top, near, far),

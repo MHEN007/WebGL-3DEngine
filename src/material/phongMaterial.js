@@ -98,15 +98,9 @@ class PhongMaterial extends ShaderMaterial {
         super(name, PhongMaterial.vs, PhongMaterial.fs, uniform)        
     }
 
-    // update(updates)
-    // {
-    //     this.uniforms['lightPosition'] = updates['lightPosition']
-    //     this.uniforms['lightIntensity'] = updates['lightIntensity']
-    // }
-
-    fromJSON(){
-        return JSON.stringify({
-            name: this.name,
+    toJSON(){
+        return {
+            type: this.type,
             uniform: {
                 ambient: this.uniforms['ambient'],
                 shininess: this.uniforms['shininess'],
@@ -114,11 +108,10 @@ class PhongMaterial extends ShaderMaterial {
                 specular: this.uniforms['specular'],
                 // lightPosition: this.uniforms['lightPosition']
             }
-        })
+        }
     }
     
-    
-    toJSON(object){
+    static fromJSON(object){
         return new PhongMaterial(object.name, object.uniforms['ambient'], object.uniforms['shininess'], object.uniforms['diffuse'], object.uniforms['specular'])
     }
 }
