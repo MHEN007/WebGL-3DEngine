@@ -6,8 +6,8 @@ class Mesh extends NodeScene {
      * @param {ShaderMaterial[]} material 
      * @param {number[]} assignMaterial 
      */
-    constructor(geometry, material, assignMaterial){
-        super()
+    constructor(id = "Mesh", geometry, material, assignMaterial){
+        super(id)
         this.geometry = geometry
         this.material = material
         this.materialMap = {}
@@ -69,9 +69,7 @@ class Mesh extends NodeScene {
         object.geometry = BufferGeometry.fromJSON(json.geometry)
         const materials = []
         //TODO: Load material error
-        console.log(json.material)
         for (let i = 0; i < json.material.length; i++){
-            console.log()
             if (json.material[i].type == "BASIC"){
                 materials.push(BasicMaterial.fromJSON(json.material[i], null));
             }
@@ -79,7 +77,6 @@ class Mesh extends NodeScene {
                 materials.push(PhongMaterial.fromJSON(json.material[i]))
             }
         }
-        console.log(materials)
         object.setMaterial(materials, json.assignMaterial)
         return object
     }
