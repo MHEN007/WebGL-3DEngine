@@ -110,9 +110,39 @@ class NodeScene {
         }
     }
 
+    // remove(...objects){
+    //     if (objects.length > 1){
+    //         objects.forEach(object => this.remove(object))
+    //     }
+    //     if(objects.length === 0){
+    //         return this;
+    //     }
+    //     if(objects.length === 1){
+    //         const object = objects[0];
+    //         if (object){
+    //             const idx = this.children.indexOf(object);
+    //             if(idx !== -1){
+    //                 object.parent = null
+    //                 this.children.splice(idx, 1)
+    //             }
+    //         }
+    //     }
+    //     return this;
+    // }
+
     remove(...objects){
+        const recursiveRemove = (node, object) => {
+            const idx = node.children.indexOf(object);
+            if(idx !== -1){
+                object.parent = null;
+                node.children.splice(idx, 1);
+            } else {
+                node.children.forEach(child => recursiveRemove(child, object));
+            }
+        }
+    
         if (objects.length > 1){
-            objects.forEach(object => this.remove(object))
+            objects.forEach(object => this.remove(object));
         }
         if(objects.length === 0){
             return this;
@@ -120,11 +150,7 @@ class NodeScene {
         if(objects.length === 1){
             const object = objects[0];
             if (object){
-                const idx = this.children.indexOf(object);
-                if(idx !== -1){
-                    object.parent = null
-                    this.children.splice(idx, 1)
-                }
+                recursiveRemove(this, object);
             }
         }
         return this;
