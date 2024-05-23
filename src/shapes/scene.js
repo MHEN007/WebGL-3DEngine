@@ -215,6 +215,7 @@ class Scene extends NodeScene{
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
         var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal')
         var texCoordAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_texcoord')
+        var tangentAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_tangent');
     
         // Get uniform locations
         var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat')
@@ -232,8 +233,7 @@ class Scene extends NodeScene{
         var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
         var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
         var uniformSpecularMapLoc = gl.getUniformLocation(this.phongProgram, 'u_specularMap')
-        var uniformDisplacementMap = gl.getUniformLocation(this.phongProgram, 'u_displacementMap')
-        var uniformDisplacementScale = gl.getUniformLocation(this.phongProgram, 'displacementScale')
+        var uniformNormalMapLoc = gl.getUniformLocation(this.phongProgram, 'u_normalMap')
 
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -249,8 +249,7 @@ class Scene extends NodeScene{
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
         gl.uniform1i(uniformSpecularMapLoc, 1)
-        gl.uniform1i(uniformDisplacementMap, 2)
-        gl.uniform1f(uniformDisplacementScale, 0)
+        gl.uniform1i(uniformNormalMapLoc, 2)
 
         let lightPos = []
         let lightInt = []
@@ -269,6 +268,7 @@ class Scene extends NodeScene{
         gl.enableVertexAttribArray(colorAttributeLocation)
         gl.enableVertexAttribArray(normalAttributeLocation)
         gl.enableVertexAttribArray(texCoordAttributeLocation)
+        gl.enableVertexAttribArray(tangentAttributeLocation)
     
         // Create and bind the buffer for position
         var positionBuffer = gl.createBuffer()
@@ -338,6 +338,12 @@ class Scene extends NodeScene{
             }
             
             gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
+
+            var tangentBuffer = gl.createBuffer()
+            const tangents = this.calculateTangents(position, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), normals)
+            this.gl.bindBuffer(gl.ARRAY_BUFFER, tangentBuffer)
+            this.gl.bufferData(gl.ARRAY_BUFFER, tangents, gl.STATIC_DRAW)
+            gl.vertexAttribPointer(tangentAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
             var texture = gl.createTexture()
             this.gl.activeTexture(gl.TEXTURE0)
@@ -377,17 +383,17 @@ class Scene extends NodeScene{
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
             }
 
-            var displacementTexture = gl.createTexture()
+            var normalTexture = gl.createTexture()
             gl.activeTexture(gl.TEXTURE2)
-            gl.bindTexture(gl.TEXTURE_2D, displacementTexture)
+            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
 
-            var displacementImage = new Image()
-            displacementImage.src = './utils/displacement.png'
-            gl.bindTexture(gl.TEXTURE_2D, displacementTexture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, displacementImage)
+            var normalMap = new Image()
+            normalMap.src = './utils/normal.png'
+            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, normalMap)
     
-            if (isPowerOf2(displacementImage.width) && isPowerOf2(displacementImage.height)) {
+            if (isPowerOf2(normalMap.width) && isPowerOf2(normalMap.height)) {
                 gl.generateMipmap(gl.TEXTURE_2D)
             } else {
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -444,5 +450,79 @@ class Scene extends NodeScene{
         object.setLightsource(lights)
         return object
     }
+
+    calculateTangents(vertices, texcoords, normals) {
+        const tan1 = [];
+        const tan2 = [];
+        const tangents = new Float32Array(vertices.length);
+    
+        for (let i = 0; i < vertices.length / 3; i++) {
+            tan1[i] = [0.0, 0.0, 0.0];
+            tan2[i] = [0.0, 0.0, 0.0];
+        }
+    
+        for (let i = 0; i < vertices.length; i += 9) {
+            const i1 = i / 3;
+            const i2 = i1 + 1;
+            const i3 = i1 + 2;
+    
+            const v1 = vertices.slice(i, i + 3);
+            const v2 = vertices.slice(i + 3, i + 6);
+            const v3 = vertices.slice(i + 6, i + 9);
+    
+            const uv1 = texcoords.slice(i1 * 2, i1 * 2 + 2);
+            const uv2 = texcoords.slice(i2 * 2, i2 * 2 + 2);
+            const uv3 = texcoords.slice(i3 * 2, i3 * 2 + 2);
+    
+            const edge1 = this.subtract(v2, v1);
+            const edge2 = this.subtract(v3, v1);
+            const deltaUV1 = this.subtract(uv2, uv1);
+            const deltaUV2 = this.subtract(uv3, uv1);
+    
+            const f = 1.0 / (deltaUV1[0] * deltaUV2[1] - deltaUV2[0] * deltaUV1[1]);
+    
+            const tangent = [
+                f * (deltaUV2[1] * edge1[0] - deltaUV1[1] * edge2[0]),
+                f * (deltaUV2[1] * edge1[1] - deltaUV1[1] * edge2[1]),
+                f * (deltaUV2[1] * edge1[2] - deltaUV1[1] * edge2[2])
+            ];
+    
+            tan1[i1] = this.addM(tan1[i1], tangent);
+            tan1[i2] = this.addM(tan1[i2], tangent);
+            tan1[i3] = this.addM(tan1[i3], tangent);
+        }
+    
+        for (let i = 0; i < vertices.length; i += 3) {
+            const n = normals.slice(i, i + 3);
+            const t = tan1[i / 3];
+    
+            const tangent = this.normalize(this.subtract(t, this.scaleM(n, this.dotM(n, t))));
+            tangents.set(tangent, i);
+        }
+    
+        return tangents;
+    }
+    
+    subtract(a, b) {
+        return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    }
+    
+    addM(a, b) {
+        return [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+    }
+    
+    scaleM(a, s) {
+        return [a[0] * s, a[1] * s, a[2] * s];
+    }
+    
+    dotM(a, b) {
+        return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    }
+    
+    normalize(a) {
+        const length = Math.sqrt(this.dotM(a, a));
+        return this.scaleM(a, 1.0 / length);
+    }
+    
 
 }
