@@ -222,15 +222,6 @@ camRotationZSlider.addEventListener('input', function(){
 })
 
 distanceSlider.addEventListener('input', function(){
-    // console.log(distanceSlider.value)
-    // if (camera.type === 'PerspectiveCamera'){
-    //     camera.far = parseFloat(distanceSlider.value)
-    // } else if (camera.type === 'Orthographic'){
-    //     camera.far = parseFloat(distanceSlider.value)
-    // } else if (camera.type === 'ObliqueCamera'){
-    //     camera.far = parseFloat(distanceSlider.value)
-    // }
-    // console.log(camera.type)
     camera.position.z = 2-parseFloat(distanceSlider.value)
     camera.position.y = camera.position.z
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -253,16 +244,54 @@ angleObliqueSlider.addEventListener('input', function(){
     scene.drawAll()
 })
 
+viewAngleSelector.addEventListener('change', function(){
+    if (viewAngleSelector.value === 'front'){
+        camera.position = new Vector3(0, 0, 1)
+        camera.rotation = new Vector3(0, 0, 0)
+    } else if (viewAngleSelector.value === 'back'){
+        camera.position = new Vector3(0, 0, -1)
+        camera.rotation = new Vector3(0, 0, 0)
+    } else if (viewAngleSelector.value === 'left'){
+        camera.position = new Vector3(-1, 0, 0)
+        camera.rotation = new Vector3(0, 0, 0)
+    } else if (viewAngleSelector.value === 'right'){
+        camera.position = new Vector3(1, 0, 0)
+        camera.rotation = new Vector3(0, 0, 0)
+    }
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
 resetButton.addEventListener('click', function(){
     camRotationXSlider.value = 0
+    camera.rotation.x = parseFloat(camRotationXSlider.value)
     camRotationYSlider.value = 0
+    camera.rotation.y = parseFloat(camRotationYSlider.value)
+    camRotationZSlider.value = 0
+    camera.rotation.z = parseFloat(camRotationZSlider.value)
     if (camera.type === 'PerspectiveCamera'){
         distanceSlider.value = 1
+        camera.position.z = 2-parseFloat(distanceSlider.value)
+        camera.position.y = camera.position.z
     } else if (camera.type === 'ObliqueCamera'){
         angleObliqueSlider.value = 0
+        camera.setAngle(parseFloat(angleObliqueSlider.value))
+        
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+        console.log(camera.angle)
+        camera.updateProjectionMatrix()
+
     } else if (camera.type === 'Orthographic'){
         viewAngleSelector.value = 'front'
+        camera.position = new Vector3(0, 0, 1)
+        camera.rotation = new Vector3(0, 0, 0)
     }
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 
@@ -277,7 +306,8 @@ xPos.addEventListener('input', function(){
      * 
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
-    scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
+    // scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
+    scene.position.x = parseFloat(xPos.value)
     // scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
