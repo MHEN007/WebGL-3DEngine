@@ -35,6 +35,7 @@ const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
 const anim = document.getElementById('anim');
 const fileSelector = document.getElementById("file-selector");
+const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
 
@@ -398,33 +399,32 @@ lightIntensityB.addEventListener('input', function() {
     scene.drawAll()
 })
 
+function updateComponentViewer(){
+    var ulElement = document.querySelector('ul');
+        while (ulElement.firstChild) {
+            ulElement.removeChild(ulElement.firstChild);
+        }
+        ulElement.remove();
+
+        componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+        const ul = document.createElement("ul")
+
+        ul.appendChild(componentViewLoader(scene))
+
+        componentViewer.appendChild(ul)
+}
+
 deleteButton.addEventListener('click', function(){
     if (check.length>0){
         check.forEach((item) => {
             console.log("yang mau di delete", item)
             scene.remove(item)
-
-            // Dapatkan elemen ul
-            var ulElement = document.querySelector('ul');
-            // Menghapus semua elemen li dalam ul
-            while (ulElement.firstChild) {
-                ulElement.removeChild(ulElement.firstChild);
-            }
-            // Atau jika Anda ingin menghapus seluruh elemen ul
-            ulElement.remove();
-
-            // Tambahkan ul kembali
-            componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-            const ul = document.createElement("ul")
-
-            ul.appendChild(componentViewLoader(scene))
-
-            componentViewer.appendChild(ul)
         })
     }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 
+    updateComponentViewer()
     console.log(scene)
 })
 
@@ -480,7 +480,6 @@ function animate() {
     }
     requestAnimationFrame(animate); // Call animate function again in next frame
 }
-// Add event listener to the checkbox
 
 anim.addEventListener('change', function() {
     isAnimating = anim.checked; // Update animation state based on checkbox state
@@ -592,12 +591,10 @@ fileSelector.addEventListener('change', async (e) => {
 function componentViewLoader(obj) {
     const li = document.createElement('li');
     
-    // Buat elemen checkbox
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.value = obj.id;
 
-    // Tambahkan event listener untuk checkbox parent
     checkbox.addEventListener('change', function() {
         if(checkbox.checked){
             findAndPushChildren(scene, checkbox.value)
@@ -612,10 +609,8 @@ function componentViewLoader(obj) {
         });
     });
 
-    // Tambahkan checkbox ke elemen li
     li.appendChild(checkbox);
 
-    // Tambahkan teks dari obj.id setelah checkbox
     li.appendChild(document.createTextNode(obj.id));
 
     if (obj.children && obj.children.length > 0) {
@@ -628,4 +623,31 @@ function componentViewLoader(obj) {
 
     return li;
 }
+
+addObjectFileSelector.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return
+
+    try{
+        json = await readFile(file)
+    } catch (error){
+        console.error(error);
+    }
+
+    const newScene = NodeScene.fromJSON(json)
+    // getAllChildren(scene)
+    const newObject = newScene.children[0]
+
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log(item)
+            scene.getObject(item).add(newObject)
+        })
+    }
+    updateComponentViewer()
+    scene.drawAll()
+
+    // Reset nilai dari input file
+    e.target.value = null;
+})
 

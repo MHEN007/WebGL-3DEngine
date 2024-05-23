@@ -13,6 +13,8 @@
             margin: 0;
             background-color: #2f2f2f;
             color: white;
+            overflow: hidden;
+
         }
 
         .main-container {
@@ -27,7 +29,8 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            z-index: 1; /* Pastikan canvas berada di atas */
+            z-index: 1;
+            margin-left: 480px;
         }
 
         #glCanvas {
@@ -41,14 +44,17 @@
         }
 
         #componentViewer {
-            width: 200px;
+            position: fixed;
+            width: 475px;
             margin-right: 100px;
             margin-left: 20px;
             flex-shrink: 0;
+            overflow-y: auto;
+            height: 100vh;
         }
 
         h1 {
-            position:fixed;
+            position:absolute;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -160,7 +166,12 @@
             <input type="file" id="file-selector">
             <br/>
             <br/>
+            <label for="delete">Delete Object</label>
             <button id="delete-button">Delete</button>
+            <br/>
+            <br/>
+            <label for="load">Add Object</label>
+            <input type="file" id="add-object-file-selector">
 
         </div>
         
