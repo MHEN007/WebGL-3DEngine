@@ -1,7 +1,14 @@
 class DirectionalLight extends Light {
 
-    direction //Vector3
-    constructor(i = Vec3(1.0, 1.0, 1.0), direction){
+    /**@type {Vector3} */
+    direction 
+
+    /**
+     * 
+     * @param {Vector3} i 
+     * @param {Vector3} direction 
+     */
+    constructor(i, direction){
         super(i)
         this.direction = direction
     }
@@ -17,4 +24,21 @@ class DirectionalLight extends Light {
         return this.intensity
     }
 
+    get type(){
+        return "DirectionalLight"
+    }
+
+    toJSON(){
+        return {
+            ...super.toJSON(),
+            direction: this.direction.toJSON(),
+            type: this.type,
+        }
+    }
+
+    static fromJSON(json, object){
+        object = object || new DirectionalLight(new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
+        object.direction = new Vector3(json.direction.x, json.direction.y, json.direction.z)
+        return object
+    }
 }

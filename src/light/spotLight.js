@@ -1,9 +1,12 @@
 class SpotLight extends Light {
 
-    position //Vector3
-    direction //Vector3
-    angle //radian
-    constructor(i = Vec3(1.0, 1.0, 1.0), position, direction, angle){
+    /**@type {Vector3} */
+    position 
+    /**@type {Vector3} */
+    direction
+    /**@type {number} */
+    angle
+    constructor(i, position, direction, angle){
         super(i)
         this.position = position
         this.direction = direction
@@ -31,4 +34,30 @@ class SpotLight extends Light {
         }
     }
 
+    get type(){
+        return "SpotLight"
+    }
+
+    toJSON(){
+        return {
+            ...super.toJSON(),
+            position: this.position.toJSON(),
+            direction: this.direction.toJSON(),
+            angle: this.angle,
+            type: this.type,
+        }
+    }
+
+    /**
+     * 
+     * @param {JSON} json 
+     * @param {SpotLight} object 
+     */
+    static fromJSON(json, object){
+        object = new SpotLight(new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
+        object.position = new Vector3(json.position.x, json.position.y, json.position.z)
+        object.direction = new Vector3(json.direction.x, json.direction.y, json.direction.z)
+        object.angle = json.angle
+        return object
+    }
 }

@@ -155,7 +155,6 @@ class NodeScene {
     }
 
     toJSON(){
-        console.log(this.children)
         return {
             id: this.id,
             position: this.position,
@@ -171,11 +170,14 @@ class NodeScene {
     static loadObject(data, type, object){
         switch (type) {
             case "Scene":
-                object = new Scene(gl, camera, null)
+                object = Scene.fromJSON(data, object)
                 return object
             case "Mesh":
-                return Mesh.fromJSON(data, object);
-            default:
+                object = Mesh.fromJSON(data, object);
+                return object
+            case "Light":
+                object = Light.fromJSON(data, object);
+                return object
         }
     }
 
@@ -192,8 +194,7 @@ class NodeScene {
         } else {
             data = jsonString
         }
-        console.log(data)
-        console.log(data.children)
+        
         object = NodeScene.loadObject(data, data.type, object)
         object.id = data.id
         object.position = new Vector3(data.position.x, data.position.y, data.position.z)
@@ -205,7 +206,6 @@ class NodeScene {
         data.children.forEach(element => {
             object.add(NodeScene.fromJSON(element))
         });
-        console.log(object)
         return object
     }
 }

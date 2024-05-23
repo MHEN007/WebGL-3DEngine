@@ -1,9 +1,4 @@
 const box = new BoxGeometry(0.1,0.1,0.1);
-const neck = new BoxGeometry(0.25, 0.025,0.025);
-const body = new BoxGeometry(0.025, 0.22, 0.025);
-const bone = new BoxGeometry(0.05, 0.025, 0.015);
-const sideHead = new BoxGeometry(0.075, 0.075, 0.075);
-const centerHead = new BoxGeometry(0.09, 0.09, 0.09);
 const plane = new PlaneGeometry(1,1);
 
 const canvas = document.getElementById("glCanvas")
@@ -46,9 +41,10 @@ canvas.height = 600
 const phongUpdater = new Updater()
 
 /* LIGHT */
-// const light1 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(1, -1, 0))
-// const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 1, 1))
-const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
+const light2 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(0, 0, -1))
+const light3 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(0, 0, 1))
+const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 0.03, 0))
+// const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
 lightIntensityR.value = light1.intensity.x
 lightIntensityG.value = light1.intensity.y
 lightIntensityB.value = light1.intensity.z
@@ -64,7 +60,7 @@ camera.rotation = new Vector3(0, 0, 0)
 
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new BasicMaterial("green", [0, 1, 0], true, tex1)
+const green = new PhongMaterial("green", [0.1, 0.1, 0.1], false, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
@@ -96,6 +92,11 @@ const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 mesh2.position = new Vector3(0.3, 0, 0)
 mesh2.rotation = new Vector3(0, 0, 0)
 
+let shulker = new Shulker()
+let wither = new Wither()
+console.log(shulker)
+// scene.add(shulker.object)
+
 // // mesh1: add children mesh2, mesh3
 // mesh1.add(mesh2,mesh3)
 // const root = new Mesh( new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
@@ -107,53 +108,6 @@ mesh2.rotation = new Vector3(0, 0, 0)
 // const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
 // mesh3.position = new Vector3(0.4, 0, 0.2)
 // mesh3.rotation = new Vector3(0, 0, 0)
-
-const neckMesh = new Mesh(neck, materials, [0, 0, 0, 0, 0, 0])
-neckMesh.position = new Vector3(0, 0, 0)
-neckMesh.rotation = new Vector3(0, 0, 0)
-
-const bodyMesh = new Mesh(body, materials, [0, 0, 0, 0, 0, 0])
-bodyMesh.position = new Vector3(0, -0.1, 0)
-bodyMesh.rotation = new Vector3(0, 0, 0)
-
-const bone1LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone1LeftMesh.position = new Vector3(-0.03, -0.05, 0)
-bone1LeftMesh.rotation = new Vector3(0, 0, 0)
-
-const bone2LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone2LeftMesh.position = new Vector3(-0.03, -0.1, 0)
-bone2LeftMesh.rotation = new Vector3(0, 0, 0)
-
-const bone3LeftMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone3LeftMesh.position = new Vector3(-0.03, -0.15, 0)
-bone3LeftMesh.rotation = new Vector3(0, 0, 0)
-
-const bone1RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone1RightMesh.position = new Vector3(0.03, -0.05, 0)
-bone1RightMesh.rotation = new Vector3(0, 0, 0)
-
-const bone2RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone2RightMesh.position = new Vector3(0.03, -0.1, 0)
-bone2RightMesh.rotation = new Vector3(0, 0, 0)
-
-const bone3RightMesh = new Mesh(bone, materials, [0, 0, 0, 0, 0, 0])
-bone3RightMesh.position = new Vector3(0.03, -0.15, 0)
-bone3RightMesh.rotation = new Vector3(0, 0, 0)
-
-const headLeftMesh = new Mesh( sideHead, materials, [0, 0, 0, 0, 0, 0])
-headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025)
-headLeftMesh.rotation = new Vector3(0, 0, 0)
-
-const headRightMesh = new Mesh( sideHead, materials, [0, 0, 0, 0, 0, 0])
-headRightMesh.position = new Vector3(0.1, 0.025, 0.025)
-headRightMesh.rotation = new Vector3(0, 0, 0)
-
-const centerHeadMesh = new Mesh( centerHead, materials, [0, 0, 0, 0, 0, 0])
-centerHeadMesh.position = new Vector3(0, 0.04, 0)
-centerHeadMesh.rotation = new Vector3(0, 0, 0)
-
-neckMesh.add(headLeftMesh, headRightMesh, centerHeadMesh)
-bodyMesh.add(bone1LeftMesh, bone2LeftMesh, bone3LeftMesh, bone1RightMesh, bone2RightMesh, bone3RightMesh, neckMesh)
 
 let isAnimating = false; // Variable to keep track of animation state
 
@@ -172,10 +126,12 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya roo
-const object = new Steve()
-let scene = new Scene(gl, [camera], [light1]).add(object.object);
-console.log(scene)
+const steve = new Chain()
 // scene add root buat jadi 'world'nya root
+const object = new Creeper()
+let scene = new Scene(gl, [camera], [light1]).add(steve.object);
+scene.position = new Vector3(0,0,0)
+
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
@@ -266,15 +222,6 @@ camRotationZSlider.addEventListener('input', function(){
 })
 
 distanceSlider.addEventListener('input', function(){
-    // console.log(distanceSlider.value)
-    // if (camera.type === 'PerspectiveCamera'){
-    //     camera.far = parseFloat(distanceSlider.value)
-    // } else if (camera.type === 'Orthographic'){
-    //     camera.far = parseFloat(distanceSlider.value)
-    // } else if (camera.type === 'ObliqueCamera'){
-    //     camera.far = parseFloat(distanceSlider.value)
-    // }
-    // console.log(camera.type)
     camera.position.z = 2-parseFloat(distanceSlider.value)
     camera.position.y = camera.position.z
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -297,16 +244,54 @@ angleObliqueSlider.addEventListener('input', function(){
     scene.drawAll()
 })
 
+viewAngleSelector.addEventListener('change', function(){
+    if (viewAngleSelector.value === 'front'){
+        camera.position = new Vector3(0, 0, 1)
+        camera.rotation = new Vector3(0, 0, 0)
+    } else if (viewAngleSelector.value === 'back'){
+        camera.position = new Vector3(0, 0, -1)
+        camera.rotation = new Vector3(0, 0, 0)
+    } else if (viewAngleSelector.value === 'left'){
+        camera.position = new Vector3(-1, 0, 0)
+        camera.rotation = new Vector3(0, 0, 0)
+    } else if (viewAngleSelector.value === 'right'){
+        camera.position = new Vector3(1, 0, 0)
+        camera.rotation = new Vector3(0, 0, 0)
+    }
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
 resetButton.addEventListener('click', function(){
     camRotationXSlider.value = 0
+    camera.rotation.x = parseFloat(camRotationXSlider.value)
     camRotationYSlider.value = 0
+    camera.rotation.y = parseFloat(camRotationYSlider.value)
+    camRotationZSlider.value = 0
+    camera.rotation.z = parseFloat(camRotationZSlider.value)
     if (camera.type === 'PerspectiveCamera'){
         distanceSlider.value = 1
+        camera.position.z = 2-parseFloat(distanceSlider.value)
+        camera.position.y = camera.position.z
     } else if (camera.type === 'ObliqueCamera'){
         angleObliqueSlider.value = 0
+        camera.setAngle(parseFloat(angleObliqueSlider.value))
+        
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+        console.log(camera.angle)
+        camera.updateProjectionMatrix()
+
     } else if (camera.type === 'Orthographic'){
         viewAngleSelector.value = 'front'
+        camera.position = new Vector3(0, 0, 1)
+        camera.rotation = new Vector3(0, 0, 0)
     }
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 
@@ -321,7 +306,8 @@ xPos.addEventListener('input', function(){
      * 
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
-    scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
+    // scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
+    scene.position.x = parseFloat(xPos.value)
     // scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
@@ -343,6 +329,7 @@ lightXPosition.addEventListener('input', function() {
     light1.position.x = parseFloat(lightXPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -351,6 +338,7 @@ lightYPosition.addEventListener('input', function() {
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     console.log(light1.position.y)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -358,6 +346,7 @@ lightZPosition.addEventListener('input', function() {
     light1.position.z = parseFloat(lightZPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -365,18 +354,22 @@ lightIntensityR.addEventListener('input', function() {
     light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityG.addEventListener('input', function() {
     light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityB.addEventListener('input', function() {
     light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -474,12 +467,14 @@ function onMouseMove(event){
             mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
             0)
         console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
     }
         // console.log(camera)
 }
 function onMouseWheel(event){
     camera.position.z += event.deltaY * 0.001
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 }
 
@@ -492,7 +487,7 @@ fileSelector.addEventListener('change', async (e) => {
     } catch (error){
         console.error(error);
     }
-    scene = Scene.fromJSON(json)
+    scene = NodeScene.fromJSON(json)
     console.log(scene)
     scene.drawAll()
     

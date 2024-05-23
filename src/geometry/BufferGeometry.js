@@ -92,7 +92,6 @@ class BufferGeometry{
                 { continue; }
             json.attributes[name] = this.#attributes[name]
         }
-        console.log(json.attributes)
         return json;
     }
 
