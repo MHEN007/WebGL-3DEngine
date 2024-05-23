@@ -15,15 +15,17 @@ class Scene extends NodeScene{
     #currentProgram = ""
     #camera
     #materialMap
+    /**@type {Light[]} */
     #lightsources
+    #isHollow
     /**
      * 
      * @param {WebGLRenderingContext} gl 
      * @param {Camera} camera 
-     * @param {} lightsources 
+     * @param {Light[]} lightsources 
      */
-    constructor(gl, camera, lightsources = []) {
-        super()
+    constructor(gl, camera, lightsources = [new DirectionalLight(new Vector3(0, 0, 0), new Vector3(0, 0, 0))]) {
+        super("Scene")
         this.gl = gl
         this.#camera = camera
         this.#lightsources = lightsources
@@ -39,12 +41,17 @@ class Scene extends NodeScene{
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
         this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
-        
+
+        this.init()
     }
 
     get type()
     {
-        return "scene"
+        return "Scene"
+    }
+
+    setIsHollow(value){
+        this.#isHollow = value;
     }
 
     setCamera(camera){
@@ -53,6 +60,18 @@ class Scene extends NodeScene{
 
     get camera(){
         return this.#camera
+    }
+
+    init(){
+        if(!gl){
+            console.log("WEBGL not available on your browser!")
+        }else{
+            gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
+            gl.clearColor(1.0, 1.0, 1.0, 1.0)
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+            gl.enable(gl.CULL_FACE)
+            gl.enable(gl.DEPTH_TEST)
+        }
     }
     
     drawAll(){
@@ -64,10 +83,7 @@ class Scene extends NodeScene{
 
         for (let i = 0; i < this.children.length; i++) {
             let mesh = this.children[i]
-            var up = Vector3.up()
             mesh.computeWorldMatrix()
-            var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
-            var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
@@ -75,7 +91,6 @@ class Scene extends NodeScene{
     }
 
     createShader(type, source){
-        console.log(source)
         var shader = this.gl.createShader(type)
         this.gl.shaderSource(shader, source)
         this.gl.compileShader(shader)
@@ -106,13 +121,12 @@ class Scene extends NodeScene{
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
-                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i)
+                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i, mesh.position)
             }
         }
 
         /* Draw for the Children */
         for (let i = 0; i < mesh.children.length; i++){
-            console.log(mesh.children[i])
             this.draw(mesh.children[i], viewProjMat, mesh.children[i].geometry.getAttribute('position').stride, mesh.children[i].geometry.getAttribute('position').offset)
         }
     }
@@ -140,7 +154,11 @@ class Scene extends NodeScene{
         var vertexBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
     
-        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        }
         
         var size = 3          // 3 components per iteration
         var type = gl.FLOAT   // the data is 32bit floats
@@ -154,7 +172,11 @@ class Scene extends NodeScene{
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)    
             gl.enableVertexAttribArray(texCoordAttributeLocation)
-            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
+            if (this.#isHollow){
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.DYNAMIC_DRAW)
+            } else {
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i*2*6, (i+1)*2*6), gl.STATIC_DRAW)
+            }
             var size = 2         // 2 components per iteration
             var type = gl.FLOAT   // the data is 32bit floats
             var normalize = false // don't normalize the data
@@ -187,7 +209,7 @@ class Scene extends NodeScene{
         gl.disableVertexAttribArray(positionAttributeLocation)
     }
     
-    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i) {
+    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i, meshPosition) {
         // Get attribute locations
         var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos')
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
@@ -207,6 +229,8 @@ class Scene extends NodeScene{
         var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos')
         var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
+        var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
+        var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
     
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -218,10 +242,21 @@ class Scene extends NodeScene{
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
-        gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray())
-        gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
+        // gl.uniform3fv(uniformCamPosLoc, this.#camera.position.toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
+
+        let lightPos = []
+        let lightInt = []
+
+        this.#lightsources.forEach(light => {
+            lightPos.push(...light.calculatePosition(meshPosition).toArray())
+            lightInt.push(...light.calculateIntensity(meshPosition).toArray())
+        })
+
+        gl.uniform3fv(uniformLightPosLoc, new Float32Array(lightPos))
+        gl.uniform3fv(uniformLightIntensityLoc, new Float32Array(lightInt))
+        gl.uniform1i(uniformNumLightLoc, this.#lightsources.length)
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation)
@@ -232,7 +267,11 @@ class Scene extends NodeScene{
         // Create and bind the buffer for position
         var positionBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, position, gl.STATIC_DRAW)
+        }
     
         // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
         var size = 3          // 3 components per iteration
@@ -251,7 +290,11 @@ class Scene extends NodeScene{
         ])
         var colorBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, colors, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW)
+        }
     
         gl.vertexAttribPointer(colorAttributeLocation, 4, gl.FLOAT, false, 0, 0)
     
@@ -269,7 +312,11 @@ class Scene extends NodeScene{
         // Create and bind the buffer for normal
         var normalBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer)
-        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, normals, gl.DYNAMIC_DRAW)
+        } else {
+            gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+        }
     
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
@@ -278,7 +325,11 @@ class Scene extends NodeScene{
             var texObj = material.uniforms['sourceTexture']
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
-            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
+            if (this.#isHollow){
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.DYNAMIC_DRAW)
+            } else {
+                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
+            }
             
             gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
     
@@ -319,19 +370,34 @@ class Scene extends NodeScene{
         }
     }
     
+    setLightsource(lights){
+        this.#lightsources = lights
+    }
     
 
     toJSON() {
         return { 
             ...super.toJSON(),
             type: this.type,
-        }
+            lightsources: this.#lightsources.map(light => light.toJSON()),
+        };
     }
 
-    static fromJSON(json, obj=null) {
-        if (!obj) obj = new Scene()
-        super.fromJSON(json, obj)
-        return obj
+    /**
+     * 
+     * @param {JSON} json 
+     * @param {Scene} object 
+     */
+    static fromJSON(json, object){
+        object = object || new Scene(gl, camera, null)
+        const lights = []
+        json.lightsources.forEach(light => {
+            console.log(light)
+            lights.push(Light.fromJSON(light))
+            console.log(Light.fromJSON(light))
+        })
+        object.setLightsource(lights)
+        return object
     }
 
 }

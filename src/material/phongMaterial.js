@@ -37,40 +37,54 @@ class PhongMaterial extends ShaderMaterial {
     uniform float shininess;
     uniform vec4 diffuseColor;
     uniform vec4 specularColor;
-    uniform vec3 lightPos;
+    uniform vec3 lightPos[5];
+    uniform vec3 intensity[5];
+    uniform int lightCount;
     uniform vec3 camPos;
+    uniform sampler2D u_texture;
+    uniform bool useTexture;
 
     varying vec4 v_color;
     varying vec3 v_normal;
     varying vec3 v_pos;
     varying vec2 v_texcoord;
 
-    uniform sampler2D u_texture;
-    uniform bool useTexture;
 
     void main() {
         // Normalize the vectors
         vec3 normal = normalize(v_normal);
-        vec3 light = normalize(lightPos - v_pos);
         vec3 viewDir = normalize(camPos - v_pos);
-        vec3 halfway = normalize(light + viewDir);
+        
+        // Calculate ambient lighting
+        vec3 ambient = ambientColor.rgb * ambientColor.a;
+
+        vec3 diffuse = vec3(0.0);
+        vec3 specular = vec3(0.0);
+
+        for (int i = 0; i < 5; ++i) {
+            if(i>=lightCount){
+                break;
+            }
+            vec3 light = normalize(lightPos[i] - v_pos);
+            vec3 halfway = normalize(light + viewDir);
+
+            // Calculate diffuse lighting
+            float diffuseFactor = max(dot(light, normal), 0.0);
+            diffuse += diffuseFactor * intensity[i] * diffuseColor.a;
+
+            // Calculate specular lighting
+            float specularFactor = pow(max(dot(normal, halfway), 0.0), shininess);
+            specular += specularFactor * intensity[i] * specularColor.a;
+
+        }
+    
+        vec3 lighting = (ambient + diffuse +  specular);
     
         // Sample the texture
         vec4 texColor = texture2D(u_texture, v_texcoord);
     
-        // Calculate diffuse lighting
-        float diffuseFactor = max(dot(light, normal), 0.0);
-        vec3 diffuse = diffuseFactor * diffuseColor.rgb;
-    
-        // Calculate specular lighting
-        float specularFactor = pow(max(dot(normal, halfway), 0.0), shininess);
-        vec3 specular = specularFactor * specularColor.rgb;
-    
-        // Calculate ambient lighting
-        vec3 ambient = ambientColor.rgb * ambientColor.a;
     
         // Combine all lighting components
-        vec3 lighting = ambient + diffuseColor.a * diffuse + specularColor.a * specular;
     
         // Blend the texture and vertex color based on useTexture
         vec4 baseColor = mix(v_color, texColor, float(useTexture));
@@ -80,15 +94,16 @@ class PhongMaterial extends ShaderMaterial {
     }
     `
 
-    constructor(name, color, camPosition, useTexture = false, sourceTexture = '', ambient = [0.6,0.6,0.6,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1], lightPosition = new Vector3(300,300,400)){
+    constructor(name, color, useTexture = false, sourceTexture = '', ambient = [0.1,0.1,0.1,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1]){
         const uniform = {
             color: color,
             ambient: ambient ||  [0.6,0.6,0.6,1],
             shininess: shininess || 20,
             diffuse: diffuse || [1,1,1,1],
             specular: specular || [1,1,1,1],
-            lightPosition: lightPosition || new Vector3(300,300,400),
-            camPosition: camPosition,
+            // lightPosition: lightPosition || new Vector3(300,300,400),
+            // lightIntensity: lightIntensity || 1,
+            // camPosition: camPosition,
             useTexture: useTexture,
             sourceTexture: sourceTexture
         }
@@ -96,21 +111,22 @@ class PhongMaterial extends ShaderMaterial {
         super(name, PhongMaterial.vs, PhongMaterial.fs, uniform)        
     }
 
-    fromJSON(){
-        return JSON.stringify({
-            name: this.name,
+    toJSON(){
+        return {
+            type: this.type,
             uniform: {
+                color: this.uniforms['color'],
+                camPosition: this.uniforms['camPosition'],
                 ambient: this.uniforms['ambient'],
                 shininess: this.uniforms['shininess'],
                 diffuse: this.uniforms['diffues'],
                 specular: this.uniforms['specular'],
-                lightPosition: this.uniforms['lightPosition']
+                // lightPosition: this.uniforms['lightPosition']
             }
-        })
+        }
     }
     
-    
-    toJSON(object){
-        return new PhongMaterial(object.name, object.uniforms['ambient'], object.uniforms['shininess'], object.uniforms['diffuse'], object.uniforms['specular'], object.uniforms['lightPosition'])
+    static fromJSON(object){
+        return new PhongMaterial(object.name, object.uniform['color'], object.uniform['camPosition'], object.uniform['ambient'], object.uniform['shininess'], object.uniform['diffuse'], object.uniform['specular'])
     }
 }

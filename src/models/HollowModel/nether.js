@@ -530,14 +530,10 @@ class NetherPortal {
 
         const vertices = new Float32Array([...outerVertices]);
 
-        const positionAttr = new BufferAttribute(vertices, 3);
-
-        const portal = new BufferGeometry();
-        portal.setAttribute('position', positionAttr);
-
+        
         const black = new BasicMaterial("black", [0, 0, 0])
         const grey = new BasicMaterial("grey", [0.5, 0.5, 0.5])
-
+        
         var materials = []
         var assignSide = []
         for(let i = 0; i < 14; i++){
@@ -547,7 +543,7 @@ class NetherPortal {
             materials.push(grey)
             materials.push(grey)
             materials.push(black)
-
+            
             assignSide.push(0)
             assignSide.push(0)
             assignSide.push(1)
@@ -555,10 +551,13 @@ class NetherPortal {
             assignSide.push(1)
             assignSide.push(1)
         }
-
+        
+        
+        const portal = new BufferGeometry();
+        portal.setAttribute('position', new BufferAttribute(vertices, 3));
         console.log(materials)
 
-        const mesh = new Mesh(portal, materials, assignSide); // Assuming materials is defined somewhere
+        const mesh = new Mesh("HollowCube", portal, materials, assignSide); // Assuming materials is defined somewhere
         mesh.position.set(0, 0, 0);
 
         return mesh;
