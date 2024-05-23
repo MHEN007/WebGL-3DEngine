@@ -18,6 +18,7 @@ const camRotationZSlider = document.getElementById("rotationZ")
 const camRotationZLabel = document.getElementById("rotationZLabel")
 const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
+const deleteButton = document.getElementById("delete-button")
 
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
@@ -36,6 +37,8 @@ const anim = document.getElementById('anim');
 const fileSelector = document.getElementById("file-selector");
 canvas.width = 600
 canvas.height = 600
+
+let check = []
 
 /* UPDATER */
 const phongUpdater = new Updater()
@@ -126,7 +129,7 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya roo
-const steve = new Chain()
+const steve = new Steve()
 // scene add root buat jadi 'world'nya root
 const object = new Creeper()
 let scene = new Scene(gl, [camera], [light1]).add(steve.object);
@@ -307,20 +310,42 @@ xPos.addEventListener('input', function(){
      * dibawah contoh code kalo misalkan mau ngubah si mesh2
      */
     // scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
-    scene.position.x = parseFloat(xPos.value)
+    // scene.position.x = parseFloat(xPos.value)
+
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log(item)
+            scene.getObject(item).position.x = parseFloat(xPos.value)
+        })
+    }
+
     // scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
-    scene.position.y = parseFloat(yPos.value)
+    // scene.position.y = parseFloat(yPos.value)
+
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log(item)
+            scene.getObject(item).position.y = parseFloat(yPos.value)
+        })
+    }
+
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 zPos.addEventListener('input', function(){
-    scene.position.z = parseFloat(zPos.value)
+    // scene.position.z = parseFloat(zPos.value)
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log(item)
+            scene.getObject(item).position.z = parseFloat(zPos.value)
+        })
+    }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -371,6 +396,36 @@ lightIntensityB.addEventListener('input', function() {
     gl.clearColor(1.0, 1.0, 1.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
+})
+
+deleteButton.addEventListener('click', function(){
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log("yang mau di delete", item)
+            scene.remove(item)
+
+            // Dapatkan elemen ul
+            var ulElement = document.querySelector('ul');
+            // Menghapus semua elemen li dalam ul
+            while (ulElement.firstChild) {
+                ulElement.removeChild(ulElement.firstChild);
+            }
+            // Atau jika Anda ingin menghapus seluruh elemen ul
+            ulElement.remove();
+
+            // Tambahkan ul kembali
+            componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+            const ul = document.createElement("ul")
+
+            ul.appendChild(componentViewLoader(scene))
+
+            componentViewer.appendChild(ul)
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+
+    console.log(scene)
 })
 
 function selectNoZ(){
@@ -478,6 +533,39 @@ function onMouseWheel(event){
     scene.drawAll()
 }
 
+function getAllChildren(obj) {
+    for (let i = 0; i < obj.children.length; i++) {
+        console.log(obj.children[i].id);
+        if (obj.children[i].children.length > 0) {
+            getAllChildren(obj.children[i]);
+        }
+    }
+}
+
+function findAndPushChildren(obj, name){
+    for (let i = 0; i < obj.children.length; i++) {
+        if (obj.children[i].id === name){
+            console.log(obj.children[i].id);
+            check.push(obj.children[i]);
+        }
+        if (obj.children[i].children.length > 0) {
+            findAndPushChildren(obj.children[i], name);
+        }
+    }
+}
+
+function findAndDeleteChildren(obj, name){
+    for (let i = 0; i < obj.children.length; i++) {
+        if (obj.children[i].id === name){
+            console.log(obj.children[i].id);
+            check = check.filter(item => item !== obj.children[i])
+        }
+        if (obj.children[i].children.length > 0) {
+            findAndDeleteChildren(obj.children[i], name);
+        }
+    }
+}
+
 fileSelector.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return
@@ -488,6 +576,7 @@ fileSelector.addEventListener('change', async (e) => {
         console.error(error);
     }
     scene = NodeScene.fromJSON(json)
+    getAllChildren(scene)
     console.log(scene)
     scene.drawAll()
     
@@ -500,22 +589,43 @@ fileSelector.addEventListener('change', async (e) => {
     componentViewer.appendChild(ul)
 })
 
-function componentViewLoader(obj)
-{
-    const li = document.createElement('li')
+function componentViewLoader(obj) {
+    const li = document.createElement('li');
+    
+    // Buat elemen checkbox
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = obj.id;
 
-    li.textContent = obj.id
-
-    if(obj.children && obj.children != 0)
-    {
-        const ul = document.createElement('ul')
-        for(let i = 0; i < obj.children.length; i++)
-        {
-            ul.append(componentViewLoader(obj.children[i]))
+    // Tambahkan event listener untuk checkbox parent
+    checkbox.addEventListener('change', function() {
+        if(checkbox.checked){
+            findAndPushChildren(scene, checkbox.value)
         }
+        if(!checkbox.checked){
+            findAndDeleteChildren(scene, checkbox.value)
+        }
+        console.log(check)
+        const checkboxes = li.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(childCheckbox => {
+            childCheckbox.checked = checkbox.checked;
+        });
+    });
 
-        li.appendChild(ul)
+    // Tambahkan checkbox ke elemen li
+    li.appendChild(checkbox);
+
+    // Tambahkan teks dari obj.id setelah checkbox
+    li.appendChild(document.createTextNode(obj.id));
+
+    if (obj.children && obj.children.length > 0) {
+        const ul = document.createElement('ul');
+        for (let i = 0; i < obj.children.length; i++) {
+            ul.append(componentViewLoader(obj.children[i]));
+        }
+        li.appendChild(ul);
     }
 
-    return li
+    return li;
 }
+
