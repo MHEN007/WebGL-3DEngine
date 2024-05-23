@@ -49,20 +49,20 @@ class BasicMaterial extends ShaderMaterial {
         super(name, BasicMaterial.vs, BasicMaterial.fs, uniform)        
     }
 
-    fromJSON(){
-        return JSON.stringify({
-            name: this.name,
+    toJSON(){
+        return {
+            type: this.type,
             uniform: {
                 color: this.uniforms['color'],
                 useTexture: false,
-                sourceTexture: sourceTexture
+                sourceTexture: this.uniforms['sourceTexture']
             }
-        })
+        }
     }
 
-    static toJSON(object){
-        var name = object.name
-        var color = object.uniforms['color']
+    static fromJSON(json, object){
+        var name = json.name
+        var color = json.uniform['color']
 
         return new BasicMaterial(name, color)
     }
