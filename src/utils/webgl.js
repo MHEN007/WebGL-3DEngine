@@ -126,11 +126,12 @@ function init(){
 init()
 
 // scene add root buat jadi 'world'nya roo
-const steve = new Steve()
+const steve = new Chain()
 // scene add root buat jadi 'world'nya root
 const object = new hollowCube()
 let scene = new Scene(gl, [camera], [light1]).add(steve.object);
 scene.position = new Vector3(0,0,0)
+
 const left = -0.5
 const right = 0.5
 const bottom = -0.5
