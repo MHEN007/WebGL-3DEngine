@@ -1108,8 +1108,6 @@ class hollowCube {
             assignSide.push(1)
         }
 
-        console.log(materials)
-
         const mesh = new Mesh("HollowCube",portal, materials, assignSide); // Assuming materials is defined somewhere
         mesh.position.set(0, 0, 0);
 
