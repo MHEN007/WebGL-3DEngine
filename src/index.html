@@ -27,6 +27,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            z-index: 1; /* Pastikan canvas berada di atas */
         }
 
         #glCanvas {
@@ -34,19 +35,20 @@
         }
 
         #right-controller {
-            width: 300px;
+            width: 400px;
             margin-left: 20px;
             flex-shrink: 0;
         }
 
         #componentViewer {
             width: 200px;
-            margin-right: 20px;
+            margin-right: 100px;
+            margin-left: 20px;
             flex-shrink: 0;
         }
 
         h1 {
-            position: absolute;
+            position:fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -59,12 +61,9 @@
 <body>
     <h1>3D Model Engine</h1>
     <div class="main-container">
-        <div id="left-controller">
-
-        </div>
         <div id="componentViewer"><h2>Component Viewer</h2></div>
         <div class="canvas-container">
-            <canvas id="glCanvas" width="600" height="400"></canvas>
+            <canvas id="glCanvas"></canvas>
         </div>
         <div id="right-controller">
             <div>Camera</div>

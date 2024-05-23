@@ -329,6 +329,7 @@ lightXPosition.addEventListener('input', function() {
     light1.position.x = parseFloat(lightXPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -337,6 +338,7 @@ lightYPosition.addEventListener('input', function() {
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     console.log(light1.position.y)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -344,6 +346,7 @@ lightZPosition.addEventListener('input', function() {
     light1.position.z = parseFloat(lightZPosition.value)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -351,18 +354,22 @@ lightIntensityR.addEventListener('input', function() {
     light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityG.addEventListener('input', function() {
     light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityB.addEventListener('input', function() {
     light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
@@ -460,12 +467,14 @@ function onMouseMove(event){
             mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
             0)
         console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
     }
         // console.log(camera)
 }
 function onMouseWheel(event){
     camera.position.z += event.deltaY * 0.001
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 }
 
