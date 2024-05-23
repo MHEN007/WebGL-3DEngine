@@ -18,37 +18,37 @@ class Wither{
         this.#sideHeadGeometry = new BoxGeometry(0.075, 0.075, 0.075);
         this.#centerHeadGeometry =  new BoxGeometry(0.09, 0.09, 0.09);
 
-        this.neckMesh = new Mesh(this.#neckGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
+        this.neckMesh = new Mesh("Neck", this.#neckGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
         this.neckMesh.position = new Vector3(0, 0.1, 0);
 
-        this.bodyMesh = new Mesh(this.#bodyGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
+        this.bodyMesh = new Mesh("Body", this.#bodyGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
         this.bodyMesh.position = new Vector3(0, 0, 0);
 
-        this.bone1LeftMesh = new Mesh(this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
+        this.bone1LeftMesh = new Mesh("Bone1L", this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
         this.bone1LeftMesh.position = new Vector3(-0.03, 0.05, 0);
 
-        this.bone2LeftMesh = new Mesh(this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
+        this.bone2LeftMesh = new Mesh("Bone2L", this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
         this.bone2LeftMesh.position = new Vector3(-0.03, 0, 0);
 
-        this.bone3LeftMesh = new Mesh(this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
+        this.bone3LeftMesh = new Mesh("Bone3L", this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
         this.bone3LeftMesh.position = new Vector3(-0.03, -0.05, 0);
 
-        this.bone1RightMesh = new Mesh(this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
+        this.bone1RightMesh = new Mesh("Bone1R", this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
         this.bone1RightMesh.position = new Vector3(0.03, 0.05, 0);
 
-        this.bone2RightMesh = new Mesh(this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
+        this.bone2RightMesh = new Mesh("Bone2R", this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
         this.bone2RightMesh.position = new Vector3(0.03, 0, 0);
 
-        this.bone3RightMesh = new Mesh(this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
+        this.bone3RightMesh = new Mesh("Bone3R", this.#boneGeometry, this.#materials, [1, 1, 1, 1, 1, 1]);
         this.bone3RightMesh.position = new Vector3(0.03, -0.05, 0);
 
-        this.headLeftMesh = new Mesh(this.#sideHeadGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
+        this.headLeftMesh = new Mesh("HeadL", this.#sideHeadGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
         this.headLeftMesh.position = new Vector3(-0.1, 0.025, 0.025);
 
-        this.headRightMesh = new Mesh(this.#sideHeadGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
+        this.headRightMesh = new Mesh("HeadR", this.#sideHeadGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
         this.headRightMesh.position = new Vector3(0.1, 0.025, 0.025);
 
-        this.headCenterMesh = new Mesh(this.#centerHeadGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
+        this.headCenterMesh = new Mesh("HeadC", this.#centerHeadGeometry, this.#materials, [0, 0, 0, 0, 0, 0]);
         this.headCenterMesh.position = new Vector3(0, 0.04, 0);
 
         // Assemble parts
