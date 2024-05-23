@@ -412,6 +412,7 @@ function updateComponentViewer(){
         ul.appendChild(componentViewLoader(scene))
 
         componentViewer.appendChild(ul)
+        check = []
 }
 
 deleteButton.addEventListener('click', function(){
