@@ -14,6 +14,8 @@ class PhongMaterial extends ShaderMaterial {
     uniform mat4 viewProjMat;
     uniform vec2 resolution;
     uniform bool vertexColor;
+    uniform sampler2D u_displacementMap;
+    uniform float displacementScale;
 
     varying vec4 v_color;
     varying vec3 v_normal;
@@ -21,7 +23,9 @@ class PhongMaterial extends ShaderMaterial {
     varying vec2 v_texcoord;
 
     void main() {
-        gl_Position = viewProjMat * worldMat * a_pos;
+        float displacement = texture2D(u_displacementMap, a_texcoord).r;
+        vec4 displacePos = a_pos + vec4(a_normal * displacement * displacementScale, 0.0);
+        gl_Position = viewProjMat * worldMat * displacePos;
         
         v_pos = gl_Position.xyz / gl_Position.w;
         v_normal = mat3(worldMat) * a_normal;
@@ -42,6 +46,7 @@ class PhongMaterial extends ShaderMaterial {
     uniform int lightCount;
     uniform vec3 camPos;
     uniform sampler2D u_texture;
+    uniform sampler2D u_specularMap;
     uniform bool useTexture;
 
     varying vec4 v_color;
@@ -70,12 +75,12 @@ class PhongMaterial extends ShaderMaterial {
 
             // Calculate diffuse lighting
             float diffuseFactor = max(dot(light, normal), 0.0);
-            diffuse += diffuseFactor * intensity[i] * diffuseColor.a;
+            diffuse += diffuseFactor * intensity[i] * diffuseColor.rgb;
 
             // Calculate specular lighting
             float specularFactor = pow(max(dot(normal, halfway), 0.0), shininess);
-            specular += specularFactor * intensity[i] * specularColor.a;
-
+            vec3 specularIntensity = texture2D(u_specularMap, v_texcoord).rgb;
+            specular += specularFactor * specularIntensity * specularColor.rgb;
         }
     
         vec3 lighting = (ambient + diffuse +  specular);
@@ -90,11 +95,11 @@ class PhongMaterial extends ShaderMaterial {
         vec4 baseColor = mix(v_color, texColor, float(useTexture));
         
         // Apply the lighting to the base color
-        gl_FragColor = vec4(lighting, 1.0) * baseColor * v_color;
+        gl_FragColor = vec4(lighting, 1.0) * baseColor;
     }
     `
 
-    constructor(name, color, useTexture = false, sourceTexture = '', ambient = [0.1,0.1,0.1,1], shininess = 20, diffuse = [1,1,1,1], specular = [1,1,1,1]){
+    constructor(name, color, useTexture = false, sourceTexture = '', ambient = [0.1,0.1,0.1,1], shininess = 64, diffuse = [0.5, 0.5, 0.5,1], specular = [1,1,1,1]){
         const uniform = {
             color: color,
             ambient: ambient ||  [0.6,0.6,0.6,1],

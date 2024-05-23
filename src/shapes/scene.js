@@ -67,7 +67,7 @@ class Scene extends NodeScene{
             console.log("WEBGL not available on your browser!")
         }else{
             gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(1.0, 1.0, 1.0, 1.0)
+            gl.clearColor(0.0, 0.0, 0.0, 1.0)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
             gl.enable(gl.CULL_FACE)
             gl.enable(gl.DEPTH_TEST)
@@ -231,7 +231,10 @@ class Scene extends NodeScene{
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
         var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
         var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
-    
+        var uniformSpecularMapLoc = gl.getUniformLocation(this.phongProgram, 'u_specularMap')
+        var uniformDisplacementMap = gl.getUniformLocation(this.phongProgram, 'u_displacementMap')
+        var uniformDisplacementScale = gl.getUniformLocation(this.phongProgram, 'displacementScale')
+
         // Set uniform values
         gl.useProgram(this.phongProgram)
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
@@ -245,6 +248,9 @@ class Scene extends NodeScene{
         // gl.uniform3fv(uniformCamPosLoc, this.#camera.position.toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
+        gl.uniform1i(uniformSpecularMapLoc, 1)
+        gl.uniform1i(uniformDisplacementMap, 2)
+        gl.uniform1f(uniformDisplacementScale, 0)
 
         let lightPos = []
         let lightInt = []
@@ -334,6 +340,7 @@ class Scene extends NodeScene{
             gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
     
             var texture = gl.createTexture()
+            this.gl.activeTexture(gl.TEXTURE0)
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
     
@@ -351,6 +358,44 @@ class Scene extends NodeScene{
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
             // })
+
+            var specularTexture = gl.createTexture()
+            gl.activeTexture(gl.TEXTURE1) // Activate texture unit 2 for specular map
+            gl.bindTexture(gl.TEXTURE_2D, specularTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+    
+            var specularImage = new Image()
+            specularImage.src = './utils/specular.png'
+            gl.bindTexture(gl.TEXTURE_2D, specularTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, specularImage)
+    
+            if (isPowerOf2(specularImage.width) && isPowerOf2(specularImage.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+
+            var displacementTexture = gl.createTexture()
+            gl.activeTexture(gl.TEXTURE2)
+            gl.bindTexture(gl.TEXTURE_2D, displacementTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+
+            var displacementImage = new Image()
+            displacementImage.src = './utils/displacement.png'
+            gl.bindTexture(gl.TEXTURE_2D, displacementTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, displacementImage)
+    
+            if (isPowerOf2(displacementImage.width) && isPowerOf2(displacementImage.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+
+            
         } else {
             gl.disableVertexAttribArray(texCoordAttributeLocation)
         }

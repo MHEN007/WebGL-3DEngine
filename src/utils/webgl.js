@@ -133,7 +133,7 @@ init()
 const steve = new Steve()
 // scene add root buat jadi 'world'nya root
 const object = new Creeper()
-let scene = new Scene(gl, [camera], [light1]).add(steve.object);
+let scene = new Scene(gl, [camera], [light1]).add(object.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -262,7 +262,7 @@ viewAngleSelector.addEventListener('change', function(){
         camera.position = new Vector3(1, 0, 0)
         camera.rotation = new Vector3(0, 0, 0)
     }
-    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clearColor(0, 0, 0, 1)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -295,7 +295,7 @@ resetButton.addEventListener('click', function(){
         camera.position = new Vector3(0, 0, 1)
         camera.rotation = new Vector3(0, 0, 0)
     }
-    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clearColor(0, 0, 0, 1)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 
@@ -394,7 +394,7 @@ lightIntensityB.addEventListener('input', function() {
     light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
-    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clearColor(0, 0, 0, 1)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
