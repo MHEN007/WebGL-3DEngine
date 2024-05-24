@@ -538,34 +538,14 @@ class infinityCube {
         
         const positionAttr = new BufferAttribute(vertices, 3);
         
-        const portal = new BufferGeometry();
-        portal.setAttribute('position', positionAttr);
+        const infCube = new BufferGeometry();
+        infCube.setAttribute('position', positionAttr);
         
-        const black = new BasicMaterial("black", [0, 0, 0])
         const grey = new BasicMaterial("grey", [0.5, 0.5, 0.5])
-        const red = new BasicMaterial("red", [1, 0, 0])
-        const green = new BasicMaterial("green", [0, 1, 0])
-        const blue = new BasicMaterial("blue", [0, 0, 1])
-        const yellow = new BasicMaterial("yellow", [1, 1, 0])
-        const magenta = new BasicMaterial("magenta", [1, 0, 1])
-        const cyan = new BasicMaterial("cyan", [0, 1, 1])
+
         
         var materials = []
         var assignSide = []
-        // materials.push(red) // 0
-        // materials.push(green) // 1
-        // materials.push(blue) // 2
-        // materials.push(yellow) // 3
-        // materials.push(magenta) // 4
-        // materials.push(cyan) // 5
-        
-        
-        // assignSide.push(0)
-        // assignSide.push(1)
-        // assignSide.push(2)
-        // assignSide.push(3)
-        // assignSide.push(4)
-        // assignSide.push(5)
         
         materials.push(grey)
         assignSide.push(0)
@@ -576,7 +556,7 @@ class infinityCube {
         assignSide.push(0)
         console.log(materials)
 
-        const mesh = new Mesh(portal, materials, assignSide); // Assuming materials is defined somewhere
+        const mesh = new Mesh("InfinityCube", infCube, materials, assignSide);
         mesh.position.set(0, 0, 0);
 
         return mesh;
