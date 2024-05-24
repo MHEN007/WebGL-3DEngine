@@ -84,7 +84,20 @@ class Vector3 {
         return [this.x, this.y, this.z]
     }
 
+    get type(){
+        return "Vector3"
+    }
+
+    toJSON(){
+        return {
+            x: this.x,
+            y: this.y,
+            z: this.z,
+        }
+    }
+
     static fromJSON(object){
+        console.log(object)
         return new Vector3(object.x, object.y, object.z)
     }
 }

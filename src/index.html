@@ -7,33 +7,65 @@
     <style>
         body {
             display: flex;
-            flex-direction: column;
+            justify-content: left;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #2f2f2f;
+            color: white;
         }
 
-        .container {
+        .main-container {
             display: flex;
-            align-items: flex-start;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            z-index: 1; /* Pastikan canvas berada di atas */
         }
 
         #glCanvas {
             border: solid 1px;
+        }
+
+        #right-controller {
+            width: 600px;
+            margin-left: 20px;
             flex-shrink: 0;
         }
-      
-        #controller {
-            margin-left: 20px; /* Adjust as necessary */
+
+        #componentViewer {
+            width: 200px;
+            margin-right: 100px;
+            margin-left: 20px;
             flex-shrink: 0;
         }
+
+        h1 {
+            position:fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
     <h1>3D Model Engine</h1>
-    <div class="container">
-        <canvas id="glCanvas"></canvas>
-        <div id="controller">
+    <div class="main-container">
+        <div id="componentViewer"><h2>Component Viewer</h2></div>
+        <div class="canvas-container">
+            <canvas id="glCanvas"></canvas>
+        </div>
+        <div id="right-controller">
             <div>Camera</div>
             <label for="projection">Projection :</label>
             <select name="projection" id="projection">
@@ -46,8 +78,6 @@
             <select name="viewAngle" id="viewAngle" hidden>
                 <option value="front">Front</option>
                 <option value="back">Back</option>
-                <!-- <option value="top">Top</option> -->
-                <!-- <option value="bottom">Bottom</option> -->
                 <option value="left">Left</option>
                 <option value="right">Right</option>
             </select>
@@ -118,13 +148,27 @@
             <label class="switch">
                 <input type="checkbox" id="anim">
             </label>
+            <br/>
+            <br/>
+            <label for="angle">save</label>
+            <button id="save">Save</button>
+            <br/>
+            <br/>
+            <label for="load">Load</label>
+            <input type="file" id="file-selector">
 
         </div>
+        
     </div>
     
     <script src="./models/steve.js"></script>
+    <script src="./models/creeper.js"></script>
+    <script src="./models/wither.js"></script>
+    <script src="./models/shulker.js"></script>
     <script src="./models/HollowModel/nether.js"></script>
     <script src="./models/HollowModel/cube.js"></script>
+    <script src="./models/HollowModel/Chain.js"></script>
+    
     <script src="./models/HollowModel/infinityCube.js"></script>
     <script src="./material/shaderMaterial.js"></script>
     <script src="./material/basicMaterial.js"></script>
@@ -150,14 +194,13 @@
     <script src="./light/spotLight.js"></script>
     <script src="./light/pointLight.js"></script>
     
-    <script src="./models/shulker.js"></script>
-    <script src="./models/steve.js"></script>
-    <script src="./models/wither.js"></script>
     <script src="./utils/updater.js"></script>
     <script src="./utils/Quarternion.js"></script>
     <script src="./utils/Matrix4x4.js"></script>
     <script src="./utils/vector.js"></script>
     <script src="./utils/webgl.js"></script>
+    <script src="./utils/Load.js"></script>
+    <script src="./utils/save.js"></script>
     <script src="./utils/animRunner.js"></script>
 
 </body>

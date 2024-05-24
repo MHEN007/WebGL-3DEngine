@@ -62,4 +62,28 @@ class Oblique extends Camera{
             border[0], border[1], border[2], border[3], this.near, this.far, this.angle, this.cameraScale
         );
     }
+
+    toJSON() {
+        const obj = {
+            left: this.left,
+            right: this.right,
+            top: this.top,
+            bottom: this.bottom,
+            near: this.near,
+            far: this.far,
+            angle: this.angle,
+            cameraScale: this.cameraScale,
+        };
+
+        return JSON.stringify(obj)
+    }
+
+    static fromJSON(jsonString) {
+        try {
+            const obj = JSON.parse(jsonString);
+            return (new Oblique(obj.left, obj.right, obj.top, obj.bottom, obj.near, obj.far, obj.angle, obj.cameraScale))
+        } catch (e) {
+            console.error('Invalid JSON string', e);
+        }
+    }
 }

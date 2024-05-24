@@ -89,15 +89,20 @@ class BufferAttribute{
     }
 
     toJSON(){
-        const options = {}
-        if (this.#dtype !== WebGLRenderingContext.FLOAT)
-            { options.dtype = this.#dtype; }
-        if (this.#normalize) 
-            { options.normalize = this.#normalize; }
-        if (this.#stride)
-            { options.stride = this.#stride; }
-        if (this.#offset)
-            { options.offset = this.#offset; }
+        const options = {
+            dtype: this.#dtype || WebGLRenderingContext.FLOAT,
+            normalize: this.#normalize,
+            stride: this.#stride,
+            offset: this.#offset,
+        }
+        // if (this.#dtype !== WebGLRenderingContext.FLOAT)
+        //     { options.dtype = this.#dtype; }
+        // if (this.#normalize) 
+        //     { options.normalize = this.#normalize; }
+        // if (this.#stride)
+        //     { options.stride = this.#stride; }
+        // if (this.#offset)
+        //     { options.offset = this.#offset; }
         return {
             type: this.type,
             data: Array.from(this.#data),
