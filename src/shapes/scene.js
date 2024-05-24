@@ -227,13 +227,16 @@ class Scene extends NodeScene{
         var uniformDiffuseColorLoc = gl.getUniformLocation(this.phongProgram, 'diffuseColor')
         var uniformSpecularColorLoc = gl.getUniformLocation(this.phongProgram, 'specularColor')
         var uniformLightPosLoc = gl.getUniformLocation(this.phongProgram, 'lightPos')
-        var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos')
         var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
         var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
         var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
         var uniformSpecularMapLoc = gl.getUniformLocation(this.phongProgram, 'u_specularMap')
         var uniformNormalMapLoc = gl.getUniformLocation(this.phongProgram, 'u_normalMap')
+        var uniformDisplacementMapLoc = gl.getUniformLocation(this.phongProgram, 'u_displacementMap')
+        var uniformUseDisplacementLoc = gl.getUniformLocation(this.phongProgram, 'useDisplacement')
+        var uniformUseSpecularLoc = gl.getUniformLocation(this.phongProgram, 'useSpecular')
+        var uniformUseNormalLoc = gl.getUniformLocation(this.phongProgram, 'useNormal');
 
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -245,11 +248,14 @@ class Scene extends NodeScene{
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
-        // gl.uniform3fv(uniformCamPosLoc, this.#camera.position.toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
         gl.uniform1i(uniformSpecularMapLoc, 1)
         gl.uniform1i(uniformNormalMapLoc, 2)
+        gl.uniform1i(uniformDisplacementMapLoc, 3)
+        gl.uniform1i(uniformUseDisplacementLoc, false)
+        gl.uniform1i(uniformUseSpecularLoc, true)
+        gl.uniform1i(uniformUseNormalLoc, true)
 
         let lightPos = []
         let lightInt = []
@@ -401,9 +407,26 @@ class Scene extends NodeScene{
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
             }
 
-            
+            var displacementTex = gl.createTexture()
+            gl.activeTexture(gl.TEXTURE3)
+            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+
+            var displacementMap = new Image()
+            displacementMap.src = './utils/DisplacementMap.png'
+            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, displacementMap)
+    
+            if (isPowerOf2(displacementMap.width) && isPowerOf2(displacementMap.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
         } else {
             gl.disableVertexAttribArray(texCoordAttributeLocation)
+            gl.disableVertexAttribArray(tangentAttributeLocation)
         }
     
         // Draw

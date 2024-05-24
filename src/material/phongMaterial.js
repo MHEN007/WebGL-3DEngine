@@ -15,6 +15,8 @@ class PhongMaterial extends ShaderMaterial {
     uniform mat4 viewProjMat;
     uniform vec2 resolution;
     uniform bool vertexColor;
+    uniform sampler2D u_displacementMap;
+    uniform bool useDisplacement;
 
     varying vec4 v_color;
     varying vec3 v_normal;
@@ -23,9 +25,17 @@ class PhongMaterial extends ShaderMaterial {
     varying mat3 v_tbn;
 
     void main() {
-        gl_Position = viewProjMat * worldMat * a_pos;
+        vec4 displacedPos = a_pos;
         
-        v_pos = gl_Position.xyz / gl_Position.w;
+        if (useDisplacement) {
+            float displacement = texture2D(u_displacementMap, a_texcoord).r;
+            displacedPos.xyz += (0.02 * displacement) * normalize(a_normal);
+        }
+        
+        vec4 worldPos = worldMat * displacedPos;
+        gl_Position = viewProjMat * worldPos;
+
+        v_pos = (worldMat * displacedPos).xyz;
         v_normal = mat3(worldMat) * a_normal;
 
         vec3 tangent = normalize(mat3(worldMat) * a_tangent);
@@ -52,6 +62,8 @@ class PhongMaterial extends ShaderMaterial {
     uniform sampler2D u_specularMap;
     uniform sampler2D u_normalMap;
     uniform bool useTexture;
+    uniform bool useSpecular;
+    uniform bool useNormal;
 
     varying vec4 v_color;
     varying vec3 v_normal;
@@ -62,9 +74,10 @@ class PhongMaterial extends ShaderMaterial {
     void main() {
         // Normalize the vectors
         vec3 normal = normalize(v_normal);
-        if(true){
+        if(useNormal){
             normal = texture2D(u_normalMap, v_texcoord).rgb;
-            normal =  normalize(normal * 2.0 - 1.0);
+            normal = normalize(normal * 2.0 - 1.0);
+            normal = normalize(v_tbn * normal);
         }
         vec3 viewDir = normalize(camPos - v_pos);
         
@@ -87,8 +100,8 @@ class PhongMaterial extends ShaderMaterial {
 
             // Calculate specular lighting
             float specularFactor = pow(max(dot(normal, halfway), 0.0), shininess);
-            vec3 specularIntensity = texture2D(u_specularMap, v_texcoord).rgb;
-            if (true) {
+            vec3 specularIntensity = vec3(1.0);
+            if (useSpecular) {
                 specularIntensity = texture2D(u_specularMap, v_texcoord).rgb;
             }
             specular += specularFactor * specularIntensity * specularColor.rgb;
