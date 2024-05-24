@@ -20,9 +20,9 @@ class Scene extends NodeScene{
      * 
      * @param {WebGLRenderingContext} gl 
      * @param {Camera} camera 
-     * @param {} lightsources 
+     * @param {Light[]} lightsources 
      */
-    constructor(gl, camera, lightsources = []) {
+    constructor(gl, camera, lightsources = [new DirectionalLight(new Vector3(0, 0, 0), new Vector3(0, 0, 0))]) {
         super()
         this.gl = gl
         this.#camera = camera
@@ -39,7 +39,8 @@ class Scene extends NodeScene{
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
         this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
-        
+
+        this.init()
     }
 
     get type()
@@ -54,6 +55,18 @@ class Scene extends NodeScene{
     get camera(){
         return this.#camera
     }
+
+    init(){
+        if(!gl){
+            console.log("WEBGL not available on your browser!")
+        }else{
+            gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
+            gl.clearColor(1.0, 1.0, 1.0, 1.0)
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+            gl.enable(gl.CULL_FACE)
+            gl.enable(gl.DEPTH_TEST)
+        }
+    }
     
     drawAll(){
         this.computeWorldMatrix(false, true)
@@ -64,10 +77,7 @@ class Scene extends NodeScene{
 
         for (let i = 0; i < this.children.length; i++) {
             let mesh = this.children[i]
-            var up = Vector3.up()
             mesh.computeWorldMatrix()
-            var viewMat = Matrix4x4.inverse(camera.lookAt(target, up))
-            var viewProjMat = Matrix4x4.multiply(viewMat, camera.projectionMatrix)
             var stride = mesh.geometry.getAttribute('position').stride
             var offset = mesh.geometry.getAttribute('position').offset 
             this.draw(mesh, viewProjMat, stride, offset)
@@ -106,7 +116,8 @@ class Scene extends NodeScene{
                 if (this.#currentProgram != "PHONG") {
                     this.gl.useProgram(this.phongProgram)
                 }
-                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i)
+                console.log(mesh.position)
+                this.drawPhongSide(mesh.geometry.getAttribute('position').data.slice(i*3*6, (i+1)*3*6), stride, offset, mesh.worldMatrix, viewProjMat, mesh.getMaterial(i), i, mesh.position)
             }
         }
 
@@ -187,8 +198,10 @@ class Scene extends NodeScene{
         gl.disableVertexAttribArray(positionAttributeLocation)
     }
     
-    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i) {
+    drawPhongSide(position, stride, offset, worldMatrix, viewProjMatrix, material, i, meshPosition) {
         // Get attribute locations
+        console.log("MESH POSITION")
+        console.log(meshPosition)
         var positionAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_pos')
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
         var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal')
@@ -207,6 +220,8 @@ class Scene extends NodeScene{
         var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos')
         var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
+        var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
+        var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
     
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -218,10 +233,21 @@ class Scene extends NodeScene{
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
-        gl.uniform3fv(uniformLightPosLoc, material.uniforms['lightPosition'].toArray())
-        gl.uniform3fv(uniformCamPosLoc, material.uniforms['camPosition'].toArray())
+        gl.uniform3fv(uniformCamPosLoc, this.#camera.position.toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         gl.uniform1i(uniformTextureLoc, 0)
+
+        let lightPos = []
+        let lightInt = []
+
+        this.#lightsources.forEach(light => {
+            lightPos.push(...light.calculatePosition(meshPosition).toArray())
+            lightInt.push(...light.calculateIntensity(meshPosition).toArray())
+        })
+
+        gl.uniform3fv(uniformLightPosLoc, new Float32Array(lightPos))
+        gl.uniform3fv(uniformLightIntensityLoc, new Float32Array(lightInt))
+        gl.uniform1i(uniformNumLightLoc, this.#lightsources.length)
     
         // Enable vertex attributes
         gl.enableVertexAttribArray(positionAttributeLocation)

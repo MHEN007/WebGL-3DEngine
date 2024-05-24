@@ -88,6 +88,32 @@
             <input type="range" min="-1" max="1" value="0" step="0.01" id="z">
             <br/>
             <br/>
+            <label for="angle">Light Position :</label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-x">
+            </label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-y">
+            </label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-z">
+            </label>
+            <br />
+            <br />
+
+            <label for="angle">Light Intensity :</label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-r">
+            </label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-g">
+            </label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-b">
+            </label>
+            
+            <br />
+            <br />
             <label for="angle">anim :</label>
             <label class="switch">
                 <input type="checkbox" id="anim">
@@ -99,25 +125,40 @@
     <script src="./models/steve.js"></script>
     <script src="./models/HollowModel/nether.js"></script>
     <script src="./models/HollowModel/cube.js"></script>
+    <script src="./models/HollowModel/infinityCube.js"></script>
     <script src="./material/shaderMaterial.js"></script>
     <script src="./material/basicMaterial.js"></script>
     <script src="./material/phongMaterial.js"></script>
     <script src="./material/texture.js"></script>
+    
     <script src="./shapes/node.js"></script>
     <script src="./shapes/scene.js"></script>
     <script src="./shapes/Mesh.js"></script>
+
     <script src="./camera/Camera.js"></script>
     <script src="./camera/Orthographic.js"></script>
     <script src="./camera/Perspective.js"></script>
     <script src="./camera/Oblique.js"></script>
+
     <script src="./geometry/BufferGeometry.js"></script>
     <script src="./geometry/BufferAttribute.js"></script>
     <script src="./geometry/PlaneGeometry.js"></script>
     <script src="./geometry/BoxGeometry.js"></script>
+
+    <script src="./light/baseLight.js"></script>
+    <script src="./light/directionalLight.js"></script>
+    <script src="./light/spotLight.js"></script>
+    <script src="./light/pointLight.js"></script>
+    
+    <script src="./models/shulker.js"></script>
+    <script src="./models/steve.js"></script>
+    <script src="./models/wither.js"></script>
+    <script src="./utils/updater.js"></script>
     <script src="./utils/Quarternion.js"></script>
     <script src="./utils/Matrix4x4.js"></script>
     <script src="./utils/vector.js"></script>
     <script src="./utils/webgl.js"></script>
     <script src="./utils/animRunner.js"></script>
+
 </body>
 </html>

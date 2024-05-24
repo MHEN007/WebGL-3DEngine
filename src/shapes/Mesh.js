@@ -17,7 +17,7 @@ class Mesh extends NodeScene {
     }
 
     getMaterial(index){
-        return this.material[this.materialMap[index.toString()]]
+        return this.material[this.materialMap[(index%this.material.length).toString()]]
     }
 
     getMaterials(){
