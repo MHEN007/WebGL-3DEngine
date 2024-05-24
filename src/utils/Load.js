@@ -1,7 +1,7 @@
 /**
  * 
  * @param {Blob} file 
- * @returns 
+ * @returns {Promise<string>}
  */
 function readFile(file) {
     return new Promise((resolve, reject) => {

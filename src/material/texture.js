@@ -89,4 +89,16 @@ class Texture extends ShaderMaterial {
 
     }
 
+    toJSON(){
+        return {
+            name: this.name,
+            source: this.source,
+        }
+    }
+
+    static fromJSON(json){
+        const obj = new Texture(json.name, json.source)
+        console.log(obj)
+        return obj
+    }
 }

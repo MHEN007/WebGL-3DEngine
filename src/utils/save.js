@@ -12,6 +12,11 @@ function removeCircularReferences() {
     };
 }
 
+/**
+ * 
+ * @param {NodeScene} scene 
+ * @param {string} filename 
+ */
 function save(scene, filename) {
     const json = JSON.stringify(scene.toJSON(),null,2);
     console.log(json);

@@ -98,7 +98,6 @@ mesh2.rotation = new Vector3(0, 0, 0)
 
 let shulker = new Shulker()
 let wither = new Wither()
-console.log(shulker)
 // scene.add(shulker.object)
 
 // // mesh1: add children mesh2, mesh3
@@ -493,7 +492,7 @@ function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
 }
 
-console.log(camera);
+// console.log(camera);
 
 canvas.addEventListener('mousemove', onMouseMove)
 canvas.addEventListener('mousedown', onMouseDown)
