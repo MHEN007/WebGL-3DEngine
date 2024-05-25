@@ -59,6 +59,10 @@ class Scene extends NodeScene{
         return this.#camera
     }
 
+    get lightSources(){
+        return this.#lightsources
+    }
+
     init(){
         if(!gl){
             console.log("WEBGL not available on your browser!")

@@ -8,8 +8,8 @@ class DirectionalLight extends Light {
      * @param {Vector3} i 
      * @param {Vector3} direction 
      */
-    constructor(c, i, direction){
-        super(c, i)
+    constructor(id, c, i, direction){
+        super(id, c, i)
         this.direction = direction
     }
 
