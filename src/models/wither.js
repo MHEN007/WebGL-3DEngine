@@ -8,7 +8,7 @@ class Wither{
 
     get object(){
         
-        this.#materials.push(new BasicMaterial("black", [0, 0, 0], false))
+        this.#materials.push(new BasicMaterial("white", [1, 1, 1], false))
         this.#materials.push(new BasicMaterial("grey", [0.55, 0.55, 0.55], false))
 
 
@@ -55,7 +55,7 @@ class Wither{
         this.neckMesh.add(this.headCenterMesh, this.headLeftMesh, this.headRightMesh);
         this.bodyMesh.add(this.neckMesh, this.bone1LeftMesh, this.bone2LeftMesh, this.bone3LeftMesh, this.bone1RightMesh, this.bone2RightMesh, this.bone3RightMesh);
 
-        this.root = new Mesh(new BoxGeometry(0, 0, 0), this.#materials, [0, 0, 0, 0, 0, 0]);
+        this.root = new Mesh("Wither", new BoxGeometry(0, 0, 0), this.#materials, [0, 0, 0, 0, 0, 0]);
         this.root.position = new Vector3(0, 0, 0);
         this.root.add(this.bodyMesh);
 
