@@ -509,6 +509,13 @@ async function animate() {
             scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
             scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
         })
+        if (camera.type === 'ObliqueCamera'){
+            scene.children[0].position.set(
+                scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+                scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+                scene.position.z
+            )
+        }
         if (!isReverse){
             fps += 1;
         } else {
@@ -725,6 +732,13 @@ nextFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    if (camera.type === 'ObliqueCamera'){
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+    }
     frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
@@ -739,6 +753,13 @@ prevFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    if (camera.type === 'ObliqueCamera'){
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+    }
     frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
@@ -750,6 +771,13 @@ firstFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    if (camera.type === 'ObliqueCamera'){
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+    }
     frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
@@ -761,6 +789,13 @@ lastFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    if (camera.type === 'ObliqueCamera'){
+        scene.children[0].position.set(
+            scene.position.x - (scene.camera.cameraScale * scene.camera.getAngleValue().x),
+            scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
+            scene.position.z
+        )
+    }
     frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
