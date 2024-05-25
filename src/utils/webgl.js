@@ -429,11 +429,7 @@ lightIntensity.addEventListener('input', function(){
 })
 
 function updateComponentViewer(){
-    var ulElement = document.querySelector('ul');
-    while (ulElement.firstChild) {
-        ulElement.removeChild(ulElement.firstChild);
-    }
-    ulElement.remove();
+    componentViewer.innerHTML = "";
 
     componentViewer.innerHTML = "<h2>Component Viewer</h2>"
 
@@ -458,8 +454,7 @@ function updateComponentViewer(){
         lightList.appendChild(li)
     }
     lightParent.appendChild(lightList)
-    ul.appendChild(lightList)
-    componentViewer.appendChild(ul)
+    ulChild.appendChild(lightParent)
 
     check = []
 }
