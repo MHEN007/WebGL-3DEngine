@@ -2,8 +2,8 @@ class PointLight extends Light {
 
     /**@type {Vector3} */
     position 
-    constructor(i = new Vector3(1.0, 1.0, 1.0), position){
-        super(i)
+    constructor(c = new Vector3(1.0, 1.0, 1.0), i, position){
+        super(c, i)
         this.position = position
     }
 
@@ -13,7 +13,7 @@ class PointLight extends Light {
 
     calculateIntensity(objPos) {
         let distance = this.position.euclideanDistance(objPos)
-        let intensity = new Vector3(this.intensity.x, this.intensity.y, this.intensity.z)
+        let intensity = new Vector3(this.color.x * this.intensity, this.color.y * this.intensity, this.color.z * this.intensity)
         intensity.multiply(1.0 / (distance * distance))
         return intensity
     }

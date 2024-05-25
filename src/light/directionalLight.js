@@ -8,8 +8,8 @@ class DirectionalLight extends Light {
      * @param {Vector3} i 
      * @param {Vector3} direction 
      */
-    constructor(i, direction){
-        super(i)
+    constructor(c, i, direction){
+        super(c, i)
         this.direction = direction
     }
 
@@ -21,7 +21,7 @@ class DirectionalLight extends Light {
     }
 
     calculateIntensity(objPos) {
-        return this.intensity
+        return this.color.multiply(this.intensity)
     }
 
     get type(){

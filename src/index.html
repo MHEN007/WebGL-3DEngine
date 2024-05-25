@@ -13,6 +13,8 @@
             margin: 0;
             background-color: #2f2f2f;
             color: white;
+            overflow: hidden;
+
         }
 
         .main-container {
@@ -27,7 +29,8 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            z-index: 1; /* Pastikan canvas berada di atas */
+            z-index: 1;
+            margin-left: 480px;
         }
 
         #glCanvas {
@@ -41,14 +44,17 @@
         }
 
         #componentViewer {
-            width: 200px;
+            position: fixed;
+            width: 475px;
             margin-right: 100px;
             margin-left: 20px;
             flex-shrink: 0;
+            overflow-y: auto;
+            height: 100vh;
         }
 
         h1 {
-            position:fixed;
+            position:absolute;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -61,7 +67,9 @@
 <body>
     <h1>3D Model Engine</h1>
     <div class="main-container">
-        <div id="componentViewer"><h2>Component Viewer</h2></div>
+        <div id="componentViewer">
+            <h2>Component Viewer</h2>
+        </div>
         <div class="canvas-container">
             <canvas id="glCanvas"></canvas>
         </div>
@@ -99,26 +107,29 @@
 
             <button id="reset">Reset</button>
             <br/>
-            <label for="angle" id="angleObliqueLabel" hidden>Oblique Angle :</label>
+            <label for="angleOblique" id="angleObliqueLabel" hidden>Oblique Angle :</label>
             <input type="range" min="0" max="360" value="0" step="0.01" id="angleOblique" hidden>
             <br/>
-            <!-- <label for="angle">Angle :</label>
-            <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="angle">
-            <br/> -->
             <br/>
-            <label for="angle">X-Pos :</label>
+            <label for="x">X-Pos :</label>
             <input type="range" min="-1" max="1" value="0" step="0.01" id="x">
+            <label for="xRot">X-Rot :</label>
+            <input type="range" min="0" max="360" value="0" step="0.1" id="xRot">
             <br/>
             <br/>
-            <label for="angle">Y-Pos :</label>
+            <label for="y">Y-Pos :</label>
             <input type="range" min="-1" max="1" value="0" step="0.01" id="y">
+            <label for="yRot">Y-Rot :</label>
+            <input type="range" min="0" max="360" value="0" step="0.1" id="yRot">
             <br/>
             <br/>
-            <label for="angle">Z-Pos :</label>
+            <label for="z">Z-Pos :</label>
             <input type="range" min="-1" max="1" value="0" step="0.01" id="z">
+            <label for="zRot">Z-Rot :</label>
+            <input type="range" min="0" max="360" value="0" step="0.1" id="zRot">
             <br/>
             <br/>
-            <label for="angle">Light Position :</label>
+            <label for="l-x">Light Position :</label>
             <label class="switch">
                 <input type="range" min="-1" max="1" value="0" step="0.01" id="l-x">
             </label>
@@ -130,8 +141,7 @@
             </label>
             <br />
             <br />
-
-            <label for="angle">Light Intensity :</label>
+            <label for="l-intensity-r">Light Intensity :</label>
             <label class="switch">
                 <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-r">
             </label>
@@ -141,21 +151,44 @@
             <label class="switch">
                 <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-b">
             </label>
+            <br />
+            <br />
+
+            <label for="l-intensity">Light Intensity :</label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity">
+            </label>
             
             <br />
             <br />
-            <label for="angle">anim :</label>
+            <label for="anim">anim :</label>
             <label class="switch">
                 <input type="checkbox" id="anim">
             </label>
+            <label for="addFrame">Add To Frame:</label>
+            <button id="addFrame">Add</button>
             <br/>
             <br/>
-            <label for="angle">save</label>
+            <label for="save">save:</label>
             <button id="save">Save</button>
+            <label for="saveAnim">saveAnim:</label>
+            <button id="saveAnim">Save</button>
             <br/>
             <br/>
-            <label for="load">Load</label>
+            <label for="file-selector">Load</label>
             <input type="file" id="file-selector">
+            <br/>
+            <br/>
+            <label for="anim-selector">Load Anim: </label>
+            <input type="file" id="anim-selector">
+            <br/>
+            <br/>
+            <label for="delete-button">Delete Object</label>
+            <button id="delete-button">Delete</button>
+            <br/>
+            <br/>
+            <label for="add-object-file-selector">Add Object</label>
+            <input type="file" id="add-object-file-selector">
 
         </div>
         
@@ -196,6 +229,7 @@
     <script src="./light/spotLight.js"></script>
     <script src="./light/pointLight.js"></script>
     
+    <script src="./utils/animRunner.js"></script>
     <script src="./utils/updater.js"></script>
     <script src="./utils/Quarternion.js"></script>
     <script src="./utils/Matrix4x4.js"></script>
@@ -203,7 +237,6 @@
     <script src="./utils/webgl.js"></script>
     <script src="./utils/Load.js"></script>
     <script src="./utils/save.js"></script>
-    <script src="./utils/animRunner.js"></script>
 
 </body>
 </html>

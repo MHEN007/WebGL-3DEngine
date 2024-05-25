@@ -1,11 +1,14 @@
 class Light extends NodeScene {
     
     intensity
-    constructor(i){
+    color
+    constructor(c, i){
         super()
         if (!i){
-            i = new Vector3(1.0, 1.0, 1.0)
+            c = new Vector3(1.0, 1.0, 1.0)
+            i = 1.0
         }
+        this.color = c
         this.intensity = i
     }
 
@@ -24,7 +27,8 @@ class Light extends NodeScene {
     toJSON(){
         return {
             ...super.toJSON(),
-            intensity: this.intensity.toJSON(),
+            color: this.color.toJSON(),
+            intensity: this.intensity,
             type: this.type,
         }
     }

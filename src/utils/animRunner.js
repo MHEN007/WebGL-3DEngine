@@ -1,46 +1,25 @@
 class AnimationRunner {
-    constructor(animFile, root, { fps = 30 } = {}) {
-        this.isPlaying = false;
+    constructor(root, fps = 30, isPlaying = false) {
+        this.isPlaying = isPlaying;
         this.fps = fps;
         this.root = root;
+        this.frames = []
         this.currentFrame = 0;
         this.deltaFrame = 0;
-        this.currentAnimation = this.load(animFile);
     }
 
-    get CurrentFrame() {
-        return this.currentFrame;
-    }
-
-    get Length() {
+    get length() {
         return this.currentAnimation ? this.currentAnimation.frames.length : 0;
     }
 
-    play() {
-        this.isPlaying = true;
-    }
-
-    stop() {
-        this.isPlaying = false;
-    }
-
-    update(deltaSecond) {
-        if (this.isPlaying) {
-            this.deltaFrame += deltaSecond * this.fps;
-            if (this.deltaFrame >= 1) { // 1 frame
-                this.currentFrame = (this.currentFrame + Math.floor(this.deltaFrame)) % this.Length;
-                this.deltaFrame %= 1;
-                this.updateSceneGraph();
-            }
-        }
-    }
-
-    updateSceneGraph() {
-        if (this.currentAnimation) {
-            const frame = this.currentAnimation.frames[this.currentFrame];
-            // Update scene graph with current frame
-            // Use root as the parent and traverse according to the frame
-        }
+    /**
+     * 
+     * @param {NodeScene} scene 
+     */
+    addFrames(scene){
+        const listOfObject = NodeScene.getAllDescendants(scene);
+        this.frames.push(listOfObject)
+        console.log("Added Frames")
     }
 
     load(animFile) {
@@ -53,5 +32,24 @@ class AnimationRunner {
             console.error("Failed to load animation:", error);
             return undefined;
         }
+    }
+
+    toJSON(){
+        return {
+            fps : this.fps,
+            frames : this.frames,
+        }
+    }
+
+    /**
+     * 
+     * @param {JSON} json 
+     * @param {AnimationRunner} obj 
+     */
+    static fromJSON(json, obj){
+        obj = new AnimationRunner(null, json.fps)
+        obj.frames = json.frames
+        console.log(obj)
+        return obj
     }
 }

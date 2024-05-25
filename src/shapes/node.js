@@ -1,11 +1,16 @@
 class NodeScene {
-
+    /** @type {Vector3} */
     position
+    /** @type {Vector3} */
     rotation
+    /** @type {Vector3} */
     scale
+    /** @type {number[]} */
     localMatrix
+    /** @type {number[]} */
     worldMatrix
     parent
+    /** @type {NodeScene[]} */
     children
     visible
 
@@ -62,6 +67,7 @@ class NodeScene {
     /**
      * Fungsi buat nyari anak atau dianya sendiri
      * @param {NodeScene} object 
+     * @returns {NodeScene | null}
      */
     getObject(object){
         if (object === this){
@@ -69,6 +75,25 @@ class NodeScene {
         }
         for (let child of this.children){
             let result = child.getObject(object);
+            if (result !== null){
+                return result
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Fungsi buat nyari anak atau dianya sendiri
+     * @param {string} objectId
+     * @returns {NodeScene | null}
+     */
+    getObjectById(objectId){
+        if (objectId === this.id){
+            return this
+        }
+        for (let child of this.children){
+            let result = child.getObjectById(objectId);
             if (result !== null){
                 return result
             }
@@ -110,9 +135,39 @@ class NodeScene {
         }
     }
 
+    // remove(...objects){
+    //     if (objects.length > 1){
+    //         objects.forEach(object => this.remove(object))
+    //     }
+    //     if(objects.length === 0){
+    //         return this;
+    //     }
+    //     if(objects.length === 1){
+    //         const object = objects[0];
+    //         if (object){
+    //             const idx = this.children.indexOf(object);
+    //             if(idx !== -1){
+    //                 object.parent = null
+    //                 this.children.splice(idx, 1)
+    //             }
+    //         }
+    //     }
+    //     return this;
+    // }
+
     remove(...objects){
+        const recursiveRemove = (node, object) => {
+            const idx = node.children.indexOf(object);
+            if(idx !== -1){
+                object.parent = null;
+                node.children.splice(idx, 1);
+            } else {
+                node.children.forEach(child => recursiveRemove(child, object));
+            }
+        }
+    
         if (objects.length > 1){
-            objects.forEach(object => this.remove(object))
+            objects.forEach(object => this.remove(object));
         }
         if(objects.length === 0){
             return this;
@@ -120,11 +175,7 @@ class NodeScene {
         if(objects.length === 1){
             const object = objects[0];
             if (object){
-                const idx = this.children.indexOf(object);
-                if(idx !== -1){
-                    object.parent = null
-                    this.children.splice(idx, 1)
-                }
+                recursiveRemove(this, object);
             }
         }
         return this;
@@ -152,6 +203,26 @@ class NodeScene {
     
     lookAt(target, up){
         return Matrix4x4.lookAt(this.getWorldPosition(), target, up)
+    }
+
+    /**
+     * 
+     * @param {Scene} object
+     * @returns 
+     */
+    static getAllDescendants(object) {
+        let descendants = [];
+        
+        for (let i = 0; i < object.children.length; i++) {
+            const objectProps = {
+                id: object.children[i].id,
+                position : object.children[i].position.toJSON(),
+                rotation : object.children[i].rotation.toJSON(),
+            }
+            descendants.push(objectProps)
+            descendants.push(...NodeScene.getAllDescendants(object.children[i]))
+        }
+        return descendants;
     }
 
     toJSON(){

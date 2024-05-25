@@ -12,6 +12,11 @@ function removeCircularReferences() {
     };
 }
 
+/**
+ * 
+ * @param {NodeScene} scene 
+ * @param {string} filename 
+ */
 function save(scene, filename) {
     const json = JSON.stringify(scene.toJSON(),null,2);
     console.log(json);
@@ -33,3 +38,8 @@ saveButton.addEventListener('click', () => {
     save(scene, 'scene.json');
 });
 
+const saveAnimation = document.getElementById('saveAnim');
+saveAnimation.addEventListener('click', () => {
+    console.log(animator.toJSON())
+    save(animator, 'animation.json')
+})
