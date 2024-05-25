@@ -137,7 +137,9 @@ init()
 const steve = new Steve()
 // scene add root buat jadi 'world'nya root
 const object = new Creeper()
-let scene = new Scene(gl, [camera], [light1]).add(object.object);
+
+// const wither = new Wither()
+let scene = new Scene(gl, [camera], [light1]).add(shulker.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -545,8 +547,12 @@ function selectAll(){
 
 let animator = new AnimationRunner(scene, 30)
 
-let fps = 0; 
-function animate() {
+let fps = 0;
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function animate() {
     if (isAnimating) {
         fps += 1;
         if (fps >= animator.frames.length){
@@ -558,6 +564,7 @@ function animate() {
         })
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
+        await delay(1000 / animator.fps)
     }
     requestAnimationFrame(animate); // Call animate function again in next frame
 }

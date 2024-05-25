@@ -30,7 +30,7 @@ class Shulker{
         this.#materials.push(new BasicMaterial("blue", [0, 0, 1], false))
         this.#materials.push(new BasicMaterial("yellow", [1, 1, 0], false))
         this.#materials.push(new BasicMaterial("lightblue", [0, 1, 1], false))
-        this.#materials.push(new PhongMaterial("purple", [1, 0, 1], false))
+        this.#materials.push(new BasicMaterial("purple", [1, 0, 1], false))
         this.#materials.push(new BasicMaterial("black", [0, 0, 0], false))
         this.#materials.push(new BasicMaterial("grey", [0.4, 0.4, 0.4], false))
         this.#materials.push(new BasicMaterial("cream", [1, 0.83, 0.72], false))
@@ -70,7 +70,7 @@ class Shulker{
         // materials [red, green, blue, yellow, lightblue, purple, black, grey, cream]
         //             0     1      2      3        4         5      6      7     8
         // create meshes
-        this.root = new Mesh("R", new BoxGeometry(0, 0, 0), this.#materials, [0, 0, 0, 0, 0, 0])
+        this.root = new Mesh("ROOT", new BoxGeometry(0, 0, 0), this.#materials, [0, 0, 0, 0, 0, 0])
         this.root.position = new Vector3(0, 0, 0)
         this.root.rotation = new Vector3(0, 0, 0)
 
@@ -104,11 +104,10 @@ class Shulker{
         this.topFrontRightMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
         this.roofMesh.add(this.topFrontRightMesh)
 
-        this.botFrontMesh = new Mesh("TLR", this.#botFrontGeometry, this.#materials, [7, 7, 7, 7, 7, 7])
+        this.botFrontMesh = new Mesh("BF", this.#botFrontGeometry, this.#materials, [7, 7, 7, 7, 7, 7])
         this.botFrontMesh.position = new Vector3(0, 0.1, -0.05)
         this.botFrontMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
         this.baseMesh.add(this.botFrontMesh)
-        this.topFrontRightMesh = new Mesh("TFR", this.topFrontRightMesh, this.#materials, [0, 0, 0, 0, 0, 0])
 
         // BACK
         this.topBackMesh = new Mesh("TB", this.#topBackGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
@@ -130,7 +129,6 @@ class Shulker{
         this.botBackMesh.position = new Vector3(0, 0.1, 0.05)
         this.botBackMesh.rotation = new Vector3(Math.PI/2, 0, 0)
         this.baseMesh.add(this.botBackMesh)
-        this.topBackRightMesh = new Mesh("TBR", this.topBackRightMesh, this.#materials, [0, 0, 0, 0, 0, 0])
 
         // RIGHT
         this.topRightMesh = new Mesh("TR", this.#topRightGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
@@ -174,8 +172,8 @@ class Shulker{
         this.botLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
         this.baseMesh.add(this.botLeftMesh)
 
-        this.roofMesh.position = new Vector3(0, 0.14, 0)
-        this.baseMesh.position = new Vector3(0, -0.11, 0)
+        // this.roofMesh.position = new Vector3(0, 0.14, 0)
+        // this.baseMesh.position = new Vector3(0, -0.11, 0)
         this.root.add(this.headMesh)
     }
 
