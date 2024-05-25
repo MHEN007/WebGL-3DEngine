@@ -2,8 +2,8 @@ class Light extends NodeScene {
     
     intensity
     color
-    constructor(c, i){
-        super()
+    constructor(id, c, i){
+        super(id)
         if (!i){
             c = new Vector3(1.0, 1.0, 1.0)
             i = 1.0

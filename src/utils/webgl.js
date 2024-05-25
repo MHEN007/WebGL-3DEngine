@@ -49,9 +49,9 @@ let check = []
 const phongUpdater = new Updater()
 
 /* LIGHT */
-const light2 = new DirectionalLight(new Vector3(0, 1, 0), 1.0, new Vector3(0, 0, -1))
-const light3 = new DirectionalLight(new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, 1))
-const light1 = new PointLight(new Vector3(0, 1, 0), 1.0, new Vector3(0, 0.03, 0))
+const light2 = new DirectionalLight("Light 2", new Vector3(0, 1, 0), 1.0, new Vector3(0, 0, -1))
+const light3 = new DirectionalLight("Light 3", new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, 1))
+const light1 = new PointLight("Light 1", new Vector3(0, 1, 0), 1.0, new Vector3(0, 0.03, 0))
 // const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
 lightIntensityR.value = light1.intensity.x
 lightIntensityG.value = light1.intensity.y
@@ -152,8 +152,22 @@ const far = 1000;
 // scene.add(mesh1)
 scene.drawAll()
 componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-const ul = document.createElement("ul")
+var ul = document.createElement("ul")
 ul.appendChild(componentViewLoader(scene))
+var lightParent = document.createElement('li')
+var lightList = document.createElement("ul")
+lightList.appendChild(document.createTextNode("Light Sources"))
+for(let i =0; i < scene.lightSources.length; i++){
+    var li = document.createElement('li')
+    var checkBox = document.createElement("input")
+    checkBox.type = 'checkbox'
+    checkBox.value = scene.lightSources[i].id
+    li.appendChild(checkBox)
+    li.appendChild(document.createTextNode(scene.lightSources[i].id))
+    lightList.appendChild(li)
+}
+lightParent.appendChild(lightList)
+ul.appendChild(lightList)
 componentViewer.appendChild(ul)
 
 projectionSelector.addEventListener('change', function(){
@@ -404,7 +418,6 @@ lightIntensityB.addEventListener('input', function() {
     light1.color = new Vector3(light1.color.x, light1.color.y, parseFloat(lightIntensityB.value))
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
-    gl.clearColor(1.0, 1.0, 1.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -417,83 +430,38 @@ lightIntensity.addEventListener('input', function(){
 
 function updateComponentViewer(){
     var ulElement = document.querySelector('ul');
-        while (ulElement.firstChild) {
-            ulElement.removeChild(ulElement.firstChild);
-        }
-        ulElement.remove();
-
-        componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-        const ul = document.createElement("ul")
-
-        ul.appendChild(componentViewLoader(scene))
-
-        componentViewer.appendChild(ul)
-        check = []
-}
-
-deleteButton.addEventListener('click', function(){
-    if (check.length>0){
-        check.forEach((item) => {
-            console.log("yang mau di delete", item)
-            scene.remove(item)
-        })
+    while (ulElement.firstChild) {
+        ulElement.removeChild(ulElement.firstChild);
     }
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.drawAll()
+    ulElement.remove();
 
-    updateComponentViewer()
-    console.log(scene)
-})
+    componentViewer.innerHTML = "<h2>Component Viewer</h2>"
 
-function selectNoZ(){
-    camRotationXSlider.style.display = 'block'
-    camRotationXLabel.style.display = 'block'
-    camRotationXSlider.value = 0
-    camRotationYSlider.style.display = 'block'
-    camRotationYLabel.style.display = 'block'
-    camRotationYSlider.value = 0
-    camRotationZSlider.style.display = 'none'
-    camRotationZLabel.style.display = 'none'
-}
+    /* SCENE CHILDREN */
+    const ulChild = document.createElement("ul")
 
-function selectNoX(){
-    camRotationXSlider.style.display = 'none'
-    camRotationXLabel.style.display = 'none'
-    camRotationYSlider.value = 0
-    camRotationYSlider.style.display = 'block'
-    camRotationYLabel.style.display = 'block'
-    camRotationZSlider.value = 0    
-    camRotationZSlider.style.display = 'block'
-    camRotationZLabel.style.display = 'block'
-}
+    ulChild.appendChild(componentViewLoader(scene))
 
-function selectAll(){
-    camRotationXSlider.style.display = 'block'
-    camRotationXLabel.style.display = 'block'
-    camRotationXSlider.value = 0
-    camRotationYSlider.style.display = 'block'
-    camRotationYLabel.style.display = 'block'
-    camRotationYSlider.value = 0
-    camRotationZSlider.style.display = 'block'
-    camRotationZLabel.style.display = 'block'
-    camRotationZSlider.value = 0
+    componentViewer.appendChild(ulChild)
 
-}
+    /* SCENE LIGHT */
+    var lightParent = document.createElement('li')
+    var lightList = document.createElement("ul")
+    lightList.appendChild(document.createTextNode("Light Sources"))
+    for(let i =0; i < scene.lightSources.length; i++){
+        var li = document.createElement('li')
+        var checkBox = document.createElement("input")
+        checkBox.type = 'checkbox'
+        checkBox.value = scene.lightSources[i].id
+        li.appendChild(checkBox)
+        li.appendChild(document.createTextNode(scene.lightSources[i].id))
+        lightList.appendChild(li)
+    }
+    lightParent.appendChild(lightList)
+    ul.appendChild(lightList)
+    componentViewer.appendChild(ul)
 
-function updateComponentViewer(){
-    var ulElement = document.querySelector('ul');
-        while (ulElement.firstChild) {
-            ulElement.removeChild(ulElement.firstChild);
-        }
-        ulElement.remove();
-
-        componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-        const ul = document.createElement("ul")
-
-        ul.appendChild(componentViewLoader(scene))
-
-        componentViewer.appendChild(ul)
-        check = []
+    check = []
 }
 
 deleteButton.addEventListener('click', function(){

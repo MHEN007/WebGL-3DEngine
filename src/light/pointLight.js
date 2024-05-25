@@ -2,8 +2,8 @@ class PointLight extends Light {
 
     /**@type {Vector3} */
     position 
-    constructor(c = new Vector3(1.0, 1.0, 1.0), i, position){
-        super(c, i)
+    constructor(id, c = new Vector3(1.0, 1.0, 1.0), i, position){
+        super(id, c, i)
         this.position = position
     }
 
