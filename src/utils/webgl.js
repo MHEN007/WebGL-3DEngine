@@ -19,6 +19,7 @@ const camRotationZLabel = document.getElementById("rotationZLabel")
 const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
 const deleteButton = document.getElementById("delete-button")
+const addFrames = document.getElementById("addFrame")
 
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
@@ -34,8 +35,10 @@ const lightIntensity = document.getElementById('l-intensity')
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
+const xRot = document.getElementById('xRot')
+const yRot = document.getElementById('yRot')
+const zRot = document.getElementById('zRot')
 const anim = document.getElementById('anim');
-const fileSelector = document.getElementById("file-selector");
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
@@ -145,6 +148,10 @@ const far = 1000;
 
 // scene.add(mesh1)
 scene.drawAll()
+componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+const ul = document.createElement("ul")
+ul.appendChild(componentViewLoader(scene))
+componentViewer.appendChild(ul)
 
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
@@ -472,29 +479,138 @@ function selectAll(){
 }
 
 
-let rotationAngle = 0; // Variable to keep track of rotation angle
+lightYPosition.addEventListener('input', function() {
+    light1.position.y = parseFloat(lightYPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    console.log(light1.position.y)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightZPosition.addEventListener('input', function() {
+    light1.position.z = parseFloat(lightZPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightIntensityR.addEventListener('input', function() {
+    light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+lightIntensityG.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+lightIntensityB.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+function updateComponentViewer(){
+    var ulElement = document.querySelector('ul');
+        while (ulElement.firstChild) {
+            ulElement.removeChild(ulElement.firstChild);
+        }
+        ulElement.remove();
+
+        componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+        const ul = document.createElement("ul")
+
+        ul.appendChild(componentViewLoader(scene))
+
+        componentViewer.appendChild(ul)
+        check = []
+}
+
+deleteButton.addEventListener('click', function(){
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log("yang mau di delete", item)
+            scene.remove(item)
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+
+    updateComponentViewer()
+    console.log(scene)
+})
+
+function selectNoZ(){
+    camRotationXSlider.style.display = 'block'
+    camRotationXLabel.style.display = 'block'
+    camRotationXSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationYSlider.value = 0
+    camRotationZSlider.style.display = 'none'
+    camRotationZLabel.style.display = 'none'
+}
+
+function selectNoX(){
+    camRotationXSlider.style.display = 'none'
+    camRotationXLabel.style.display = 'none'
+    camRotationYSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationZSlider.value = 0    
+    camRotationZSlider.style.display = 'block'
+    camRotationZLabel.style.display = 'block'
+}
+
+function selectAll(){
+    camRotationXSlider.style.display = 'block'
+    camRotationXLabel.style.display = 'block'
+    camRotationXSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationYSlider.value = 0
+    camRotationZSlider.style.display = 'block'
+    camRotationZLabel.style.display = 'block'
+    camRotationZSlider.value = 0
+
+}
+
+let animator = new AnimationRunner(scene, 30)
+
+let fps = 0; 
 function animate() {
     if (isAnimating) {
-        rotationAngle += 0.01;
-        if (rotationAngle>3.14){
-            rotationAngle = -3.14
+        fps += 1;
+        if (fps >= animator.frames.length){
+            fps = 0
         }
-        // set distanceSlider value
-        camRotationYSlider.value = rotationAngle
-        camera.rotation.y = rotationAngle; // Update rotation of the mesh
-        // scene.computeWorldMatrix(false, true);
+        animator.frames[Math.floor(fps)].forEach(frame => {
+            scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
+            scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
+        })
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-        scene.drawAll(); // Redraw the scene
+        scene.drawAll()
     }
     requestAnimationFrame(animate); // Call animate function again in next frame
 }
-
+// Add event listener to the checkbox
 anim.addEventListener('change', function() {
     isAnimating = anim.checked; // Update animation state based on checkbox state
     if (isAnimating) {
         animate(); // Start animation if checkbox is checked
     }
 });
+
+
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
@@ -573,29 +689,6 @@ function findAndDeleteChildren(obj, name){
     }
 }
 
-fileSelector.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return
-
-    try{
-        json = await readFile(file)
-    } catch (error){
-        console.error(error);
-    }
-    scene = NodeScene.fromJSON(json)
-    getAllChildren(scene)
-    console.log(scene)
-    scene.drawAll()
-    
-    /* LOAD VIEWER */
-    componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-    const ul = document.createElement("ul")
-
-    ul.appendChild(componentViewLoader(scene))
-
-    componentViewer.appendChild(ul)
-})
-
 function componentViewLoader(obj) {
     const li = document.createElement('li');
     
@@ -659,3 +752,38 @@ addObjectFileSelector.addEventListener('change', async (e) => {
     e.target.value = null;
 })
 
+xRot.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).rotation.x = parseFloat(xRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+yRot.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).rotation.y = parseFloat(yRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+zRot.addEventListener('input', () =>{
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).rotation.z = parseFloat(zRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+addFrames.addEventListener('click', () => {
+    animator.addFrames(scene)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll();
+})

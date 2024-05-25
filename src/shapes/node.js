@@ -1,11 +1,16 @@
 class NodeScene {
-
+    /** @type {Vector3} */
     position
+    /** @type {Vector3} */
     rotation
+    /** @type {Vector3} */
     scale
+    /** @type {number[]} */
     localMatrix
+    /** @type {number[]} */
     worldMatrix
     parent
+    /** @type {NodeScene[]} */
     children
     visible
 
@@ -62,6 +67,7 @@ class NodeScene {
     /**
      * Fungsi buat nyari anak atau dianya sendiri
      * @param {NodeScene} object 
+     * @returns {NodeScene | null}
      */
     getObject(object){
         if (object === this){
@@ -69,6 +75,25 @@ class NodeScene {
         }
         for (let child of this.children){
             let result = child.getObject(object);
+            if (result !== null){
+                return result
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Fungsi buat nyari anak atau dianya sendiri
+     * @param {string} objectId
+     * @returns {NodeScene | null}
+     */
+    getObjectById(objectId){
+        if (objectId === this.id){
+            return this
+        }
+        for (let child of this.children){
+            let result = child.getObjectById(objectId);
             if (result !== null){
                 return result
             }
@@ -178,6 +203,26 @@ class NodeScene {
     
     lookAt(target, up){
         return Matrix4x4.lookAt(this.getWorldPosition(), target, up)
+    }
+
+    /**
+     * 
+     * @param {Scene} object
+     * @returns 
+     */
+    static getAllDescendants(object) {
+        let descendants = [];
+        
+        for (let i = 0; i < object.children.length; i++) {
+            const objectProps = {
+                id: object.children[i].id,
+                position : object.children[i].position.toJSON(),
+                rotation : object.children[i].rotation.toJSON(),
+            }
+            descendants.push(objectProps)
+            descendants.push(...NodeScene.getAllDescendants(object.children[i]))
+        }
+        return descendants;
     }
 
     toJSON(){
