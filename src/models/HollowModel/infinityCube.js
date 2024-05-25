@@ -1,4 +1,4 @@
-class infinityCube {
+class InfinityCube {
     
 
     get object(){

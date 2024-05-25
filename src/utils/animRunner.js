@@ -1,15 +1,7 @@
 class AnimationRunner {
-    constructor(root, fps = 30, isPlaying = false) {
-        this.isPlaying = isPlaying;
+    constructor(fps = 30) {
         this.fps = fps;
-        this.root = root;
         this.frames = []
-        this.currentFrame = 0;
-        this.deltaFrame = 0;
-    }
-
-    get length() {
-        return this.currentAnimation ? this.currentAnimation.frames.length : 0;
     }
 
     /**
@@ -19,19 +11,15 @@ class AnimationRunner {
     addFrames(scene){
         const listOfObject = NodeScene.getAllDescendants(scene);
         this.frames.push(listOfObject)
-        console.log("Added Frames")
+        console.log("frames: ", this.frames.length)
     }
 
-    load(animFile) {
-        try { // TODO
-            // Load animation from file
-            // If successful, return the AnimationClip
-            // Otherwise, handle the error or throw an exception
-        } catch (error) {
-            // Handle error, e.g., log or notify
-            console.error("Failed to load animation:", error);
-            return undefined;
-        }
+    getFrame(index){
+        return this.frames[index]
+    }
+
+    deleteFrame(index){
+        this.frames.splice(index, 1)
     }
 
     toJSON(){
@@ -47,7 +35,7 @@ class AnimationRunner {
      * @param {AnimationRunner} obj 
      */
     static fromJSON(json, obj){
-        obj = new AnimationRunner(null, json.fps)
+        obj = new AnimationRunner(json.fps, json.fps)
         obj.frames = json.frames
         console.log(obj)
         return obj

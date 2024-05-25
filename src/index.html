@@ -27,10 +27,10 @@
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items:start;
             padding: 20px;
             z-index: 1;
-            margin-left: 480px;
+            margin-left: 1px;
         }
 
         #glCanvas {
@@ -43,14 +43,22 @@
             flex-shrink: 0;
         }
 
-        #componentViewer {
-            position: fixed;
+        #componentViewer{
+            position: relative;
             width: 475px;
-            margin-right: 100px;
+            margin-right: 2px;
             margin-left: 20px;
             flex-shrink: 0;
             overflow-y: auto;
-            height: 100vh;
+            height: fit-content;
+        }
+        
+        .right{
+            position: relative;
+            width: 475px;
+            margin-right: 2px;
+            margin-left: 20px;
+            height: 20vh;
         }
 
         h1 {
@@ -67,10 +75,49 @@
 <body>
     <h1>3D Model Engine</h1>
     <div class="main-container">
-        <div id="componentViewer">
-            <h2>Component Viewer</h2>
+        <div>
+            <div id="componentViewer">
+                <h2>Component Viewer</h2>
+            </div>
+            <div class="right">
+                <h2>Animation Manager</h2>
+                <button id="play">play</button>
+                <button id="pause">pause</button>
+                <br>
+                <br>
+                <label for="reverse">reverse:</label>
+                <label class="switch">
+                    <input type="checkbox" id="reverse">
+                </label>
+                <label for="autoreplay">auto-replay:</label>
+                <label class="switch">
+                    <input type="checkbox" id="autoreplay">
+                </label>
+                <br>
+                <br>
+                <label for="addFrame">Add Frame:</label>
+                <button id="addFrame">Add</button>
+                <br/>
+                <br/>
+                <label for="saveAnim">saveAnim:</label>
+                <button id="saveAnim">Save</button>
+                <br/>
+                <br/>
+                <label for="anim-selector">Load Anim: </label>
+                <input type="file" id="anim-selector">
+                <br>
+                <br>
+                <h3>Frame Controller</h3>
+                <button id="nextFrame">Next</button>
+                <button id="prevFrame">Previous</button>
+                <button id="firstFrame">First</button>
+                <button id="lastFrame">Last</button>
+                <br>
+                <br>
+            </div>
         </div>
         <div class="canvas-container">
+            <p>Frame</p>
             <canvas id="glCanvas"></canvas>
         </div>
         <div id="right-controller">
@@ -93,18 +140,19 @@
             <label for="rotationXLabel" id="rotationXLabel">Rotation x :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationX">
             <br/>
+            <br/>
             <label for="rotationYLabel" id="rotationYLabel">Rotation y :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationY">
+            <br/>
             <br/>
             <label for="rotationZLabel" id="rotationZLabel">Rotation z :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationZ">
             <br/>
+            <br/>
             <label for="distance" id="distanceLabel" hidden>Distance :</label>
             <input type="range" min="0" max="2" value="1" step="0.01" id="distance" hidden>
             <br/>
-            
-
-
+            <br/>
             <button id="reset">Reset</button>
             <br/>
             <label for="angleOblique" id="angleObliqueLabel" hidden>Oblique Angle :</label>
@@ -158,29 +206,14 @@
             <label class="switch">
                 <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity">
             </label>
-            
-            <br />
-            <br />
-            <label for="anim">anim :</label>
-            <label class="switch">
-                <input type="checkbox" id="anim">
-            </label>
-            <label for="addFrame">Add To Frame:</label>
-            <button id="addFrame">Add</button>
             <br/>
             <br/>
             <label for="save">save:</label>
             <button id="save">Save</button>
-            <label for="saveAnim">saveAnim:</label>
-            <button id="saveAnim">Save</button>
             <br/>
             <br/>
             <label for="file-selector">Load</label>
             <input type="file" id="file-selector">
-            <br/>
-            <br/>
-            <label for="anim-selector">Load Anim: </label>
-            <input type="file" id="anim-selector">
             <br/>
             <br/>
             <label for="delete-button">Delete Object</label>

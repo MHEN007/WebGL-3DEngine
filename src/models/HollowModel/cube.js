@@ -1,4 +1,4 @@
-class hollowCube {
+class HollowCube {
     get object(){
         const outerVertices = new Float32Array([
             // Tampak depan

@@ -19,7 +19,6 @@ const camRotationZLabel = document.getElementById("rotationZLabel")
 const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
 const deleteButton = document.getElementById("delete-button")
-const addFrames = document.getElementById("addFrame")
 
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
@@ -38,7 +37,17 @@ const zPos = document.getElementById("z")
 const xRot = document.getElementById('xRot')
 const yRot = document.getElementById('yRot')
 const zRot = document.getElementById('zRot')
-const anim = document.getElementById('anim');
+
+const play = document.getElementById('play')
+const pause = document.getElementById('pause')
+const reverse = document.getElementById('reverse')
+const autoreplay = document.getElementById('autoreplay')
+const addFrames = document.getElementById("addFrame")
+const nextFrame = document.getElementById('nextFrame')
+const prevFrame = document.getElementById('prevFrame')
+const firstFrame = document.getElementById('firstFrame')
+const lastFrame = document.getElementById('lastFrame')
+
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
@@ -64,14 +73,12 @@ let camera = new PerspectiveCamera(45 * Math.PI / 180, canvas.width / canvas.hei
 camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
-/* SCENE CREATION */
-
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
-const green = new PhongMaterial("green", [0.1, 0.1, 0.1], false, tex1)
+const green = new BasicMaterial("green", [0, 1, 0], false, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
-const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
+const yellow = new BasicMaterial("yellow", [1, 1, 0], false, tex1)
 const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
 const cyan = new BasicMaterial("cyan", [0, 1, 1], false, tex1)
 const grey = new BasicMaterial("grey", [0.6, 0.6, 0.6], false, tex1)
@@ -80,44 +87,10 @@ phongUpdater.subscribe(green)
 
 const materials = [green, purple, yellow, blue, cyan, red, grey]
 
-/* MESH */
-// const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
-// mesh1.position = new Vector3(0, 0, 0)
-// mesh1.rotation = new Vector3(0, 0, 0)
-
-// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-// mesh2.position = new Vector3(0.2, 0, 0.1)
-// mesh2.rotation = new Vector3(0, 0, 0)
-
-// const mesh2 = new Mesh(gl, [camera],null,box, materials, [0, 0, 0, 0, 0, 0])
-// mesh2.position = new Vector3(0.2, 0, 0.1)
-// mesh2.rotation = new Vector3(0, 0, 0)
-
-const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-mesh3.position = new Vector3(0, 0, 0)
-mesh3.rotation = new Vector3(0, 0, 0)
-
-const mesh2 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-mesh2.position = new Vector3(0.3, 0, 0)
-mesh2.rotation = new Vector3(0, 0, 0)
-
-let shulker = new Shulker()
-let wither = new Wither()
-// scene.add(shulker.object)
-
-// // mesh1: add children mesh2, mesh3
-// mesh1.add(mesh2,mesh3)
-// const root = new Mesh( new BoxGeometry(0,0,0), materials, [0, 0, 0, 0, 0, 0])
-// root.position = new Vector3(0,0,0)
-// root.rotation = new Vector3(0,0,0)
-// root.add(mesh1)
-// // root: add children mesh1 YANG punya children mesh2, mesh3
-
-// const mesh3 = new Mesh(box, materials, [0, 0, 0, 0, 0, 0])
-// mesh3.position = new Vector3(0.4, 0, 0.2)
-// mesh3.rotation = new Vector3(0, 0, 0)
 
 let isAnimating = false; // Variable to keep track of animation state
+let isReverse = false
+let isAutoreplay = false
 
 function init(){
     if(!gl){
@@ -133,12 +106,21 @@ function init(){
 
 init()
 
-// scene add root buat jadi 'world'nya roo
+/*ARTICULATED MODEL CREATION */
+const shulker = new Shulker()
+const wither = new Wither()
 const steve = new Steve()
-// scene add root buat jadi 'world'nya root
-const object = new Creeper()
+const creeper = new Creeper()
+const golem = new Golem()
 
-// const wither = new Wither()
+/*HOLLOW MODEL CREATION */
+const batako = new Batako()
+const chain = new Chain()
+const cube = new HollowCube()
+const infinityCube = new InfinityCube()
+const nether = new NetherPortal()
+
+/* SCENE CREATION */
 let scene = new Scene(gl, [camera], [light1]).add(shulker.object);
 scene.position = new Vector3(0,0,0)
 
@@ -149,7 +131,6 @@ const topp = 0.5
 const near = -1000;
 const far = 1000;
 
-// scene.add(mesh1)
 scene.drawAll()
 componentViewer.innerHTML = "<h2>Component Viewer</h2>"
 var ul = document.createElement("ul")
@@ -228,8 +209,6 @@ projectionSelector.addEventListener('change', function(){
 
 camRotationYSlider.addEventListener('input', function(){
     // unchecked anim
-    isAnimating = false;
-    anim.checked = false;
     camera.rotation.y = parseFloat(camRotationYSlider.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
@@ -238,7 +217,6 @@ camRotationYSlider.addEventListener('input', function(){
 
 camRotationXSlider.addEventListener('input', function(){
     camera.rotation.x = parseFloat(camRotationXSlider.value)
-    console.log(camera.rotation)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -326,16 +304,6 @@ resetButton.addEventListener('click', function(){
 })
 
 xPos.addEventListener('input', function(){
-    /**
-     * struktur anaknya
-     * scene.children[] => root
-     *  scene.children[].children[] => mesh1
-     *  scene.children[].children[].children[] => mesh2,mesh3
-     * 
-     * dibawah contoh code kalo misalkan mau ngubah si mesh2
-     */
-    // scene.getObject(object.upperArmLeftMesh).position.x = parseFloat(xPos.value)
-    // scene.position.x = parseFloat(xPos.value)
 
     if (check.length>0){
         check.forEach((item) => {
@@ -344,13 +312,11 @@ xPos.addEventListener('input', function(){
         })
     }
 
-    // scene.position.x = parseFloat(xPos.value)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 
 yPos.addEventListener('input', function(){
-    // scene.position.y = parseFloat(yPos.value)
 
     if (check.length>0){
         check.forEach((item) => {
@@ -508,36 +474,67 @@ function selectAll(){
 
 }
 
-let animator = new AnimationRunner(scene, 30)
-
+let animator = new AnimationRunner(30)
 let fps = 0;
+
+let callbackId = 0;
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function animate() {
-    if (isAnimating) {
-        fps += 1;
-        if (fps >= animator.frames.length){
+    if (fps >= animator.frames.length){
+        if (isAutoreplay){
+            isReverse = !isReverse
+            fps -= 1
+        } else {
             fps = 0
         }
+    }
+    if (fps < 0){
+        if (isAutoreplay){
+            isReverse = !isReverse
+            fps += 1
+        } else {
+            fps = animator.frames.length - 1
+        }
+    }
+    console.log(fps)
+
+    if (isAnimating) {
         animator.frames[Math.floor(fps)].forEach(frame => {
             scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
             scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
         })
+        if (!isReverse){
+            fps += 1;
+        } else {
+            fps -= 1;
+        }
+        await delay(1000 / animator.fps)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
-        await delay(1000 / animator.fps)
+        callbackId = requestAnimationFrame(animate);
     }
-    requestAnimationFrame(animate); // Call animate function again in next frame
 }
-// Add event listener to the checkbox
-anim.addEventListener('change', function() {
-    isAnimating = anim.checked; // Update animation state based on checkbox state
-    if (isAnimating) {
-        animate(); // Start animation if checkbox is checked
-    }
+
+play.addEventListener('click', function() {
+    isAnimating = true; 
+    animate()
 });
+
+pause.addEventListener('click', () => {
+    isAnimating = false;
+    cancelAnimationFrame(callbackId)
+})
+
+reverse.addEventListener('change', () => {
+    isReverse = reverse.checked
+})
+
+autoreplay.addEventListener('change', () => {
+    isAutoreplay = autoreplay.checked
+})
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
@@ -713,4 +710,50 @@ addFrames.addEventListener('click', () => {
     animator.addFrames(scene)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll();
+})
+
+nextFrame.addEventListener('click', () => {
+    fps += 1
+    if (fps >= animator.frames.length){
+        fps = 0
+    }
+    animator.frames[fps].forEach(frame => {
+        scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
+        scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+prevFrame.addEventListener('click', () => {
+    fps -= 1
+    if (fps < 0){
+        fps = animator.frames.length - 1
+    }
+    animator.frames[fps].forEach(frame => {
+        scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
+        scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+firstFrame.addEventListener('click', () => {
+    fps = 0
+    animator.frames[fps].forEach(frame => {
+        scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
+        scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()    
+})
+
+lastFrame.addEventListener('click', () => {
+    fps = animator.frames.length - 1
+    animator.frames[fps].forEach(frame => {
+        scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
+        scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()    
 })
