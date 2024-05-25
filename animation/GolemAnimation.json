@@ -1,0 +1,2266 @@
+{
+  "fps": 12,
+  "frames": [
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.04363323129985824,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.04363323129985824,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.48345620280242924,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.48345620280242924,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.6719517620178169,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.6719517620178169,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.9040805525330626,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.9040805525330626,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.0367255756846316,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.0367255756846316,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.3753194505715316,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.3753194505715316,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.5638150097869192,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.5638150097869192,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.7226399717184033,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.7226399717184033,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.9547687622336491,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.9547687622336491,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.7749998492782333,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.7749998492782333,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.7749998492782333,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.7749998492782333,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.340412865531645,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.340412865531645,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.1868238913561442,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.1868238913561442,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.0000736613927508,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 1.0000736613927508,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.7522369076095561,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.7522369076095561,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.640535835481919,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.640535835481919,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.47123889803846897,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.47123889803846897,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.12042771838760874,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.12042771838760874,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Golem",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ]
+  ]
+}
