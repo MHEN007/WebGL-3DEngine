@@ -64,6 +64,10 @@ class BasicMaterial extends ShaderMaterial {
     }
 
     static fromJSON(json, object){
-        return new BasicMaterial(json.name, json.uniforms['color'], json.uniforms['useTexture'], Texture.fromJSON(json.uniforms.sourceTexture))
+        if (!json.uniforms.sourceTexture){
+            return new BasicMaterial(json.name, json.uniforms['color'], json.uniforms['useTexture'], null, json.uniforms.ambient)
+        } else {
+            return new BasicMaterial(json.name, json.uniforms['color'], json.uniforms['useTexture'], Texture.fromJSON(json.uniforms.sourceTexture), json.uniforms.ambient)
+        }
     }
 }
