@@ -35,12 +35,9 @@ class Scene extends NodeScene{
         this.#basicFS = this.createShader(gl.FRAGMENT_SHADER, BasicMaterial.fs)
         this.#phongVS = this.createShader(gl.VERTEX_SHADER, PhongMaterial.vs)
         this.#phongFS = this.createShader(gl.FRAGMENT_SHADER, PhongMaterial.fs)
-        this.#textureVS = this.createShader(gl.VERTEX_SHADER, Texture.vs)
-        this.#textureFS = this.createShader(gl.FRAGMENT_SHADER, Texture.fs)
 
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
-        this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
 
         this.init()
     }
@@ -183,12 +180,8 @@ class Scene extends NodeScene{
             gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
     
             var texture = gl.createTexture()
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
-            
-            var image = new Image()
-            image.src = texObj.source
-            // image.addEventListener('load', function(){
+
+            if(texObj.loaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
                 
@@ -199,7 +192,10 @@ class Scene extends NodeScene{
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
-            // })
+            }else{
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+            }
         }
 
         // Draw
@@ -256,7 +252,7 @@ class Scene extends NodeScene{
         gl.uniform1i(uniformSpecularMapLoc, 1)
         gl.uniform1i(uniformNormalMapLoc, 2)
         gl.uniform1i(uniformDisplacementMapLoc, 3)
-        gl.uniform1i(uniformUseDisplacementLoc, true)
+        gl.uniform1i(uniformUseDisplacementLoc, false)
         gl.uniform1i(uniformUseSpecularLoc, true)
         gl.uniform1i(uniformUseNormalLoc, true)
 
@@ -356,28 +352,25 @@ class Scene extends NodeScene{
     
             var texture = gl.createTexture()
             this.gl.activeTexture(gl.TEXTURE0)
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
-    
-            var image = new Image()
-            image.src = texObj.source
-            // image.addEventListener('load', function() {
+
+            if(texObj.loaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.image)
     
-                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                if (isPowerOf2(texObj.image.width) && isPowerOf2(texObj.image.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
-            // })
+            }else{
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+            }
 
             var specularTexture = gl.createTexture()
             gl.activeTexture(gl.TEXTURE1) // Activate texture unit 2 for specular map
-            gl.bindTexture(gl.TEXTURE_2D, specularTexture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
     
             var specularImage = new Image()
             specularImage.src = './utils/specular.png'
@@ -395,7 +388,7 @@ class Scene extends NodeScene{
             var normalTexture = gl.createTexture()
             gl.activeTexture(gl.TEXTURE2)
             gl.bindTexture(gl.TEXTURE_2D, normalTexture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
 
             var normalMap = new Image()
             normalMap.src = './utils/normal.png'
@@ -413,7 +406,7 @@ class Scene extends NodeScene{
             var displacementTex = gl.createTexture()
             gl.activeTexture(gl.TEXTURE3)
             gl.bindTexture(gl.TEXTURE_2D, displacementTex)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
 
             var displacementMap = new Image()
             displacementMap.src = './utils/DisplacementMap.png'

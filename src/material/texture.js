@@ -1,31 +1,6 @@
-class Texture extends ShaderMaterial {
+class Texture {
 
-    static vs = `
-    attribute vec4 a_pos;
-    attribute vec2 a_texcoord;
-    
-    uniform mat4 worldMat;
-    uniform mat4 viewProjMat;
-
-    varying vec2 v_texcoord;
-
-    void main(){
-        gl_Position = viewProjMat * worldMat * a_pos;
-        v_texcoord = a_texcoord;
-    }
-    `
-
-    static fs = `
-    precision mediump float;
-
-    varying vec2 v_texcoord;
-
-    uniform sampler2D u_texture;
-
-    void main(){
-        gl_FragColor = texture2D(u_texture, v_texcoord);
-    }
-    `
+    image
 
     get type(){
         return "TEXTURE"
@@ -80,13 +55,16 @@ class Texture extends ShaderMaterial {
         1, 1,
     ]))
     {
-        const uniform = {
-
-        }
-        super(name, Texture.vs, Texture.fs, uniform)
+        this.name = name
         this.source = source
         this.assignSide = assignSide
+        this.image = new Image()
+        this.image.src = this.source
+        this.loaded = false
 
+        this.image.onload = () => {
+            console.log("LOADED " + this.name)
+            this.loaded = true
+        }
     }
-
 }
