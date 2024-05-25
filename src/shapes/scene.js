@@ -340,6 +340,8 @@ class Scene extends NodeScene{
         if (material.uniforms['useTexture']) {
             
             var texObj = material.uniforms['sourceTexture']
+            console.log(texObj)
+
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
             if (this.#isHollow){
@@ -359,11 +361,11 @@ class Scene extends NodeScene{
             var texture = gl.createTexture()
             this.gl.activeTexture(gl.TEXTURE0)
 
-            if(texObj.loaded){
+            if(texObj.texLoaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.image)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.texture)
     
-                if (isPowerOf2(texObj.image.width) && isPowerOf2(texObj.image.height)) {
+                if (isPowerOf2(texObj.texture.width) && isPowerOf2(texObj.texture.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -377,54 +379,56 @@ class Scene extends NodeScene{
 
             var specularTexture = gl.createTexture()
             gl.activeTexture(gl.TEXTURE1) // Activate texture unit 2 for specular map
-    
-            var specularImage = new Image()
-            specularImage.src = './utils/specular.png'
-            gl.bindTexture(gl.TEXTURE_2D, specularTexture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, specularImage)
-    
-            if (isPowerOf2(specularImage.width) && isPowerOf2(specularImage.height)) {
-                gl.generateMipmap(gl.TEXTURE_2D)
-            } else {
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            // var specularImage = new Image()
+            // specularImage.src = './utils/specular.png'
+            if (texObj.speLoaded){
+                gl.bindTexture(gl.TEXTURE_2D, specularTexture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.specular)
+                if (isPowerOf2(texObj.specular.width) && isPowerOf2(texObj.specular.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
             }
+    
 
             var normalTexture = gl.createTexture()
             gl.activeTexture(gl.TEXTURE2)
-            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-
-            var normalMap = new Image()
-            normalMap.src = './utils/normal.png'
-            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, normalMap)
-    
-            if (isPowerOf2(normalMap.width) && isPowerOf2(normalMap.height)) {
-                gl.generateMipmap(gl.TEXTURE_2D)
-            } else {
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            // var normalMap = new Image()
+            // normalMap.src = './utils/normal.png'
+            if (texObj.norLoaded){
+                gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+                gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.normal)
+                if (isPowerOf2(texObj.normal.width) && isPowerOf2(texObj.normal.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
             }
+    
 
             var displacementTex = gl.createTexture()
             gl.activeTexture(gl.TEXTURE3)
-            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-
-            var displacementMap = new Image()
-            displacementMap.src = './utils/DisplacementMap.png'
-            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, displacementMap)
-    
-            if (isPowerOf2(displacementMap.width) && isPowerOf2(displacementMap.height)) {
-                gl.generateMipmap(gl.TEXTURE_2D)
-            } else {
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            // var displacementMap = new Image()
+            // displacementMap.src = './utils/DisplacementMap.png'
+            if (texObj.disLoaded){
+                gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+                gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.displacement)
+                if (isPowerOf2(texObj.displacement.width) && isPowerOf2(texObj.displacement.height)) {
+                    gl.generateMipmap(gl.TEXTURE_2D)
+                } else {
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                }
             }
         } else {
             gl.disableVertexAttribArray(texCoordAttributeLocation)
