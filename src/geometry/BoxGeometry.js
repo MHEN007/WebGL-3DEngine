@@ -10,49 +10,56 @@ class BoxGeometry extends BufferGeometry{
         this.#depth = depth;
         const w = width/2, h = height/2, d = depth/2;
         const vertices = new Float32Array([
-            //depan
+            // depan
             -w,  h,  d,
             -w, -h,  d,
-             w, -h,  d,
              w,  h,  d,
-            -w,  h,  d,
+             w,  h,  d,
+            -w, -h,  d,
              w, -h,  d,
-            //belakang
-            -w,  h, -d,
-             w, -h, -d,
-            -w, -h, -d,
+        
+            // belakang
              w,  h, -d,
              w, -h, -d,
             -w,  h, -d,
-            //atas
+            -w,  h, -d,
+             w, -h, -d,
+            -w, -h, -d,
+        
+            // atas
             -w,  h, -d,
             -w,  h,  d,
-             w,  h,  d,
              w,  h, -d,
-            -w,  h, -d,
+             w,  h, -d,
+            -w,  h,  d,
              w,  h,  d,
-            //bawah
-            -w, -h, -d,
-             w, -h, -d,
-             w, -h,  d,
+        
+            // bawah
             -w, -h,  d,
             -w, -h, -d,
              w, -h,  d,
-            //kanan
+             w, -h,  d,
+            -w, -h, -d,
              w, -h, -d,
+        
+            // kanan
              w,  h,  d,
              w, -h,  d,
-             w, -h, -d,
              w,  h, -d,
-             w,  h,  d,
-            //kiri
-            -w, -h, -d,
-            -w,  h,  d,
+             w,  h, -d,
+             w, -h,  d,
+             w, -h, -d,
+        
+            // kiri
             -w,  h, -d,
             -w, -h, -d,
-            -w, -h,  d,
-            -w,  h,  d
+            -w,  h,  d,
+            -w,  h,  d,
+            -w, -h, -d,
+            -w, -h, d
         ]);
+        
+        
         this.setAttribute('position', new BufferAttribute(vertices, 3));
         this.calculateNormals();
     }
@@ -74,7 +81,6 @@ class BoxGeometry extends BufferGeometry{
     
     toJSON(){
         const json = super.toJSON();
-        delete json.attributes.position;
         return {
             ...json,
             width: this.#width,
@@ -93,7 +99,7 @@ class BoxGeometry extends BufferGeometry{
      */
     static fromJSON(json, object){
         if (!object)
-            { object = new BoxGeomerty(json.width, json.height, json.depth); }
+            { object = new BoxGeometry(json.width, json.height, json.depth); }
         BufferGeometry.fromJSON(json, object);
         return object;
     }

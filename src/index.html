@@ -2,38 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=2048, initial-scale=1.0">
     <title>ABA Engine</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
+            justify-content: left;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #2f2f2f;
+            color: white;
+            overflow: hidden;
+
         }
 
-        .container {
+        .main-container {
             display: flex;
-            align-items: flex-start;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            z-index: 1;
+            margin-left: 480px;
         }
 
         #glCanvas {
             border: solid 1px;
+        }
+
+        #right-controller {
+            width: 600px;
+            margin-left: 20px;
             flex-shrink: 0;
         }
-      
-        #controller {
-            margin-left: 20px; /* Adjust as necessary */
+
+        #componentViewer {
+            position: fixed;
+            width: 475px;
+            margin-right: 100px;
+            margin-left: 20px;
             flex-shrink: 0;
+            overflow-y: auto;
+            height: 100vh;
         }
+
+        h1 {
+            position:absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
     <h1>3D Model Engine</h1>
-    <div class="container">
-        <canvas id="glCanvas"></canvas>
-        <div id="controller">
+    <div class="main-container">
+        <div id="componentViewer">
+            <h2>Component Viewer</h2>
+        </div>
+        <div class="canvas-container">
+            <canvas id="glCanvas"></canvas>
+        </div>
+        <div id="right-controller">
             <div>Camera</div>
             <label for="projection">Projection :</label>
             <select name="projection" id="projection">
@@ -42,19 +82,29 @@
                 <option value="orthographic">Orthographic</option>
             </select>
             <br/>
+            <label for="viewAngle" id="viewAngleLabel" hidden>View Angle :</label>
+            <select name="viewAngle" id="viewAngle" hidden>
+                <option value="front">Front</option>
+                <option value="back">Back</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
             <br/>
-            <label for="rotationX" id="rotationXLabel">Rotation x :</label>
+            <label for="rotationXLabel" id="rotationXLabel">Rotation x :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationX">
             <br/>
-            <label for="rotationY" id="rotationYLabel">Rotation y :</label>
+            <label for="rotationYLabel" id="rotationYLabel">Rotation y :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationY">
             <br/>
-            <label for="rotationZ" id="rotationZLabel">Rotation z :</label>
+            <label for="rotationZLabel" id="rotationZLabel">Rotation z :</label>
             <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationZ">
             <br/>
             <label for="distance" id="distanceLabel" hidden>Distance :</label>
             <input type="range" min="0" max="2" value="1" step="0.01" id="distance" hidden>
             <br/>
+            
+
+
             <button id="reset">Reset</button>
             <br/>
             <label for="angleOblique" id="angleObliqueLabel" hidden>Oblique Angle :</label>
@@ -127,19 +177,31 @@
             <input type="file" id="add-object-file-selector">
 
         </div>
+        
     </div>
-  
+    
+    <script src="./models/steve.js"></script>
+    <script src="./models/creeper.js"></script>
+    <script src="./models/wither.js"></script>
+    <script src="./models/shulker.js"></script>
+    <script src="./models/HollowModel/nether.js"></script>
+    <script src="./models/HollowModel/cube.js"></script>
+    <script src="./models/HollowModel/Chain.js"></script>
+    
     <script src="./material/shaderMaterial.js"></script>
     <script src="./material/basicMaterial.js"></script>
     <script src="./material/phongMaterial.js"></script>
     <script src="./material/texture.js"></script>
+    
     <script src="./shapes/node.js"></script>
-    <script src="./shapes/Mesh.js"></script>
     <script src="./shapes/scene.js"></script>
+    <script src="./shapes/Mesh.js"></script>
+
     <script src="./camera/Camera.js"></script>
     <script src="./camera/Orthographic.js"></script>
     <script src="./camera/Perspective.js"></script>
     <script src="./camera/Oblique.js"></script>
+
     <script src="./geometry/BufferGeometry.js"></script>
     <script src="./geometry/BufferAttribute.js"></script>
     <script src="./geometry/PlaneGeometry.js"></script>
