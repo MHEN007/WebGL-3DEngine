@@ -49,7 +49,7 @@ let check = []
 const phongUpdater = new Updater()
 
 /* LIGHT */
-const light2 = new DirectionalLight(new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, -1))
+const light2 = new DirectionalLight(new Vector3(0, 1, 0), 1.0, new Vector3(0, 0, -1))
 const light3 = new DirectionalLight(new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, 1))
 const light1 = new PointLight(new Vector3(0, 1, 0), 1.0, new Vector3(0, 0.03, 0))
 // const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
@@ -409,7 +409,6 @@ lightIntensityB.addEventListener('input', function() {
 
 lightIntensity.addEventListener('input', function(){
     light1.intensity = parseFloat(lightIntensity.value)
-    gl.clearColor(1.0, 1.0, 1.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -478,47 +477,6 @@ function selectAll(){
     camRotationZSlider.value = 0
 
 }
-
-
-lightYPosition.addEventListener('input', function() {
-    light1.position.y = parseFloat(lightYPosition.value)
-    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    // phongUpdater.update(updates)
-    console.log(light1.position.y)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.drawAll()
-})
-
-lightZPosition.addEventListener('input', function() {
-    light1.position.z = parseFloat(lightZPosition.value)
-    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    // phongUpdater.update(updates)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.drawAll()
-})
-
-lightIntensityR.addEventListener('input', function() {
-    light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
-    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    // phongUpdater.update(updates)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.drawAll()
-})
-lightIntensityG.addEventListener('input', function() {
-    light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
-    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    // phongUpdater.update(updates)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.drawAll()
-})
-lightIntensityB.addEventListener('input', function() {
-    light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
-    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
-    // phongUpdater.update(updates)
-    gl.clearColor(0, 0, 0, 1)
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    scene.drawAll()
-})
 
 function updateComponentViewer(){
     var ulElement = document.querySelector('ul');
@@ -610,8 +568,6 @@ anim.addEventListener('change', function() {
         animate(); // Start animation if checkbox is checked
     }
 });
-
-
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
