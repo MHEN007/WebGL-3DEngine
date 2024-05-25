@@ -68,7 +68,6 @@ class Mesh extends NodeScene {
         object = object || new Mesh();
         object.geometry = BufferGeometry.fromJSON(json.geometry)
         const materials = []
-        //TODO: Load material error
         for (let i = 0; i < json.material.length; i++){
             if (json.material[i].type == "BASIC"){
                 materials.push(BasicMaterial.fromJSON(json.material[i], null));
