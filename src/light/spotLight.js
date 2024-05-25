@@ -6,8 +6,8 @@ class SpotLight extends Light {
     direction
     /**@type {number} */
     angle
-    constructor(i, position, direction, angle){
-        super(i)
+    constructor(c, i, position, direction, angle){
+        super(c, i)
         this.position = position
         this.direction = direction
         this.angle = angle
@@ -28,7 +28,7 @@ class SpotLight extends Light {
         if (dotProduct < cosAngle) {
             return new Vector3(0, 0, 0)
         } else {
-            let intensity = new Vector3(this.intensity.x, this.intensity.y, this.intensity.z)
+            let intensity = new Vector3(this.color.x * this.intensity, this.color.y * this.intensity, this.color.z * this.intensity)
             intensity.multiply(1.0 / (distance * distance))
             return intensity
         }

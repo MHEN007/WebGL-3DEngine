@@ -148,21 +148,23 @@ class PhongMaterial extends ShaderMaterial {
     }
 
     toJSON(){
+        console.log(this.uniforms)
         return {
             type: this.type,
-            uniform: {
+            uniforms: {
                 color: this.uniforms['color'],
-                camPosition: this.uniforms['camPosition'],
                 ambient: this.uniforms['ambient'],
                 shininess: this.uniforms['shininess'],
                 diffuse: this.uniforms['diffues'],
                 specular: this.uniforms['specular'],
+                useTexture: this.uniforms['useTexture'],
+                sourceTexture: this.uniforms['sourceTexture'],
                 // lightPosition: this.uniforms['lightPosition']
             }
         }
     }
     
     static fromJSON(object){
-        return new PhongMaterial(object.name, object.uniform['color'], object.uniform['camPosition'], object.uniform['ambient'], object.uniform['shininess'], object.uniform['diffuse'], object.uniform['specular'])
+        return new PhongMaterial(object.name, object.uniforms['color'],object.uniforms['useTexture'], Texture.fromJSON(object.uniforms['sourceTexture']), object.uniforms['ambient'], object.uniforms['shininess'], object.uniforms['diffuse'], object.uniforms['specular'])
     }
 }
