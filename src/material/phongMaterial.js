@@ -35,7 +35,7 @@ class PhongMaterial extends ShaderMaterial {
         vec4 worldPos = worldMat * displacedPos;
         gl_Position = viewProjMat * worldPos;
 
-        v_pos = (worldMat * displacedPos).xyz;
+        v_pos = gl_Position.xyz / gl_Position.w;
         v_normal = mat3(worldMat) * a_normal;
 
         vec3 tangent = normalize(mat3(worldMat) * a_tangent);
