@@ -8,7 +8,10 @@ class Texture {
 
     constructor(
         name, 
-        source, 
+        textureSrc = null,
+        displacementSrc = null,
+        normalSrc = null,
+        specularSrc = null,
         assignSide = new Float32Array([
             
         // DEPAN
@@ -56,27 +59,71 @@ class Texture {
     ]))
     {
         this.name = name
-        this.source = source
         this.assignSide = assignSide
-        this.image = new Image()
-        this.image.src = this.source
-        this.loaded = false
 
-        this.image.onload = () => {
-            console.log("LOADED " + this.name)
+        this.textureSrc = textureSrc
+        this.displacementSrc = displacementSrc
+        this.normalSrc = normalSrc
+        this.specularSrc = specularSrc
+
+        this.texture = new Image()
+        this.displacement = new Image()
+        this.normal = new Image()
+        this.specular = new Image()
+
+        this.texture.src = this.textureSrc
+        this.displacement.src = this.displacementSrc
+        this.normal.src = this.normalSrc
+        this.specular.src = this.specularSrc
+
+        this.texLoaded = false
+        this.disLoaded = false
+        this.norLoaded = false
+        this.speLoaded = false
+
+        this.isDisplacement = Boolean(this.displacementSrc)
+        this.isNormal = Boolean(this.normalSrc)
+        this.isSpecular = Boolean(this.specularSrc)
+
+        this.texture.onload = () => {
+            console.log("TEXTURE LOADED" + this.name)
             this.loaded = true
+        }
+
+        this.displacement.onload = () => {
+            console.log("DISPLACEMENT LOADED " + this.name)
+            this.disLoaded = true
+        }
+
+        this.normal.onload = () => {
+            console.log("NORMAL LOADED " + this.name)
+            this.norLoaded = true
+        }
+
+        this.specular.onload = () => {
+            console.log("SPECULAR LOADED " + this.name)
+            this.speLoaded = true
         }
     }
   
     toJSON(){
         return {
             name: this.name,
-            source: this.source,
+            texture: this.textureSrc,
+            displacement: this.displacementSrc,
+            normal: this.normalSrc,
+            specular: this.specularSrc,
         }
     }
 
     static fromJSON(json){
-        const obj = new Texture(json.name, json.source)
+        let dis = null
+        let nor = null 
+        let spe = null
+        if (json.displacement) { dis = json.displacement }
+        if (json.normal) { nor = json.normal }
+        if (json.specular) { spe = json.specular }
+        const obj = new Texture(json.name, json.texture, dis, nor, spe)
         return obj
     }
 }
