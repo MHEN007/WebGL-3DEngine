@@ -128,7 +128,7 @@ init()
 // scene add root buat jadi 'world'nya roo
 // const steve = new Chain()
 // scene add root buat jadi 'world'nya root
-const steve = new infinityCube()
+const steve = new Batako()
 const scene = new Scene(gl, [camera]).add(steve.object);
 scene.position = new Vector3(0,0,0)
 
