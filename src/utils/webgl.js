@@ -61,15 +61,16 @@ camera.rotation = new Vector3(0, 0, 0)
 /* MATERIALS */
 const tex1 = new Texture('tex1', './utils/texture.png')
 const green = new PhongMaterial("green", [0.1, 0.1, 0.1], false, tex1)
-const red = new BasicMaterial("red", [1, 0, 0], true, tex1)
+const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
 const yellow = new BasicMaterial("yellow", [1, 1, 0], true, tex1)
 const purple = new BasicMaterial("purple", [1, 0, 1], false, tex1)
-const cyan = new BasicMaterial("cyan", [0, 1, 1], true, tex1)
+const cyan = new BasicMaterial("cyan", [0, 1, 1], false, tex1)
+const grey = new BasicMaterial("grey", [0.6, 0.6, 0.6], false, tex1)
 
 phongUpdater.subscribe(green)
 
-const materials = [green, purple, yellow, blue, cyan, red]
+const materials = [green, purple, yellow, blue, cyan, red, grey]
 
 /* MESH */
 // const mesh1 = new Mesh(gl, [camera],null, box, materials, [0, 0, 0, 0, 0, 0])
@@ -128,8 +129,8 @@ init()
 // scene add root buat jadi 'world'nya roo
 // const steve = new Chain()
 // scene add root buat jadi 'world'nya root
-const steve = new Batako()
-const scene = new Scene(gl, [camera]).add(steve.object);
+const object = new Golem()
+let scene = new Scene(gl, [camera], [light1]).add(object.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
