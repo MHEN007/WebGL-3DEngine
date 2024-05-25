@@ -138,10 +138,12 @@ class Scene extends NodeScene{
         var uniformVertexColorLoc = gl.getUniformLocation(this.basicProgram, 'vertexColor')
         var uniformUseTexture = gl.getUniformLocation(this.basicProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.basicProgram, 'u_texture')
+        var uniformAmbientColorLoc = gl.getUniformLocation(this.basicProgram, 'ambient');
         
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
+        gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
         gl.uniform1i(uniformVertexColorLoc, true)
         this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         this.gl.uniform1i(uniformTextureLoc, 0)
@@ -252,7 +254,7 @@ class Scene extends NodeScene{
         gl.uniform1i(uniformSpecularMapLoc, 1)
         gl.uniform1i(uniformNormalMapLoc, 2)
         gl.uniform1i(uniformDisplacementMapLoc, 3)
-        gl.uniform1i(uniformUseDisplacementLoc, false)
+        gl.uniform1i(uniformUseDisplacementLoc, true)
         gl.uniform1i(uniformUseSpecularLoc, true)
         gl.uniform1i(uniformUseNormalLoc, true)
 

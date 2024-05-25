@@ -31,7 +31,7 @@ class PhongMaterial extends ShaderMaterial {
         
         if (useDisplacement) {
             float displacement = texture2D(u_displacementMap, a_texcoord).r;
-            displacedPos.xyz += (0.001 * displacement) * normalize(a_normal);
+            displacedPos.xyz += (0.02 * displacement) * normalize(a_normal);
         }
         
         gl_Position = viewProjMat * displacedPos;
