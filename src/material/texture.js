@@ -87,7 +87,7 @@ class Texture {
 
         this.texture.onload = () => {
             console.log("TEXTURE LOADED" + this.name)
-            this.loaded = true
+            this.texLoaded = true
         }
 
         this.displacement.onload = () => {
