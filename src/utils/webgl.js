@@ -7,9 +7,29 @@ const projectionSelector = document.getElementById("projection")
 const distanceSlider = document.getElementById("distance")
 const resetButton = document.getElementById("reset")
 const angleObliqueSlider = document.getElementById("angleOblique")
+const angleObliqueLabel = document.getElementById("angleObliqueLabel")
+const deleteButton = document.getElementById("delete-button")
+const addFrames = document.getElementById("addFrame")
+
+const viewAngleLabel = document.getElementById("viewAngleLabel")
+const viewAngleSelector = document.getElementById("viewAngle")
+
+const lightXPosition = document.getElementById('l-x')
+const lightYPosition = document.getElementById('l-y')
+const lightZPosition = document.getElementById('l-z')
+const lightIntensityR = document.getElementById('l-intensity-r')
+const lightIntensityG = document.getElementById('l-intensity-g')
+const lightIntensityB = document.getElementById('l-intensity-b')
+
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
+const xRot = document.getElementById('xRot')
+const yRot = document.getElementById('yRot')
+const zRot = document.getElementById('zRot')
+const anim = document.getElementById('anim');
+const fileSelector = document.getElementById("file-selector");
+const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
 
@@ -63,6 +83,10 @@ const near = -1000;
 const far = 1000;
 
 scene.drawAll()
+componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+const ul = document.createElement("ul")
+ul.appendChild(componentViewLoader(scene))
+componentViewer.appendChild(ul)
 
 projectionSelector.addEventListener('change', function(){
     if (projectionSelector.value === 'perspective'){
@@ -137,24 +161,136 @@ zPos.addEventListener('input', function(){
     scene.drawAll()
 })
 
+lightXPosition.addEventListener('input', function() {
+    light1.position.x = parseFloat(lightXPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
 
-let rotationAngle = 0; // Variable to keep track of rotation angle
+lightYPosition.addEventListener('input', function() {
+    light1.position.y = parseFloat(lightYPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    console.log(light1.position.y)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightZPosition.addEventListener('input', function() {
+    light1.position.z = parseFloat(lightZPosition.value)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightIntensityR.addEventListener('input', function() {
+    light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+lightIntensityG.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+lightIntensityB.addEventListener('input', function() {
+    light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+function updateComponentViewer(){
+    var ulElement = document.querySelector('ul');
+        while (ulElement.firstChild) {
+            ulElement.removeChild(ulElement.firstChild);
+        }
+        ulElement.remove();
+
+        componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+        const ul = document.createElement("ul")
+
+        ul.appendChild(componentViewLoader(scene))
+
+        componentViewer.appendChild(ul)
+        check = []
+}
+
+deleteButton.addEventListener('click', function(){
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log("yang mau di delete", item)
+            scene.remove(item)
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+
+    updateComponentViewer()
+    console.log(scene)
+})
+
+function selectNoZ(){
+    camRotationXSlider.style.display = 'block'
+    camRotationXLabel.style.display = 'block'
+    camRotationXSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationYSlider.value = 0
+    camRotationZSlider.style.display = 'none'
+    camRotationZLabel.style.display = 'none'
+}
+
+function selectNoX(){
+    camRotationXSlider.style.display = 'none'
+    camRotationXLabel.style.display = 'none'
+    camRotationYSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationZSlider.value = 0    
+    camRotationZSlider.style.display = 'block'
+    camRotationZLabel.style.display = 'block'
+}
+
+function selectAll(){
+    camRotationXSlider.style.display = 'block'
+    camRotationXLabel.style.display = 'block'
+    camRotationXSlider.value = 0
+    camRotationYSlider.style.display = 'block'
+    camRotationYLabel.style.display = 'block'
+    camRotationYSlider.value = 0
+    camRotationZSlider.style.display = 'block'
+    camRotationZLabel.style.display = 'block'
+    camRotationZSlider.value = 0
+
+}
+
+const animator = new AnimationRunner(null, scene, 30)
+
+let fps = 0; 
 function animate() {
     if (isAnimating) {
-        rotationAngle += 0.01;
-        if (rotationAngle>3.14){
-            rotationAngle = -3.14
+        fps += 1;
+        if (fps >= animator.frames.length){
+            fps = 0
         }
-        // set distanceSlider value
-        distanceSlider.value = rotationAngle
-        scene.rotation.y = rotationAngle; // Update rotation of the mesh
-        scene.computeWorldMatrix(false, true);
-        scene.drawAll(); // Redraw the scene
+        console.log(fps)
+        scene = animator.frames[Math.floor(fps)]
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        scene.drawAll()
     }
     requestAnimationFrame(animate); // Call animate function again in next frame
 }
 // Add event listener to the checkbox
-const anim = document.getElementById('anim');
 anim.addEventListener('change', function() {
     isAnimating = anim.checked; // Update animation state based on checkbox state
     if (isAnimating) {
@@ -166,3 +302,197 @@ anim.addEventListener('change', function() {
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
 }
+
+// console.log(camera);
+
+canvas.addEventListener('mousemove', onMouseMove)
+canvas.addEventListener('mousedown', onMouseDown)
+canvas.addEventListener('mouseup', onMouseUp)
+canvas.addEventListener('wheel', onMouseWheel)
+
+let isMoving = false
+
+function mod(a, b) {
+    return ((a % b) + b) % b
+}
+
+function onMouseDown(event){
+    isMoving = true
+}
+function onMouseUp(event){
+    isMoving = false
+}
+function onMouseMove(event){
+    const dx = event.movementX
+    const dy = event.movementY
+
+    if(isMoving){
+        camera.rotation.set(
+            mod(camera.rotation.x - dy * Math.PI/180, Math.PI*2), 
+            mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
+            0)
+        console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        scene.drawAll()
+    }
+        // console.log(camera)
+}
+function onMouseWheel(event){
+    camera.position.z += event.deltaY * 0.001
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+}
+
+function getAllChildren(obj) {
+    for (let i = 0; i < obj.children.length; i++) {
+        console.log(obj.children[i].id);
+        if (obj.children[i].children.length > 0) {
+            getAllChildren(obj.children[i]);
+        }
+    }
+}
+
+function findAndPushChildren(obj, name){
+    for (let i = 0; i < obj.children.length; i++) {
+        if (obj.children[i].id === name){
+            console.log(obj.children[i].id);
+            check.push(obj.children[i]);
+        }
+        if (obj.children[i].children.length > 0) {
+            findAndPushChildren(obj.children[i], name);
+        }
+    }
+}
+
+function findAndDeleteChildren(obj, name){
+    for (let i = 0; i < obj.children.length; i++) {
+        if (obj.children[i].id === name){
+            console.log(obj.children[i].id);
+            check = check.filter(item => item !== obj.children[i])
+        }
+        if (obj.children[i].children.length > 0) {
+            findAndDeleteChildren(obj.children[i], name);
+        }
+    }
+}
+
+fileSelector.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return
+
+    try{
+        json = await readFile(file)
+    } catch (error){
+        console.error(error);
+    }
+    scene = NodeScene.fromJSON(json)
+    getAllChildren(scene)
+    console.log(scene)
+    scene.drawAll()
+    
+    /* LOAD VIEWER */
+    componentViewer.innerHTML = "<h2>Component Viewer</h2>"
+    const ul = document.createElement("ul")
+
+    ul.appendChild(componentViewLoader(scene))
+
+    componentViewer.appendChild(ul)
+})
+
+function componentViewLoader(obj) {
+    const li = document.createElement('li');
+    
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = obj.id;
+
+    checkbox.addEventListener('change', function() {
+        if(checkbox.checked){
+            findAndPushChildren(scene, checkbox.value)
+        }
+        if(!checkbox.checked){
+            findAndDeleteChildren(scene, checkbox.value)
+        }
+        console.log(check)
+        const checkboxes = li.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(childCheckbox => {
+            childCheckbox.checked = checkbox.checked;
+        });
+    });
+
+    li.appendChild(checkbox);
+
+    li.appendChild(document.createTextNode(obj.id));
+
+    if (obj.children && obj.children.length > 0) {
+        const ul = document.createElement('ul');
+        for (let i = 0; i < obj.children.length; i++) {
+            ul.append(componentViewLoader(obj.children[i]));
+        }
+        li.appendChild(ul);
+    }
+
+    return li;
+}
+
+addObjectFileSelector.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return
+
+    try{
+        json = await readFile(file)
+    } catch (error){
+        console.error(error);
+    }
+
+    const newScene = NodeScene.fromJSON(json)
+    // getAllChildren(scene)
+    const newObject = newScene.children[0]
+
+    if (check.length>0){
+        check.forEach((item) => {
+            console.log(item)
+            scene.getObject(item).add(newObject)
+        })
+    }
+    updateComponentViewer()
+    scene.drawAll()
+
+    // Reset nilai dari input file
+    e.target.value = null;
+})
+
+xRot.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).rotation.x = parseFloat(xRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+yRot.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).rotation.y = parseFloat(yRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+zRot.addEventListener('input', () =>{
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).rotation.z = parseFloat(zRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+addFrames.addEventListener('click', () => {
+    animator.addFrames(scene)
+    scene.drawAll();
+})

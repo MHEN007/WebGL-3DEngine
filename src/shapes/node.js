@@ -48,6 +48,29 @@ class NodeScene {
         return this.children
     }
 
+    /**
+     * Fungsi buat nyari anak atau dianya sendiri
+     * @param {NodeScene} object 
+     * @returns {NodeScene | null}
+     */
+    getObject(object){
+        if (object === this){
+            return this
+        }
+        for (let child of this.children){
+            let result = child.getObject(object);
+            if (result !== null){
+                return result
+            }
+        }
+
+        return null;
+    }
+
+    setChildren(children){
+        this.children = children
+    }
+
     isVisible(){
         return this.visible
     }
