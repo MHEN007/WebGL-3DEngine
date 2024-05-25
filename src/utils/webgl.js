@@ -29,6 +29,7 @@ const lightZPosition = document.getElementById('l-z')
 const lightIntensityR = document.getElementById('l-intensity-r')
 const lightIntensityG = document.getElementById('l-intensity-g')
 const lightIntensityB = document.getElementById('l-intensity-b')
+const lightIntensity = document.getElementById('l-intensity')
 
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
@@ -45,9 +46,9 @@ let check = []
 const phongUpdater = new Updater()
 
 /* LIGHT */
-const light2 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(0, 0, -1))
-const light3 = new DirectionalLight(new Vector3(1, 1, 1), new Vector3(0, 0, 1))
-const light1 = new PointLight(new Vector3(0, 1, 0), new Vector3(0, 0.03, 0))
+const light2 = new DirectionalLight(new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, -1))
+const light3 = new DirectionalLight(new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, 1))
+const light1 = new PointLight(new Vector3(0, 1, 0), 1.0, new Vector3(0, 0.03, 0))
 // const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
 lightIntensityR.value = light1.intensity.x
 lightIntensityG.value = light1.intensity.y
@@ -132,7 +133,7 @@ init()
 const steve = new Steve()
 // scene add root buat jadi 'world'nya root
 const object = new Creeper()
-let scene = new Scene(gl, [camera], [light1]).add(steve.object);
+let scene = new Scene(gl, [camera], [light1]).add(object.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -376,23 +377,30 @@ lightZPosition.addEventListener('input', function() {
 })
 
 lightIntensityR.addEventListener('input', function() {
-    light1.intensity = new Vector3(parseFloat(lightIntensityR.value), light1.intensity.y, light1.intensity.z)
+    light1.color = new Vector3(parseFloat(lightIntensityR.value), light1.color.y, light1.color.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityG.addEventListener('input', function() {
-    light1.intensity = new Vector3(light1.intensity.x, parseFloat(lightIntensityG.value), light1.intensity.z)
+    light1.color = new Vector3(light1.color.x, parseFloat(lightIntensityG.value), light1.intenscolority.z)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityB.addEventListener('input', function() {
-    light1.intensity = new Vector3(light1.intensity.x, light1.intensity.y, parseFloat(lightIntensityB.value))
+    light1.color = new Vector3(light1.color.x, light1.color.y, parseFloat(lightIntensityB.value))
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
+    gl.clearColor(1.0, 1.0, 1.0, 0.0)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightIntensity.addEventListener('input', function(){
+    light1.intensity = parseFloat(lightIntensity.value)
     gl.clearColor(1.0, 1.0, 1.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
