@@ -17,36 +17,9 @@ class AnimationRunner {
      * @param {NodeScene} scene 
      */
     addFrames(scene){
-        let clonedScene = NodeScene.fromJSON(scene.toJSON())
-        this.frames.push(clonedScene)
-        console.log(this.frames)
-    }
-
-    play() {
-        this.isPlaying = true;
-    }
-
-    stop() {
-        this.isPlaying = false;
-    }
-
-    update(deltaSecond) {
-        if (this.isPlaying) {
-            this.deltaFrame += deltaSecond * this.fps;
-            if (this.deltaFrame >= 1) { // 1 frame
-                this.currentFrame = (this.currentFrame + Math.floor(this.deltaFrame)) % this.Length;
-                this.deltaFrame %= 1;
-                this.updateSceneGraph();
-            }
-        }
-    }
-
-    updateSceneGraph() {
-        if (this.currentAnimation) {
-            const frame = this.currentAnimation.frames[this.currentFrame];
-            // Update scene graph with current frame
-            // Use root as the parent and traverse according to the frame
-        }
+        const listOfObject = NodeScene.getAllDescendants(scene);
+        this.frames.push(listOfObject)
+        console.log("Added Frames")
     }
 
     load(animFile) {
@@ -61,11 +34,22 @@ class AnimationRunner {
         }
     }
 
+    toJSON(){
+        return {
+            fps : this.fps,
+            frames : this.frames,
+        }
+    }
+
     /**
      * 
-     * @param {number} now 
-     * @param {boolean} isPlaying 
-     * @param {Scene} scene 
-     * @param {AnimationRunner} animator 
+     * @param {JSON} json 
+     * @param {AnimationRunner} obj 
      */
+    static fromJSON(json, obj){
+        obj = new AnimationRunner(null, json.fps)
+        obj.frames = json.frames
+        console.log(obj)
+        return obj
+    }
 }

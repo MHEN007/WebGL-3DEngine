@@ -38,3 +38,8 @@ saveButton.addEventListener('click', () => {
     save(scene, 'scene.json');
 });
 
+const saveAnimation = document.getElementById('saveAnim');
+saveAnimation.addEventListener('click', () => {
+    console.log(animator.toJSON())
+    save(animator, 'animation.json')
+})

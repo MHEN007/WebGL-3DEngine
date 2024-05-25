@@ -1,0 +1,1455 @@
+{
+  "fps": 30,
+  "frames": [
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.3385938748868999,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.01091394386847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.01091394386847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.3385938748868999,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.7278022980816355,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 5.731661263549378,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 5.731661263549378,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.7278022980816355,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.39444441095071847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 5.899212871740834,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 5.899212871740834,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.39444441095071847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.11693705988362009,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.283185307179586,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.283185307179586,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.11693705988362009,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.17278759594743864,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.17278759594743864,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.01091394386847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.5619960191421741,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.5619960191421741,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.01091394386847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 5.731661263549378,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.5061454830783556,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.5061454830783556,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 5.731661263549378,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.01091394386847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.17278759594743864,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.17278759594743864,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 6.01091394386847,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Steve",
+        "position": {
+          "x": 0,
+          "y": -0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Left",
+        "position": {
+          "x": -0.145,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Arm Right",
+        "position": {
+          "x": 0.15,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Arm Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Left",
+        "position": {
+          "x": -0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Left",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Upper Leg Right",
+        "position": {
+          "x": 0.05,
+          "y": -0.225,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Lower Leg Right",
+        "position": {
+          "x": 0,
+          "y": -0.175,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ]
+  ]
+}

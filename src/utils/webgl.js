@@ -38,7 +38,6 @@ const xRot = document.getElementById('xRot')
 const yRot = document.getElementById('yRot')
 const zRot = document.getElementById('zRot')
 const anim = document.getElementById('anim');
-const fileSelector = document.getElementById("file-selector");
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
@@ -577,7 +576,7 @@ function selectAll(){
 
 }
 
-const animator = new AnimationRunner(null, scene, 30)
+let animator = new AnimationRunner(scene, 30)
 
 let fps = 0; 
 function animate() {
@@ -586,8 +585,10 @@ function animate() {
         if (fps >= animator.frames.length){
             fps = 0
         }
-        console.log(fps)
-        scene = animator.frames[Math.floor(fps)]
+        animator.frames[Math.floor(fps)].forEach(frame => {
+            scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
+            scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
+        })
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
     }
@@ -600,6 +601,8 @@ anim.addEventListener('change', function() {
         animate(); // Start animation if checkbox is checked
     }
 });
+
+
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
@@ -677,29 +680,6 @@ function findAndDeleteChildren(obj, name){
         }
     }
 }
-
-fileSelector.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return
-
-    try{
-        json = await readFile(file)
-    } catch (error){
-        console.error(error);
-    }
-    scene = NodeScene.fromJSON(json)
-    getAllChildren(scene)
-    console.log(scene)
-    scene.drawAll()
-    
-    /* LOAD VIEWER */
-    componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-    const ul = document.createElement("ul")
-
-    ul.appendChild(componentViewLoader(scene))
-
-    componentViewer.appendChild(ul)
-})
 
 function componentViewLoader(obj) {
     const li = document.createElement('li');
@@ -796,5 +776,6 @@ zRot.addEventListener('input', () =>{
 
 addFrames.addEventListener('click', () => {
     animator.addFrames(scene)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll();
 })
