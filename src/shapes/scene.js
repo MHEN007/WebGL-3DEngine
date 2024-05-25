@@ -220,6 +220,7 @@ class Scene extends NodeScene{
         // Get uniform locations
         var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat')
         var uniformViewProjMatLoc = gl.getUniformLocation(this.phongProgram, 'viewProjMat')
+        var uniformNormalMatLoc = gl.getUniformLocation(this.phongProgram, 'u_normalMat')
         var uniformResolutionLoc = gl.getUniformLocation(this.phongProgram, 'resolution')
         var uniformVertexColorLoc = gl.getUniformLocation(this.phongProgram, 'vertexColor')
         var uniformAmbientColorLoc = gl.getUniformLocation(this.phongProgram, 'ambientColor')
@@ -242,6 +243,7 @@ class Scene extends NodeScene{
         gl.useProgram(this.phongProgram)
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
+        gl.uniformMatrix4fv(uniformNormalMatLoc, false, Matrix4x4.transpose(Matrix4x4.inverse(worldMatrix)))
         gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height])
         gl.uniform1i(uniformVertexColorLoc, true) // Assuming you want to use vertex color
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
@@ -249,11 +251,12 @@ class Scene extends NodeScene{
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
+
         gl.uniform1i(uniformTextureLoc, 0)
         gl.uniform1i(uniformSpecularMapLoc, 1)
         gl.uniform1i(uniformNormalMapLoc, 2)
         gl.uniform1i(uniformDisplacementMapLoc, 3)
-        gl.uniform1i(uniformUseDisplacementLoc, false)
+        gl.uniform1i(uniformUseDisplacementLoc, true)
         gl.uniform1i(uniformUseSpecularLoc, true)
         gl.uniform1i(uniformUseNormalLoc, true)
 
@@ -333,7 +336,7 @@ class Scene extends NodeScene{
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
         if (material.uniforms['useTexture']) {
-    
+            
             var texObj = material.uniforms['sourceTexture']
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)

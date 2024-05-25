@@ -13,6 +13,7 @@ class PhongMaterial extends ShaderMaterial {
 
     uniform mat4 worldMat;
     uniform mat4 viewProjMat;
+    uniform mat4 u_normalMat;
     uniform vec2 resolution;
     uniform bool vertexColor;
     uniform sampler2D u_displacementMap;
@@ -25,22 +26,28 @@ class PhongMaterial extends ShaderMaterial {
     varying mat3 v_tbn;
 
     void main() {
-        vec4 displacedPos = a_pos;
+        mat3 normalMat = mat3(u_normalMat);
+        vec4 displacedPos = worldMat * a_pos;
         
         if (useDisplacement) {
             float displacement = texture2D(u_displacementMap, a_texcoord).r;
-            displacedPos.xyz += (0.02 * displacement) * normalize(a_normal);
+            displacedPos.xyz += (0.001 * displacement) * normalize(a_normal);
         }
         
-        vec4 worldPos = worldMat * displacedPos;
-        gl_Position = viewProjMat * worldPos;
+        gl_Position = viewProjMat * displacedPos;
 
-        v_pos = gl_Position.xyz / gl_Position.w;
-        v_normal = mat3(worldMat) * a_normal;
-
-        vec3 tangent = normalize(mat3(worldMat) * a_tangent);
+        v_normal = normalize(normalMat * a_normal);
+        vec3 tangent = normalize(normalMat * a_tangent);
         vec3 bitangent = cross(v_normal, tangent);
-        v_tbn = mat3(tangent, bitangent, v_normal);
+        v_tbn = mat3(
+            vec3(tangent.x, bitangent.x, v_normal.x),
+            vec3(tangent.y, bitangent.y, v_normal.y),
+            vec3(tangent.z, bitangent.z, v_normal.z)
+        );
+
+        // v_pos = gl_Position.xyz / gl_Position.w;
+        v_pos = v_tbn * displacedPos.xyz;
+
 
         v_color = mix(vec4(1, 1, 1, 1), a_color, float(vertexColor));
         v_texcoord = a_texcoord;
@@ -77,7 +84,7 @@ class PhongMaterial extends ShaderMaterial {
         if(useNormal){
             normal = texture2D(u_normalMap, v_texcoord).rgb;
             normal = normalize(normal * 2.0 - 1.0);
-            normal = normalize(v_tbn * normal);
+            // normal = normalize(v_tbn * normal);
         }
         vec3 viewDir = normalize(camPos - v_pos);
         

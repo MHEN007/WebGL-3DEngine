@@ -93,6 +93,46 @@ class Matrix4x4{
         return out
     }
 
+    static transpose(m) {
+        const dst = new Array(16);
+        
+        const m00 = m[0 * 4 + 0];
+        const m01 = m[0 * 4 + 1];
+        const m02 = m[0 * 4 + 2];
+        const m03 = m[0 * 4 + 3];
+        const m10 = m[1 * 4 + 0];
+        const m11 = m[1 * 4 + 1];
+        const m12 = m[1 * 4 + 2];
+        const m13 = m[1 * 4 + 3];
+        const m20 = m[2 * 4 + 0];
+        const m21 = m[2 * 4 + 1];
+        const m22 = m[2 * 4 + 2];
+        const m23 = m[2 * 4 + 3];
+        const m30 = m[3 * 4 + 0];
+        const m31 = m[3 * 4 + 1];
+        const m32 = m[3 * 4 + 2];
+        const m33 = m[3 * 4 + 3];
+      
+        dst[ 0] = m00;
+        dst[ 1] = m10;
+        dst[ 2] = m20;
+        dst[ 3] = m30;
+        dst[ 4] = m01;
+        dst[ 5] = m11;
+        dst[ 6] = m21;
+        dst[ 7] = m31;
+        dst[ 8] = m02;
+        dst[ 9] = m12;
+        dst[10] = m22;
+        dst[11] = m32;
+        dst[12] = m03;
+        dst[13] = m13;
+        dst[14] = m23;
+        dst[15] = m33;
+      
+        return dst;
+      }
+
     static createTranslationMatrix(transformation){
         var transformationMatrix = this.mat4Identity.slice()
 
