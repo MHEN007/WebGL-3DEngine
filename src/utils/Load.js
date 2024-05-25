@@ -59,5 +59,7 @@ animSelector.addEventListener('change', async (e) => {
     }
 
     animator = AnimationRunner.fromJSON(JSON.parse(json))
+    fpsIndicator.innerHTML = `FPS: ${animator.fps}`
+    frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     alert("animation loaded")
 })

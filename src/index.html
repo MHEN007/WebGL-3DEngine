@@ -13,19 +13,22 @@
             margin: 0;
             background-color: #2f2f2f;
             color: white;
-            overflow: hidden;
+            overflow: auto;
 
         }
 
         .main-container {
             display: flex;
+            margin-top: 80px;
+            justify-content: center;
             width: 100%;
-            max-width: 1200px;
+            max-width: 100vw;
         }
 
         .canvas-container {
             flex: 1;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items:start;
             padding: 20px;
@@ -62,7 +65,7 @@
         }
 
         h1 {
-            position:absolute;
+            position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -105,20 +108,22 @@
                 <br/>
                 <label for="anim-selector">Load Anim: </label>
                 <input type="file" id="anim-selector">
-                <br>
-                <br>
-                <h3>Frame Controller</h3>
-                <button id="nextFrame">Next</button>
-                <button id="prevFrame">Previous</button>
-                <button id="firstFrame">First</button>
-                <button id="lastFrame">Last</button>
+                
                 <br>
                 <br>
             </div>
         </div>
         <div class="canvas-container">
-            <p>Frame</p>
             <canvas id="glCanvas"></canvas>
+            <div>
+                <h2>Frame Controller</h2>
+                <p id="fps">FPS: 0</p>
+                <p id="frame">Frame: 0/0</p>
+                <button id="nextFrame">Next</button>
+                <button id="prevFrame">Previous</button>
+                <button id="firstFrame">First</button>
+                <button id="lastFrame">Last</button>
+            </div>
         </div>
         <div id="right-controller">
             <div>Camera</div>

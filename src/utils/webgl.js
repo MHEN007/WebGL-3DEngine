@@ -48,12 +48,17 @@ const prevFrame = document.getElementById('prevFrame')
 const firstFrame = document.getElementById('firstFrame')
 const lastFrame = document.getElementById('lastFrame')
 
+const fpsIndicator = document.getElementById('fps')
+const frameIndicator = document.getElementById('frame')
+
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
 
 let check = []
 
+let animator = new AnimationRunner(30)
+let fps = 0;
 /* UPDATER */
 const phongUpdater = new Updater()
 
@@ -474,8 +479,6 @@ function selectAll(){
 
 }
 
-let animator = new AnimationRunner(30)
-let fps = 0;
 
 let callbackId = 0;
 function delay(ms) {
@@ -516,6 +519,7 @@ async function animate() {
         scene.drawAll()
         callbackId = requestAnimationFrame(animate);
     }
+    frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
 }
 
 play.addEventListener('click', function() {
@@ -721,6 +725,7 @@ nextFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -734,6 +739,7 @@ prevFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -744,6 +750,7 @@ firstFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
 })
@@ -754,6 +761,7 @@ lastFrame.addEventListener('click', () => {
         scene.getObjectById(frame.id).position = new Vector3(frame.position.x, frame.position.y, frame.position.z)
         scene.getObjectById(frame.id).rotation = new Vector3(frame.rotation.x, frame.rotation.y, frame.rotation.z)
     })
+    frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
 })
