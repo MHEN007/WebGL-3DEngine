@@ -35,12 +35,9 @@ class Scene extends NodeScene{
         this.#basicFS = this.createShader(gl.FRAGMENT_SHADER, BasicMaterial.fs)
         this.#phongVS = this.createShader(gl.VERTEX_SHADER, PhongMaterial.vs)
         this.#phongFS = this.createShader(gl.FRAGMENT_SHADER, PhongMaterial.fs)
-        this.#textureVS = this.createShader(gl.VERTEX_SHADER, Texture.vs)
-        this.#textureFS = this.createShader(gl.FRAGMENT_SHADER, Texture.fs)
 
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
-        this.textureProgram = this.createProgram(this.#textureVS, this.#textureFS)
 
         this.init()
     }
@@ -67,7 +64,7 @@ class Scene extends NodeScene{
             console.log("WEBGL not available on your browser!")
         }else{
             gl.viewport(0,0, gl.canvas.width, gl.canvas.height)
-            gl.clearColor(1.0, 1.0, 1.0, 1.0)
+            gl.clearColor(0.0, 0.0, 0.0, 1.0)
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
             gl.enable(gl.CULL_FACE)
             gl.enable(gl.DEPTH_TEST)
@@ -141,10 +138,12 @@ class Scene extends NodeScene{
         var uniformVertexColorLoc = gl.getUniformLocation(this.basicProgram, 'vertexColor')
         var uniformUseTexture = gl.getUniformLocation(this.basicProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.basicProgram, 'u_texture')
+        var uniformAmbientColorLoc = gl.getUniformLocation(this.basicProgram, 'ambient');
         
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
+        gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
         gl.uniform1i(uniformVertexColorLoc, true)
         this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         this.gl.uniform1i(uniformTextureLoc, 0)
@@ -183,12 +182,8 @@ class Scene extends NodeScene{
             gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
     
             var texture = gl.createTexture()
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
-            
-            var image = new Image()
-            image.src = texObj.source
-            // image.addEventListener('load', function(){
+
+            if(texObj.loaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
                 
@@ -199,7 +194,10 @@ class Scene extends NodeScene{
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
-            // })
+            }else{
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+            }
         }
 
         // Draw
@@ -215,10 +213,12 @@ class Scene extends NodeScene{
         var colorAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_color')
         var normalAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_normal')
         var texCoordAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_texcoord')
+        var tangentAttributeLocation = gl.getAttribLocation(this.phongProgram, 'a_tangent');
     
         // Get uniform locations
         var uniformWorldMatrixLoc = gl.getUniformLocation(this.phongProgram, 'worldMat')
         var uniformViewProjMatLoc = gl.getUniformLocation(this.phongProgram, 'viewProjMat')
+        var uniformNormalMatLoc = gl.getUniformLocation(this.phongProgram, 'u_normalMat')
         var uniformResolutionLoc = gl.getUniformLocation(this.phongProgram, 'resolution')
         var uniformVertexColorLoc = gl.getUniformLocation(this.phongProgram, 'vertexColor')
         var uniformAmbientColorLoc = gl.getUniformLocation(this.phongProgram, 'ambientColor')
@@ -226,25 +226,37 @@ class Scene extends NodeScene{
         var uniformDiffuseColorLoc = gl.getUniformLocation(this.phongProgram, 'diffuseColor')
         var uniformSpecularColorLoc = gl.getUniformLocation(this.phongProgram, 'specularColor')
         var uniformLightPosLoc = gl.getUniformLocation(this.phongProgram, 'lightPos')
-        var uniformCamPosLoc = gl.getUniformLocation(this.phongProgram, 'camPos')
         var uniformUseTexture = gl.getUniformLocation(this.phongProgram, 'useTexture')
         var uniformTextureLoc = gl.getUniformLocation(this.phongProgram, 'u_texture')
         var uniformLightIntensityLoc = gl.getUniformLocation(this.phongProgram, 'intensity')
         var uniformNumLightLoc = gl.getUniformLocation(this.phongProgram, 'lightCount')
-    
+        var uniformSpecularMapLoc = gl.getUniformLocation(this.phongProgram, 'u_specularMap')
+        var uniformNormalMapLoc = gl.getUniformLocation(this.phongProgram, 'u_normalMap')
+        var uniformDisplacementMapLoc = gl.getUniformLocation(this.phongProgram, 'u_displacementMap')
+        var uniformUseDisplacementLoc = gl.getUniformLocation(this.phongProgram, 'useDisplacement')
+        var uniformUseSpecularLoc = gl.getUniformLocation(this.phongProgram, 'useSpecular')
+        var uniformUseNormalLoc = gl.getUniformLocation(this.phongProgram, 'useNormal');
+
         // Set uniform values
         gl.useProgram(this.phongProgram)
         gl.uniformMatrix4fv(uniformWorldMatrixLoc, false, worldMatrix)
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
+        gl.uniformMatrix4fv(uniformNormalMatLoc, false, Matrix4x4.transpose(Matrix4x4.inverse(worldMatrix)))
         gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height])
         gl.uniform1i(uniformVertexColorLoc, true) // Assuming you want to use vertex color
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
-        // gl.uniform3fv(uniformCamPosLoc, this.#camera.position.toArray())
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
+
         gl.uniform1i(uniformTextureLoc, 0)
+        gl.uniform1i(uniformSpecularMapLoc, 1)
+        gl.uniform1i(uniformNormalMapLoc, 2)
+        gl.uniform1i(uniformDisplacementMapLoc, 3)
+        gl.uniform1i(uniformUseDisplacementLoc, true)
+        gl.uniform1i(uniformUseSpecularLoc, true)
+        gl.uniform1i(uniformUseNormalLoc, true)
 
         let lightPos = []
         let lightInt = []
@@ -263,6 +275,7 @@ class Scene extends NodeScene{
         gl.enableVertexAttribArray(colorAttributeLocation)
         gl.enableVertexAttribArray(normalAttributeLocation)
         gl.enableVertexAttribArray(texCoordAttributeLocation)
+        gl.enableVertexAttribArray(tangentAttributeLocation)
     
         // Create and bind the buffer for position
         var positionBuffer = gl.createBuffer()
@@ -321,7 +334,7 @@ class Scene extends NodeScene{
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
         if (material.uniforms['useTexture']) {
-    
+            
             var texObj = material.uniforms['sourceTexture']
             var texCoordBuffer = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
@@ -332,27 +345,86 @@ class Scene extends NodeScene{
             }
             
             gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
+
+            var tangentBuffer = gl.createBuffer()
+            const tangents = this.calculateTangents(position, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), normals)
+            this.gl.bindBuffer(gl.ARRAY_BUFFER, tangentBuffer)
+            this.gl.bufferData(gl.ARRAY_BUFFER, tangents, gl.STATIC_DRAW)
+            gl.vertexAttribPointer(tangentAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
             var texture = gl.createTexture()
-            gl.bindTexture(gl.TEXTURE_2D, texture)
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]))
-    
-            var image = new Image()
-            image.src = texObj.source
-            // image.addEventListener('load', function() {
+            this.gl.activeTexture(gl.TEXTURE0)
+
+            if(texObj.loaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.image)
     
-                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                if (isPowerOf2(texObj.image.width) && isPowerOf2(texObj.image.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 }
-            // })
+            }else{
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+            }
+
+            var specularTexture = gl.createTexture()
+            gl.activeTexture(gl.TEXTURE1) // Activate texture unit 2 for specular map
+    
+            var specularImage = new Image()
+            specularImage.src = './utils/specular.png'
+            gl.bindTexture(gl.TEXTURE_2D, specularTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, specularImage)
+    
+            if (isPowerOf2(specularImage.width) && isPowerOf2(specularImage.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+
+            var normalTexture = gl.createTexture()
+            gl.activeTexture(gl.TEXTURE2)
+            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+
+            var normalMap = new Image()
+            normalMap.src = './utils/normal.png'
+            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, normalMap)
+    
+            if (isPowerOf2(normalMap.width) && isPowerOf2(normalMap.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+
+            var displacementTex = gl.createTexture()
+            gl.activeTexture(gl.TEXTURE3)
+            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+
+            var displacementMap = new Image()
+            displacementMap.src = './utils/DisplacementMap.png'
+            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, displacementMap)
+    
+            if (isPowerOf2(displacementMap.width) && isPowerOf2(displacementMap.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
         } else {
             gl.disableVertexAttribArray(texCoordAttributeLocation)
+            gl.disableVertexAttribArray(tangentAttributeLocation)
         }
     
         // Draw
@@ -399,5 +471,79 @@ class Scene extends NodeScene{
         object.setLightsource(lights)
         return object
     }
+
+    calculateTangents(vertices, texcoords, normals) {
+        const tan1 = [];
+        const tan2 = [];
+        const tangents = new Float32Array(vertices.length);
+    
+        for (let i = 0; i < vertices.length / 3; i++) {
+            tan1[i] = [0.0, 0.0, 0.0];
+            tan2[i] = [0.0, 0.0, 0.0];
+        }
+    
+        for (let i = 0; i < vertices.length; i += 9) {
+            const i1 = i / 3;
+            const i2 = i1 + 1;
+            const i3 = i1 + 2;
+    
+            const v1 = vertices.slice(i, i + 3);
+            const v2 = vertices.slice(i + 3, i + 6);
+            const v3 = vertices.slice(i + 6, i + 9);
+    
+            const uv1 = texcoords.slice(i1 * 2, i1 * 2 + 2);
+            const uv2 = texcoords.slice(i2 * 2, i2 * 2 + 2);
+            const uv3 = texcoords.slice(i3 * 2, i3 * 2 + 2);
+    
+            const edge1 = this.subtract(v2, v1);
+            const edge2 = this.subtract(v3, v1);
+            const deltaUV1 = this.subtract(uv2, uv1);
+            const deltaUV2 = this.subtract(uv3, uv1);
+    
+            const f = 1.0 / (deltaUV1[0] * deltaUV2[1] - deltaUV2[0] * deltaUV1[1]);
+    
+            const tangent = [
+                f * (deltaUV2[1] * edge1[0] - deltaUV1[1] * edge2[0]),
+                f * (deltaUV2[1] * edge1[1] - deltaUV1[1] * edge2[1]),
+                f * (deltaUV2[1] * edge1[2] - deltaUV1[1] * edge2[2])
+            ];
+    
+            tan1[i1] = this.addM(tan1[i1], tangent);
+            tan1[i2] = this.addM(tan1[i2], tangent);
+            tan1[i3] = this.addM(tan1[i3], tangent);
+        }
+    
+        for (let i = 0; i < vertices.length; i += 3) {
+            const n = normals.slice(i, i + 3);
+            const t = tan1[i / 3];
+    
+            const tangent = this.normalize(this.subtract(t, this.scaleM(n, this.dotM(n, t))));
+            tangents.set(tangent, i);
+        }
+    
+        return tangents;
+    }
+    
+    subtract(a, b) {
+        return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    }
+    
+    addM(a, b) {
+        return [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+    }
+    
+    scaleM(a, s) {
+        return [a[0] * s, a[1] * s, a[2] * s];
+    }
+    
+    dotM(a, b) {
+        return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    }
+    
+    normalize(a) {
+        const length = Math.sqrt(this.dotM(a, a));
+        return this.scaleM(a, 1.0 / length);
+    }
+    
 
 }

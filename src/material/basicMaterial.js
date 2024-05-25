@@ -11,6 +11,7 @@ class BasicMaterial extends ShaderMaterial {
     uniform mat4 worldMat;
     uniform mat4 viewProjMat;
     uniform vec3 color;
+    uniform vec4 ambient;
     uniform bool vertexColor;
 
     varying vec4 v_color;
@@ -18,7 +19,7 @@ class BasicMaterial extends ShaderMaterial {
 
     void main() {
         gl_Position = viewProjMat * worldMat * a_pos;
-        v_color = vec4(color * float(vertexColor), 1.0);
+        v_color = vec4(color * float(vertexColor), 1.0) * ambient;
 
         v_texcoord = a_texcoord;
     }
@@ -39,11 +40,12 @@ class BasicMaterial extends ShaderMaterial {
         gl_FragColor = finalColor * v_color;
     }`
     
-    constructor(name, color, useTexture = false, sourceTexture = ''){        
+    constructor(name, color, useTexture = false, sourceTexture = '', ambient = [1, 1, 1, 1]){        
         const uniform = {
             color: color,
             useTexture: useTexture,
             sourceTexture: sourceTexture,
+            ambient: ambient
         }
 
         super(name, BasicMaterial.vs, BasicMaterial.fs, uniform)        
@@ -55,7 +57,8 @@ class BasicMaterial extends ShaderMaterial {
             uniforms: {
                 color: this.uniforms['color'],
                 useTexture: this.uniforms['useTexture'],
-                sourceTexture: this.uniforms['sourceTexture']
+                sourceTexture: this.uniforms['sourceTexture'],
+                ambient: this.uniforms['ambient']
             }
         }
     }
