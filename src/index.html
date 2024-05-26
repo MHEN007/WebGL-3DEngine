@@ -293,6 +293,44 @@
                     Shininess
                 </label> 
             </label>
+            <br/>
+            <br/>
+            <label for="change-material">Change Material: </label>
+            <select name="projection" id="materialSelect">
+                <option value="basic">Basic</option>
+                <option value="phong">Phong</option>
+            </select>
+            <label class="switch">
+                <input type="checkbox" id="change-texture" checked>
+                <label for="texture">Texture</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-displacement" checked>
+                <label for="displacement">Displacement</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-specular" checked>
+                <label for="specular">Specular</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-normal" checked>
+                <label for="normal">Normal</label>
+            </label>
+            <button id="applyChange">Apply</button>
+            <br/>
+            <br/>
+            <label for="change-texture-file-selector">Texture File</label>
+            <input type="file" id="change-texture-file-selector">
+            <br/>
+            <label for="change-displacement-file-selector">Displacement Map File</label>
+            <input type="file" id="change-displacement-file-selector">
+            <br/>
+            <label for="change-specular-file-selector">Specular Map File</label>
+            <input type="file" id="change-specular-file-selector">
+            <br/>
+            <label for="change-normal-file-selector">Normal Map File</label>
+            <input type="file" id="change-normal-file-selector">
+
         </div>
         
     </div>

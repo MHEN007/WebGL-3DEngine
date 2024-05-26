@@ -20,6 +20,18 @@ const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
 const deleteButton = document.getElementById("delete-button")
 
+const applyButton = document.getElementById("applyChange")
+const texChangeButton = document.getElementById("change-texture")
+const normChangeButton = document.getElementById("change-normal")
+const specChangeButton = document.getElementById("change-specular")
+const dispChangeButton = document.getElementById("change-displacement")
+const materialDropDown = document.getElementById("materialSelect")
+
+const changeTextureFile = document.getElementById("change-texture-file-selector")
+const changeNormalFile = document.getElementById("change-normal-file-selector")
+const changeSpecularFile = document.getElementById("change-specular-file-selector")
+const changeDisplacementFile = document.getElementById("change-displacement-file-selector")
+
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
 
@@ -76,7 +88,8 @@ canvas.height = 600
 
 let check = []
 let lightSelected = []
-
+let newTexture = null
+let tempMaterial = null
 let animator = new AnimationRunner(30)
 let fps = 0;
 /* UPDATER */
@@ -1118,3 +1131,102 @@ useVertColor.addEventListener('change', () => {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
+
+applyButton.addEventListener('click', () => {
+    var texImg = changeTextureFile.files[0]
+    var normalImg = changeNormalFile.files[0]
+    var specularImg = changeSpecularFile.files[0]
+    var displacementImg = changeDisplacementFile.files[0]
+    
+    var texSrc = ""
+    var normalSrc = ""
+    var specularSrc = ""
+    var displacementSrc = ""
+    if (texImg) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "texture")
+        }
+        reader.readAsDataURL(texImg);
+    }
+    if (normalImg) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "normal")
+        }
+        reader.readAsDataURL(normalImg);
+    }
+    if (specularImg) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "specular")
+        }
+        reader.readAsDataURL(specularImg);
+    }
+    if (displacementImg) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "displacement")
+        }
+        reader.readAsDataURL(displacementImg);
+    }
+
+    newTexture = new Texture("New Texture", texSrc, displacementSrc, normalSrc, specularSrc)
+    if (materialDropDown.value === 'Phong'){
+        tempMaterial = new PhongMaterial("New Material", [1, 1, 1], true, newTexture)
+    }
+    else {
+        tempMaterial = new BasicMaterial("New Material", [1, 1, 1], true, newTexture)
+    }
+
+    console.log(tempMaterial)
+
+    if (check.length > 0){
+        check.forEach((item) => {
+            if (scene.getObject(item).type === 'Mesh'){
+                scene.getObject(item).setMaterial([tempMaterial], [0, 0, 0, 0, 0, 0])
+                console.log(scene.getObject(item))
+                console.log(scene.getObject(item).material)
+            }
+        })
+    }
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+function loadImage(imageSrc, cat) {
+      this.img = new Image();
+      this.img.src = imageSrc;
+
+      // Optionally, handle the image load event if needed
+      this.img.onload = () => {
+        if (cat == "texture") {
+            newTexture.setImageSource(imageSrc, cat)
+            newTexture.texSrc = imageSrc
+            console.log(1)
+            console.log(tempMaterial)
+        }
+        if (cat == "normal") {
+            newTexture.setImageSource(imageSrc, cat)
+            newTexture.normalSrc = imageSrc
+            console.log(2)
+            console.log(tempMaterial)
+
+        }
+        if (cat == "specular") {
+            newTexture.setImageSource(imageSrc, cat)
+            console.log(3)
+            console.log(tempMaterial)
+        }
+        if (cat == "displacement") {
+            newTexture.setImageSource(imageSrc, cat)
+            console.log(4)
+            console.log(tempMaterial)
+        }
+      };
+    }
