@@ -20,6 +20,18 @@ const angleObliqueSlider = document.getElementById("angleOblique")
 const angleObliqueLabel = document.getElementById("angleObliqueLabel")
 const deleteButton = document.getElementById("delete-button")
 
+const applyButton = document.getElementById("applyChange")
+const texChangeButton = document.getElementById("change-texture")
+const normChangeButton = document.getElementById("change-normal")
+const specChangeButton = document.getElementById("change-specular")
+const dispChangeButton = document.getElementById("change-displacement")
+const materialDropDown = document.getElementById("materialSelect")
+
+const changeTextureFile = document.getElementById("change-texture-file-selector")
+const changeNormalFile = document.getElementById("change-normal-file-selector")
+const changeSpecularFile = document.getElementById("change-specular-file-selector")
+const changeDisplacementFile = document.getElementById("change-displacement-file-selector")
+
 const viewAngleLabel = document.getElementById("viewAngleLabel")
 const viewAngleSelector = document.getElementById("viewAngle")
 
@@ -35,6 +47,8 @@ const lightDirY = document.getElementById('l-dir-y')
 const lightDirZ = document.getElementById('l-dir-z')
 const lightAngle = document.getElementById('l-angle')
 
+const useVertColor = document.getElementById('useVertColor')
+
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
@@ -44,7 +58,6 @@ const zRot = document.getElementById('zRot')
 const xScale = document.getElementById('xScale')
 const yScale = document.getElementById('yScale')
 const zScale = document.getElementById('zScale')
-
 
 const play = document.getElementById('play')
 const pause = document.getElementById('pause')
@@ -59,13 +72,24 @@ const lastFrame = document.getElementById('lastFrame')
 const fpsIndicator = document.getElementById('fps')
 const frameIndicator = document.getElementById('frame')
 
+const displacement = document.getElementById('displacement');
+const specular = document.getElementById('specular');
+const normal = document.getElementById('normal');
+const diffuse = document.getElementById('diffuse');
+
+const ambientColor = document.getElementById('ambientColor')
+const specularColor = document.getElementById('specularColor')
+const diffuseColor = document.getElementById('diffuseColor')
+const shininess = document.getElementById('shininess')
+
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
 
 let check = []
 let lightSelected = []
-
+let newTexture = null
+let tempMaterial = null
 let animator = new AnimationRunner(30)
 let fps = 0;
 /* UPDATER */
@@ -135,7 +159,7 @@ const infinityCube = new InfinityCube()
 const nether = new NetherPortal()
 
 /* SCENE CREATION */
-let scene = new Scene(gl, [camera], [light1, light3]).add(creeper.object);
+let scene = new Scene(gl, [camera], [light1, light3]).add(golem.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -417,7 +441,7 @@ lightIntensityR.addEventListener('input', function() {
 lightIntensityG.addEventListener('input', function() {
     if(lightSelected.length > 0){
         lightSelected.forEach((light) => {
-            light.color = new Vector3(light.color.x, parseFloat(lightIntensityG.value), light.intenscolority.z)
+            light.color = new Vector3(light.color.x, parseFloat(lightIntensityG.value), light.color.z)
         })
     }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
@@ -696,7 +720,6 @@ function onMouseMove(event){
             mod(camera.rotation.x - dy * Math.PI/180, Math.PI*2), 
             mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
             0)
-        console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
     }
@@ -788,13 +811,11 @@ addObjectFileSelector.addEventListener('change', async (e) => {
     }
 
     const newScene = NodeScene.fromJSON(json)
-    // getAllChildren(scene)
-    const newObject = newScene.children[0]
 
     if (check.length>0){
         check.forEach((item) => {
             console.log(item)
-            scene.getObject(item).add(newObject)
+            scene.getObject(item).add(newScene)
         })
     }
     updateComponentViewer()
@@ -947,3 +968,268 @@ lastFrame.addEventListener('click', () => {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
 })
+
+displacement.addEventListener('change', () => {
+    if (displacement.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useDisplacement'] != null)
+                    m.uniforms['useDisplacement'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+               if(m.uniforms['useDisplacement'] != null)
+                    m.uniforms['useDisplacement'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+specular.addEventListener('change', () => {
+    if (specular.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useSpecular'] != null)
+                    m.uniforms['useSpecular'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useSpecular'] != null )
+                    m.uniforms['useSpecular'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+normal.addEventListener('change', () => {
+    if (normal.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useNormal'] != null)
+                    m.uniforms['useNormal'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useNormal'] != null)
+                    m.uniforms['useNormal'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+diffuse.addEventListener('change', () => {
+    if (diffuse.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useTexture'] != null && m.uniforms['sourceTexture'] != null)
+                    m.uniforms['useTexture'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useTexture'] != null && m.uniforms['sourceTexture'] != null)
+                    m.uniforms['useTexture'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+function normalizeColor(hex) {
+    // Remove the hash (#) if present
+    hex = hex.replace(/^#/, '');
+
+    // Parse the hex values for red, green, and blue
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+
+    // Normalize the values to 0..1
+    let rNormalized = r / 255;
+    let gNormalized = g / 255;
+    let bNormalized = b / 255;
+
+    return [rNormalized, gNormalized, bNormalized, 1]
+}
+
+ambientColor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            m.uniforms['ambient'] = normalizeColor(ambientColor.value)
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+specularColor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['specular'] != null)
+                m.uniforms['specular'] = normalizeColor(specularColor.value)
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+
+diffuseColor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['diffuse'] != null)
+                m.uniforms['diffuse'] = normalizeColor(diffuseColor.value)
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+shininess.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['shininess'] != null)
+                m.uniforms['shininess'] = shininess.value
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+useVertColor.addEventListener('change', () => {
+    if(useVertColor.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useVertexColor'] != null)
+                    m.uniforms['useVertexColor'] = true
+            })
+        })
+    }else{
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useVertexColor'] != null)
+                    m.uniforms['useVertexColor'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+applyButton.addEventListener('click', () => {
+    var texImg = changeTextureFile.files[0]
+    var normalImg = changeNormalFile.files[0]
+    var specularImg = changeSpecularFile.files[0]
+    var displacementImg = changeDisplacementFile.files[0]
+    
+    var texSrc = ""
+    var normalSrc = ""
+    var specularSrc = ""
+    var displacementSrc = ""
+    var useTxt = false
+    if (texImg) {
+        useTxt = true
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "texture")
+        }
+        reader.readAsDataURL(texImg);
+    }
+    if (normalImg) {
+        useTxt = true
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "normal")
+        }
+        reader.readAsDataURL(normalImg);
+    }
+    if (specularImg) {
+        useTxt = true
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "specular")
+        }
+        reader.readAsDataURL(specularImg);
+    }
+    if (displacementImg) {
+        useTxt = true
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const src = e.target.result
+            loadImage(src, "displacement")
+        }
+        reader.readAsDataURL(displacementImg);
+    }
+
+    newTexture = new Texture("New Texture", texSrc, displacementSrc, normalSrc, specularSrc)
+    if (materialDropDown.value === 'phong'){
+        tempMaterial = new PhongMaterial("New Material", [1, 1, 1], useTxt, newTexture)
+    }
+    else {
+        tempMaterial = new BasicMaterial("New Material", [1, 1, 1], useTxt, newTexture)
+    }
+
+    console.log(tempMaterial)
+
+    if (check.length > 0){
+        check.forEach((item) => {
+            if (scene.getObject(item).type === 'Mesh'){
+                scene.getObject(item).setMaterial([tempMaterial], [0, 0, 0, 0, 0, 0])
+                console.log(scene.getObject(item))
+                console.log(scene.getObject(item).material)
+            }
+        })
+    }
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+function loadImage(imageSrc, cat) {
+      this.img = new Image();
+      this.img.src = imageSrc;
+
+      // Optionally, handle the image load event if needed
+      this.img.onload = () => {
+        if (cat == "texture") {
+            newTexture.setImageSource(imageSrc, cat)
+            newTexture.texSrc = imageSrc
+            console.log(1)
+            console.log(tempMaterial)
+        }
+        if (cat == "normal") {
+            newTexture.setImageSource(imageSrc, cat)
+            newTexture.normalSrc = imageSrc
+            console.log(2)
+            console.log(tempMaterial)
+
+        }
+        if (cat == "specular") {
+            newTexture.setImageSource(imageSrc, cat)
+            console.log(3)
+            console.log(tempMaterial)
+        }
+        if (cat == "displacement") {
+            newTexture.setImageSource(imageSrc, cat)
+            console.log(4)
+            console.log(tempMaterial)
+        }
+      };
+    }

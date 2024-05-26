@@ -45,7 +45,8 @@ class BasicMaterial extends ShaderMaterial {
             color: color,
             useTexture: useTexture,
             sourceTexture: sourceTexture,
-            ambient: ambient
+            ambient: ambient,
+            useVertexColor: true
         }
 
         super(name, BasicMaterial.vs, BasicMaterial.fs, uniform)        
@@ -58,7 +59,8 @@ class BasicMaterial extends ShaderMaterial {
                 color: this.uniforms['color'],
                 useTexture: this.uniforms['useTexture'],
                 sourceTexture: this.uniforms['sourceTexture'],
-                ambient: this.uniforms['ambient']
+                ambient: this.uniforms['ambient'],
+                useVertexColor: this.uniforms['useVertexColor']
             }
         }
     }

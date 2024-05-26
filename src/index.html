@@ -235,10 +235,12 @@
             <br/>
             <label for="save">save:</label>
             <button id="save">Save</button>
-            <br/>
-            <br/>
             <label for="file-selector">Load</label>
             <input type="file" id="file-selector">
+            <br/>
+            <br/>
+            <label for="export-object">Export Object</label>
+            <button id="export-object">Export</button>
             <br/>
             <br/>
             <label for="delete-button">Delete Object</label>
@@ -247,6 +249,91 @@
             <br/>
             <label for="add-object-file-selector">Add Object</label>
             <input type="file" id="add-object-file-selector">
+            <br/>
+            <br/>
+            <label class="switch">
+                <input type="checkbox" id="diffuse" checked>
+                <label for="diffuse">Diffuse</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="displacement" checked>
+                <label for="displacement">Displacement</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="specular" checked>
+                <label for="specular">Specular</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="normal" checked>
+                <label for="normal">Normal</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="useVertColor" checked>
+                <label for="useVertColor">Use Vertex Color</label>
+            </label>
+            <br>
+            <br>
+            <label class="switch">
+                <input type="color" id="ambientColor">
+                <label for="ambientColor">
+                    Ambient
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="color" id="specularColor">
+                <label for="specularColor">
+                    Specular
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="color" id="diffuseColor">
+                <label for="diffuseColor">
+                    Diffuse
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="range" min=0 max=100 value=64 id="shininess">
+                <label for="shininess">
+                    Shininess
+                </label> 
+            </label>
+            <br/>
+            <br/>
+            <label for="change-material">Change Material: </label>
+            <select name="projection" id="materialSelect">
+                <option value="basic">Basic</option>
+                <option value="phong">Phong</option>
+            </select>
+            <label class="switch">
+                <input type="checkbox" id="change-texture" checked>
+                <label for="texture">Texture</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-displacement" checked>
+                <label for="displacement">Displacement</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-specular" checked>
+                <label for="specular">Specular</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-normal" checked>
+                <label for="normal">Normal</label>
+            </label>
+            <button id="applyChange">Apply</button>
+            <br/>
+            <br/>
+            <label for="change-texture-file-selector">Texture File</label>
+            <input type="file" id="change-texture-file-selector">
+            <br/>
+            <label for="change-displacement-file-selector">Displacement Map File</label>
+            <input type="file" id="change-displacement-file-selector">
+            <br/>
+            <label for="change-specular-file-selector">Specular Map File</label>
+            <input type="file" id="change-specular-file-selector">
+            <br/>
+            <label for="change-normal-file-selector">Normal Map File</label>
+            <input type="file" id="change-normal-file-selector">
 
         </div>
         

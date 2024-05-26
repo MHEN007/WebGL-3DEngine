@@ -148,7 +148,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
-        gl.uniform1i(uniformVertexColorLoc, true)
+        gl.uniform1i(uniformVertexColorLoc, material.uniforms['useVertexColor'])
         this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         this.gl.uniform1i(uniformTextureLoc, 0)
     
@@ -186,12 +186,13 @@ class Scene extends NodeScene{
             gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
     
             var texture = gl.createTexture()
+            this.gl.activeTexture(gl.TEXTURE0)
 
-            if(texObj.loaded){
+            if(texObj.texLoaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.texture)
                 
-                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                if (isPowerOf2(texObj.texture.width) && isPowerOf2(texObj.texture.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -247,7 +248,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniformMatrix4fv(uniformNormalMatLoc, false, Matrix4x4.transpose(Matrix4x4.inverse(worldMatrix)))
         gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height])
-        gl.uniform1i(uniformVertexColorLoc, true) // Assuming you want to use vertex color
+        gl.uniform1i(uniformVertexColorLoc, material.uniforms['useVertexColor']) // Assuming you want to use vertex color
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
@@ -258,9 +259,9 @@ class Scene extends NodeScene{
         gl.uniform1i(uniformSpecularMapLoc, 1)
         gl.uniform1i(uniformNormalMapLoc, 2)
         gl.uniform1i(uniformDisplacementMapLoc, 3)
-        gl.uniform1i(uniformUseDisplacementLoc, true)
-        gl.uniform1i(uniformUseSpecularLoc, true)
-        gl.uniform1i(uniformUseNormalLoc, true)
+        gl.uniform1i(uniformUseDisplacementLoc, material.uniforms['useDisplacement'])
+        gl.uniform1i(uniformUseSpecularLoc, material.uniforms['useSpecular'])
+        gl.uniform1i(uniformUseNormalLoc, material.uniforms['useNormal'])
 
         let lightPos = []
         let lightInt = []
@@ -337,102 +338,94 @@ class Scene extends NodeScene{
     
         gl.vertexAttribPointer(normalAttributeLocation, 3, gl.FLOAT, false, 0, 0)
     
-        if (material.uniforms['useTexture']) {
-            
-            var texObj = material.uniforms['sourceTexture']
-            console.log(texObj)
+        var texObj = material.uniforms['sourceTexture']
 
-            var texCoordBuffer = gl.createBuffer()
-            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
-            if (this.#isHollow){
-                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.DYNAMIC_DRAW)
-            } else {
-                gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
-            }
-            
-            gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
-
-            var tangentBuffer = gl.createBuffer()
-            const tangents = this.calculateTangents(position, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), normals)
-            this.gl.bindBuffer(gl.ARRAY_BUFFER, tangentBuffer)
-            this.gl.bufferData(gl.ARRAY_BUFFER, tangents, gl.STATIC_DRAW)
-            gl.vertexAttribPointer(tangentAttributeLocation, 3, gl.FLOAT, false, 0, 0)
-    
-            var texture = gl.createTexture()
-            this.gl.activeTexture(gl.TEXTURE0)
-
-            if(texObj.texLoaded){
-                gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.texture)
-    
-                if (isPowerOf2(texObj.texture.width) && isPowerOf2(texObj.texture.height)) {
-                    gl.generateMipmap(gl.TEXTURE_2D)
-                } else {
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-                }
-            }else{
-                gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-            }
-
-            var specularTexture = gl.createTexture()
-            gl.activeTexture(gl.TEXTURE1) // Activate texture unit 2 for specular map
-            // var specularImage = new Image()
-            // specularImage.src = './utils/specular.png'
-            if (texObj.speLoaded){
-                gl.bindTexture(gl.TEXTURE_2D, specularTexture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.specular)
-                if (isPowerOf2(texObj.specular.width) && isPowerOf2(texObj.specular.height)) {
-                    gl.generateMipmap(gl.TEXTURE_2D)
-                } else {
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-                }
-            }
-    
-
-            var normalTexture = gl.createTexture()
-            gl.activeTexture(gl.TEXTURE2)
-            // var normalMap = new Image()
-            // normalMap.src = './utils/normal.png'
-            if (texObj.norLoaded){
-                gl.bindTexture(gl.TEXTURE_2D, normalTexture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-                gl.bindTexture(gl.TEXTURE_2D, normalTexture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.normal)
-                if (isPowerOf2(texObj.normal.width) && isPowerOf2(texObj.normal.height)) {
-                    gl.generateMipmap(gl.TEXTURE_2D)
-                } else {
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-                }
-            }
-    
-
-            var displacementTex = gl.createTexture()
-            gl.activeTexture(gl.TEXTURE3)
-            // var displacementMap = new Image()
-            // displacementMap.src = './utils/DisplacementMap.png'
-            if (texObj.disLoaded){
-                gl.bindTexture(gl.TEXTURE_2D, displacementTex)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
-                gl.bindTexture(gl.TEXTURE_2D, displacementTex)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.displacement)
-                if (isPowerOf2(texObj.displacement.width) && isPowerOf2(texObj.displacement.height)) {
-                    gl.generateMipmap(gl.TEXTURE_2D)
-                } else {
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-                }
-            }
+        var texCoordBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
+        if (this.#isHollow){
+            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.DYNAMIC_DRAW)
         } else {
-            gl.disableVertexAttribArray(texCoordAttributeLocation)
-            gl.disableVertexAttribArray(tangentAttributeLocation)
+            gl.bufferData(gl.ARRAY_BUFFER, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), gl.STATIC_DRAW)
+        }
+
+        gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, stride, offset)
+
+        var tangentBuffer = gl.createBuffer()
+        const tangents = this.calculateTangents(position, texObj.assignSide.slice(i * 2 * 6, (i + 1) * 2 * 6), normals)
+        this.gl.bindBuffer(gl.ARRAY_BUFFER, tangentBuffer)
+        this.gl.bufferData(gl.ARRAY_BUFFER, tangents, gl.STATIC_DRAW)
+        gl.vertexAttribPointer(tangentAttributeLocation, 3, gl.FLOAT, false, 0, 0)
+
+        var texture = gl.createTexture()
+        this.gl.activeTexture(gl.TEXTURE0)
+
+        if(texObj.texLoaded){
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.texture)
+
+            if (isPowerOf2(texObj.texture.width) && isPowerOf2(texObj.texture.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+        }else{
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+        }
+
+        var specularTexture = gl.createTexture()
+        gl.activeTexture(gl.TEXTURE1) // Activate texture unit 2 for specular map
+        // var specularImage = new Image()
+        // specularImage.src = './utils/specular.png'
+        if (texObj.speLoaded){
+            gl.bindTexture(gl.TEXTURE_2D, specularTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.specular)
+            if (isPowerOf2(texObj.specular.width) && isPowerOf2(texObj.specular.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+        }
+
+
+        var normalTexture = gl.createTexture()
+        gl.activeTexture(gl.TEXTURE2)
+        // var normalMap = new Image()
+        // normalMap.src = './utils/normal.png'
+        if (texObj.norLoaded){
+            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+            gl.bindTexture(gl.TEXTURE_2D, normalTexture)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.normal)
+            if (isPowerOf2(texObj.normal.width) && isPowerOf2(texObj.normal.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
+        }
+
+        var displacementTex = gl.createTexture()
+        gl.activeTexture(gl.TEXTURE3)
+        // var displacementMap = new Image()
+        // displacementMap.src = './utils/DisplacementMap.png'
+        if (texObj.disLoaded){
+            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]))
+            gl.bindTexture(gl.TEXTURE_2D, displacementTex)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.displacement)
+            if (isPowerOf2(texObj.displacement.width) && isPowerOf2(texObj.displacement.height)) {
+                gl.generateMipmap(gl.TEXTURE_2D)
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+            }
         }
     
         // Draw

@@ -7,6 +7,7 @@ Pada tugas ini, kelompok kami telah membuat sebuah program 3D menggunakan WebGL 
 1. Lakukan clone repository ini
 2. Buka file index.html yang terdapat pada folder src dengan menggunakan fitur LiveServer dari IDE Anda.
 3. Pastikan canvas berhasil muncul pada halaman web dengan baik.
+4. Untuk pengalaman penggunaan yang lebih baik, jalankan webapp ini di 75% zoom pada browser Anda.
 
 ## Panduan Penggunaan
 ![main screen](img/screen.png)
@@ -35,7 +36,7 @@ Bagian ini memiliki 4 button dimana fungsinya natara lain adalah save to json, l
 | NIM | Nama |Pembagian Kerja |Hollow Model | Articulated Model|
 | --- | -----| ---|----- | -----
 | 13521003 |Bintang Hijriawan J.| |infinity cube| shulker
-| 13521007 |Matthew Mahendra| |nether | creeper
+| 13521007 |Matthew Mahendra| Rendering (Shaders, Pipeline), Texture, Component Viewer and Editor, Utils(Matrix4x4, Vector), Basic Material |nether | creeper
 | 13521012 |Haikal Ardzi S.|Oblique Projection, Geometries, Save/Load, Animation Builder and Manager, Quaternion|chain |steve
-| 13521022 |Raditya Naufal A.| |batako | golem
+| 13521022 |Raditya Naufal A.| Camera, Component editor, Save, Object manipulation|batako | golem
 | 13521027 |Agsha Athalla N.| |cube| wither

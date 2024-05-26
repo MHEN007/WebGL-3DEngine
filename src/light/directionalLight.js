@@ -36,7 +36,7 @@ class DirectionalLight extends Light {
     }
 
     static fromJSON(json, object){
-        object = object || new DirectionalLight(new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
+        object = object || new DirectionalLight(json.id, new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
         object.direction = new Vector3(json.direction.x, json.direction.y, json.direction.z)
         return object
     }

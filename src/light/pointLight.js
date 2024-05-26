@@ -31,7 +31,7 @@ class PointLight extends Light {
     }
 
     static fromJSON(json, object){
-        object = object || new PointLight(new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
+        object = object || new PointLight(json.id, new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
         object.position = new Vector3(json.position.x, json.position.y, json.position.z)
         return object
     }

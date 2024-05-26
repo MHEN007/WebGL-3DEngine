@@ -2893,6 +2893,74 @@
       },
       "intensity": 1,
       "type": "PointLight"
+    },
+    {
+      "id": "Light 3",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "worldMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "children": [],
+      "visible": true,
+      "color": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "intensity": 1,
+      "type": "SpotLight",
+      "direction": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      }
     }
   ]
 }
