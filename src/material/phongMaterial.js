@@ -137,10 +137,10 @@ class PhongMaterial extends ShaderMaterial {
             shininess: shininess || 20,
             diffuse: diffuse || [1,1,1,1],
             specular: specular || [1,1,1,1],
-            // lightPosition: lightPosition || new Vector3(300,300,400),
-            // lightIntensity: lightIntensity || 1,
-            // camPosition: camPosition,
             useTexture: useTexture,
+            useSpecular: sourceTexture.isSpecular,
+            useDisplacement: sourceTexture.isDisplacement,
+            useNormal: sourceTexture.isNormal,
             sourceTexture: sourceTexture
         }
         
@@ -158,8 +158,10 @@ class PhongMaterial extends ShaderMaterial {
                 diffuse: this.uniforms['diffuse'],
                 specular: this.uniforms['specular'],
                 useTexture: this.uniforms['useTexture'],
+                useSpecular: this.uniforms['useSpecular'],
+                useDisplacement: this.uniforms['useDisplacement'],
+                useNormal: this.uniforms['useNormal'],
                 sourceTexture: this.uniforms['sourceTexture'],
-                // lightPosition: this.uniforms['lightPosition']
             }
         }
     }

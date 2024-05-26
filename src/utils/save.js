@@ -43,3 +43,12 @@ saveAnimation.addEventListener('click', () => {
     console.log(animator.toJSON())
     save(animator, 'animation.json')
 })
+
+const exportButton = document.getElementById('export-object');
+exportButton.addEventListener('click', () => {
+    if (check.length > 0){
+        check.forEach((obj) => {
+            save(obj, obj.id + '.json');
+        })
+    }
+});

@@ -59,6 +59,11 @@ const lastFrame = document.getElementById('lastFrame')
 const fpsIndicator = document.getElementById('fps')
 const frameIndicator = document.getElementById('frame')
 
+const displacement = document.getElementById('displacement');
+const specular = document.getElementById('specular');
+const normal = document.getElementById('normal');
+const diffuse = document.getElementById('diffuse');
+
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
@@ -135,7 +140,7 @@ const infinityCube = new InfinityCube()
 const nether = new NetherPortal()
 
 /* SCENE CREATION */
-let scene = new Scene(gl, [camera], [light1, light3]).add(creeper.object);
+let scene = new Scene(gl, [camera], [light1, light3]).add(golem.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -788,13 +793,11 @@ addObjectFileSelector.addEventListener('change', async (e) => {
     }
 
     const newScene = NodeScene.fromJSON(json)
-    // getAllChildren(scene)
-    const newObject = newScene.children[0]
 
     if (check.length>0){
         check.forEach((item) => {
             console.log(item)
-            scene.getObject(item).add(newObject)
+            scene.getObject(item).add(newScene)
         })
     }
     updateComponentViewer()
@@ -946,4 +949,85 @@ lastFrame.addEventListener('click', () => {
     frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
+})
+
+displacement.addEventListener('change', () => {
+    if (displacement.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useDisplacement'] != null)
+                    m.uniforms['useDisplacement'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+               if(m.uniforms['useDisplacement'] != null)
+                    m.uniforms['useDisplacement'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+specular.addEventListener('change', () => {
+    if (specular.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useSpecular'] != null)
+                    m.uniforms['useSpecular'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useSpecular'] != null )
+                    m.uniforms['useSpecular'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+normal.addEventListener('change', () => {
+    if (normal.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useNormal'] != null)
+                    m.uniforms['useNormal'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useNormal'] != null)
+                    m.uniforms['useNormal'] = false
+            })
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+diffuse.addEventListener('change', () => {
+    if (diffuse.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useTexture'] != null && m.uniforms['sourceTexture'] != null)
+                    m.uniforms['useTexture'] = true
+            })
+        })
+    } else {
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useTexture'] != null && m.uniforms['sourceTexture'] != null)
+                    m.uniforms['useTexture'] = false
+            })
+        })
+    }
+    console.log(check[0].material[0].uniforms['useTexture'])
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
 })
