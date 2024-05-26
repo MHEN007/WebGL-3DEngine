@@ -35,6 +35,8 @@ const lightDirY = document.getElementById('l-dir-y')
 const lightDirZ = document.getElementById('l-dir-z')
 const lightAngle = document.getElementById('l-angle')
 
+const useVertColor = document.getElementById('useVertColor')
+
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
 const zPos = document.getElementById("z")
@@ -1093,6 +1095,26 @@ shininess.addEventListener('change', () => {
                 m.uniforms['shininess'] = shininess.value
         })
     })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+useVertColor.addEventListener('change', () => {
+    if(useVertColor.checked){
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useVertexColor'] != null)
+                    m.uniforms['useVertexColor'] = true
+            })
+        })
+    }else{
+        check.forEach((c) => {
+            c.material.forEach((m) => {
+                if(m.uniforms['useVertexColor'] != null)
+                    m.uniforms['useVertexColor'] = false
+            })
+        })
+    }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })

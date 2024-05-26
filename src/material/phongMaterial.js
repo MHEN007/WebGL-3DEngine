@@ -141,7 +141,8 @@ class PhongMaterial extends ShaderMaterial {
             useSpecular: sourceTexture.isSpecular,
             useDisplacement: sourceTexture.isDisplacement,
             useNormal: sourceTexture.isNormal,
-            sourceTexture: sourceTexture
+            sourceTexture: sourceTexture,
+            useVertexColor: true,
         }
         
         super(name, PhongMaterial.vs, PhongMaterial.fs, uniform)        
@@ -162,6 +163,7 @@ class PhongMaterial extends ShaderMaterial {
                 useDisplacement: this.uniforms['useDisplacement'],
                 useNormal: this.uniforms['useNormal'],
                 sourceTexture: this.uniforms['sourceTexture'],
+                useVertexColor: this.uniforms['useVertexColor']
             }
         }
     }

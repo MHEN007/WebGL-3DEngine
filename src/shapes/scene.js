@@ -148,7 +148,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
-        gl.uniform1i(uniformVertexColorLoc, true)
+        gl.uniform1i(uniformVertexColorLoc, material.uniforms['useVertexColor'])
         this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         this.gl.uniform1i(uniformTextureLoc, 0)
     
@@ -247,7 +247,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniformMatrix4fv(uniformNormalMatLoc, false, Matrix4x4.transpose(Matrix4x4.inverse(worldMatrix)))
         gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height])
-        gl.uniform1i(uniformVertexColorLoc, true) // Assuming you want to use vertex color
+        gl.uniform1i(uniformVertexColorLoc, material.uniforms['useVertexColor']) // Assuming you want to use vertex color
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
