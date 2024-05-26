@@ -5,7 +5,7 @@ Pada tugas ini, kelompok kami telah membuat sebuah program 3D menggunakan WebGL 
 
 ## Cara Menjalankan
 1. Lakukan clone repository ini
-2. Buka file index.html yang terdapat pada folder src dengan menggunakan fitur LiveServer dari IDE Anda.
+2. Buka file index.html yang terdapat pada folder src dengan menggunakan fitur LiveServer dari IDE Anda atau membuka index.html secara langsung.
 3. Pastikan canvas berhasil muncul pada halaman web dengan baik.
 4. Untuk pengalaman penggunaan yang lebih baik, jalankan webapp ini di 75% zoom pada browser Anda.
 
