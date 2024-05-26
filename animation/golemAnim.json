@@ -1,21 +1,9 @@
+
 {
-  "fps": 12,
+  "fps": 30,
   "frames": [
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -55,27 +43,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.04363323129985824,
+          "x": 0,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.04363323129985824,
+          "x": 0,
           "y": 0,
           "z": 0
         }
@@ -94,7 +82,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -107,7 +95,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -122,19 +110,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -174,27 +149,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.48345620280242924,
+          "x": 0.10995574287564275,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.48345620280242924,
+          "x": 0.10995574287564275,
           "y": 0,
           "z": 0
         }
@@ -213,7 +188,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -226,7 +201,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -241,19 +216,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -293,27 +255,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.6719517620178169,
+          "x": 0.1605702911834783,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.6719517620178169,
+          "x": 0.1605702911834783,
           "y": 0,
           "z": 0
         }
@@ -332,7 +294,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -345,7 +307,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -360,19 +322,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -412,27 +361,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.9040805525330626,
+          "x": 0.1466076571675237,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.9040805525330626,
+          "x": 0.1466076571675237,
           "y": 0,
           "z": 0
         }
@@ -451,7 +400,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -464,7 +413,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -479,19 +428,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -531,27 +467,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.0367255756846316,
+          "x": 0.35604716740684317,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.0367255756846316,
+          "x": 0.35604716740684317,
           "y": 0,
           "z": 0
         }
@@ -570,7 +506,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -583,7 +519,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -598,19 +534,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -650,27 +573,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.3753194505715316,
+          "x": 0.4468042885105484,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.3753194505715316,
+          "x": 0.4468042885105484,
           "y": 0,
           "z": 0
         }
@@ -689,7 +612,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -702,7 +625,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -717,19 +640,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -769,27 +679,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.5638150097869192,
+          "x": 0.5480333851262194,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.5638150097869192,
+          "x": 0.5480333851262194,
           "y": 0,
           "z": 0
         }
@@ -808,7 +718,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -821,7 +731,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -836,19 +746,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -888,27 +785,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.7226399717184033,
+          "x": 0.8133234314293576,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.7226399717184033,
+          "x": 0.8133234314293576,
           "y": 0,
           "z": 0
         }
@@ -927,7 +824,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -940,7 +837,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -955,19 +852,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1007,27 +891,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.9547687622336491,
+          "x": 0.8813912722571364,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.9547687622336491,
+          "x": 0.8813912722571364,
           "y": 0,
           "z": 0
         }
@@ -1046,7 +930,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1059,7 +943,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1074,19 +958,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1126,27 +997,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.7749998492782333,
+          "x": 0.9616764178488756,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.7749998492782333,
+          "x": 0.9616764178488756,
           "y": 0,
           "z": 0
         }
@@ -1165,7 +1036,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1178,7 +1049,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1193,19 +1064,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1245,27 +1103,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.7749998492782333,
+          "x": 1.0890854532444616,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.7749998492782333,
+          "x": 1.0890854532444616,
           "y": 0,
           "z": 0
         }
@@ -1284,7 +1142,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1297,7 +1155,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1312,19 +1170,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1364,27 +1209,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.340412865531645,
+          "x": 1.3840460968315034,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.340412865531645,
+          "x": 1.3840460968315034,
           "y": 0,
           "z": 0
         }
@@ -1403,7 +1248,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1416,7 +1261,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1431,19 +1276,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1483,27 +1315,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.1868238913561442,
+          "x": 1.7383479349863522,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.1868238913561442,
+          "x": 1.7383479349863522,
           "y": 0,
           "z": 0
         }
@@ -1522,7 +1354,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1535,7 +1367,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1550,19 +1382,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1602,27 +1421,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.0000736613927508,
+          "x": 1.6022122533307945,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 1.0000736613927508,
+          "x": 1.6022122533307945,
           "y": 0,
           "z": 0
         }
@@ -1641,7 +1460,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1654,7 +1473,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1669,19 +1488,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1721,27 +1527,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.7522369076095561,
+          "x": 1.4643312424232426,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.7522369076095561,
+          "x": 1.4643312424232426,
           "y": 0,
           "z": 0
         }
@@ -1760,7 +1566,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1773,7 +1579,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1788,19 +1594,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1840,27 +1633,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.640535835481919,
+          "x": 1.3543754995475996,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.640535835481919,
+          "x": 1.3543754995475996,
           "y": 0,
           "z": 0
         }
@@ -1879,7 +1672,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -1892,7 +1685,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -1907,19 +1700,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -1959,27 +1739,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.47123889803846897,
+          "x": 1.064650843716541,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.47123889803846897,
+          "x": 1.064650843716541,
           "y": 0,
           "z": 0
         }
@@ -1998,7 +1778,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -2011,7 +1791,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -2026,19 +1806,6 @@
     ],
     [
       {
-        "id": "Golem",
-        "position": {
-          "x": 0,
-          "y": -0.2,
-          "z": 0
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        }
-      },
-      {
         "id": "Torso",
         "position": {
           "x": 0,
@@ -2078,27 +1845,27 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.12042771838760874,
+          "x": 0.635299847725936,
           "y": 0,
           "z": 0
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
           "z": 0
         },
         "rotation": {
-          "x": 0.12042771838760874,
+          "x": 0.635299847725936,
           "y": 0,
           "z": 0
         }
@@ -2117,7 +1884,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -2130,7 +1897,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
@@ -2145,10 +1912,10 @@
     ],
     [
       {
-        "id": "Golem",
+        "id": "Torso",
         "position": {
           "x": 0,
-          "y": -0.2,
+          "y": 0.3,
           "z": 0
         },
         "rotation": {
@@ -2157,6 +1924,99 @@
           "z": 0
         }
       },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.48520153205442357,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.48520153205442357,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
       {
         "id": "Torso",
         "position": {
@@ -2197,7 +2057,325 @@
         }
       },
       {
-        "id": "Upper Arm Left",
+        "id": "Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.3892084231947355,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.3892084231947355,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.291469985083053,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.291469985083053,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Left",
+        "position": {
+          "x": -0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.14486232791552936,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Right",
+        "position": {
+          "x": 0.175,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0.14486232791552936,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "hip",
+        "position": {
+          "x": 0,
+          "y": -0.15,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Left",
+        "position": {
+          "x": -0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Leg Right",
+        "position": {
+          "x": 0.08,
+          "y": -0.18,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    [
+      {
+        "id": "Torso",
+        "position": {
+          "x": 0,
+          "y": 0.3,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Head",
+        "position": {
+          "x": 0,
+          "y": 0.2,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "nose",
+        "position": {
+          "x": 0,
+          "y": -0.08,
+          "z": 0.06
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "Arm Left",
         "position": {
           "x": -0.175,
           "y": -0.15,
@@ -2210,7 +2388,7 @@
         }
       },
       {
-        "id": "Upper Arm Right",
+        "id": "Arm Right",
         "position": {
           "x": 0.175,
           "y": -0.15,
@@ -2236,7 +2414,7 @@
         }
       },
       {
-        "id": "Upper Leg Left",
+        "id": "Leg Left",
         "position": {
           "x": -0.08,
           "y": -0.18,
@@ -2249,7 +2427,7 @@
         }
       },
       {
-        "id": "Upper Leg Right",
+        "id": "Leg Right",
         "position": {
           "x": 0.08,
           "y": -0.18,
