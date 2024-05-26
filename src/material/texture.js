@@ -107,7 +107,7 @@ class Texture {
     setImageSource(imgSrc, cat){
         switch(cat){
             case "texture":
-                this.texture.src = "./utils/DisplacementMap.png"
+                this.texture.src = imgSrc
                 this.texture.onload = () => {
                     console.log("TEXTURE LOADED" + this.name)
                     this.texLoaded = true

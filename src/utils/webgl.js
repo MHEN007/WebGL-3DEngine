@@ -441,7 +441,7 @@ lightIntensityR.addEventListener('input', function() {
 lightIntensityG.addEventListener('input', function() {
     if(lightSelected.length > 0){
         lightSelected.forEach((light) => {
-            light.color = new Vector3(light.color.x, parseFloat(lightIntensityG.value), light.intenscolority.z)
+            light.color = new Vector3(light.color.x, parseFloat(lightIntensityG.value), light.color.z)
         })
     }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
@@ -1176,7 +1176,7 @@ applyButton.addEventListener('click', () => {
     }
 
     newTexture = new Texture("New Texture", texSrc, displacementSrc, normalSrc, specularSrc)
-    if (materialDropDown.value === 'Phong'){
+    if (materialDropDown.value === 'phong'){
         tempMaterial = new PhongMaterial("New Material", [1, 1, 1], true, newTexture)
     }
     else {
