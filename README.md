@@ -7,6 +7,7 @@ Pada tugas ini, kelompok kami telah membuat sebuah program 3D menggunakan WebGL 
 1. Lakukan clone repository ini
 2. Buka file index.html yang terdapat pada folder src dengan menggunakan fitur LiveServer dari IDE Anda.
 3. Pastikan canvas berhasil muncul pada halaman web dengan baik.
+4. Untuk pengalaman penggunaan yang lebih baik, jalankan webapp ini di 75% zoom pada browser Anda.
 
 ## Panduan Penggunaan
 ![main screen](img/screen.png)
@@ -31,11 +32,14 @@ Frame Controller memiliki beberapa kegunaan diantaranya untuk melihat berapa fps
 ### 7. Settings
 Bagian ini memiliki 4 button dimana fungsinya natara lain adalah save to json, load from json, kemudian delete selected object, dan add object to selected object.
 
+### 8. Texture
+Bagian ini digunakan untuk mengatur texture dan atau material yang digunakan pada objek yang dipilih. Dalam bagian ini ada 2 opsi material dan pengguna dapat mengupload texture yang ingin digunakan.
+
 ## Members
 | NIM | Nama |Pembagian Kerja |Hollow Model | Articulated Model|
 | --- | -----| ---|----- | -----
-| 13521003 |Bintang Hijriawan J.| |infinity cube| shulker
+| 13521003 |Bintang Hijriawan J.| Camera, Orthographic, Box geometry, Base light, Directional light, Point light, Spot light, Phong Material, Scene |infinity cube| shulker
 | 13521007 |Matthew Mahendra| Rendering (Shaders, Pipeline), Texture, Component Viewer and Editor, Utils(Matrix4x4, Vector), Basic Material |nether | creeper
 | 13521012 |Haikal Ardzi S.|Oblique Projection, Geometries, Save/Load, Animation Builder and Manager, Quaternion|chain |steve
-| 13521022 |Raditya Naufal A.| |batako | golem
-| 13521027 |Agsha Athalla N.| |cube| wither
+| 13521022 |Raditya Naufal A.| Camera, Component editor, Save, Object manipulation|batako | golem
+| 13521027 |Agsha Athalla N.| Mesh, Add-remove Object, Camera Controller, Orbit Control, Component Editor |cube| wither

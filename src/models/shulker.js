@@ -1,184 +1,148 @@
 class Shulker{
-    #headGeometry
-    #baseGeometry
-    #roofGeometry
-    
-    #topFrontGeometry
-    #topFrontLeftGeometry
-    #topFrontRightGeometry
-    #botFrontGeometry
-
-    #topBackGeometry
-    #topBackLeftGeometry
-    #topBackRightGeometry
-    #botBackGeometry
-    
-    #topLeftGeometry
-    #topLeftLeftGeometry
-    #topLeftRightGeometry
-    #botLeftGeometry
-    
-    #topRightGeometry
-    #topRightLeftGeometry
-    #topRightRightGeometry
-    #botRightGeometry
-
-    #materials = []
-    constructor() {
-        this.#materials.push(new BasicMaterial("red", [1, 0, 0], false))
-        this.#materials.push(new BasicMaterial("green", [0, 1, 0], false))
-        this.#materials.push(new BasicMaterial("blue", [0, 0, 1], false))
-        this.#materials.push(new BasicMaterial("yellow", [1, 1, 0], false))
-        this.#materials.push(new BasicMaterial("lightblue", [0, 1, 1], false))
-        this.#materials.push(new BasicMaterial("purple", [1, 0, 1], false))
-        this.#materials.push(new BasicMaterial("black", [0, 0, 0], false))
-        this.#materials.push(new BasicMaterial("grey", [0.4, 0.4, 0.4], false))
-        this.#materials.push(new BasicMaterial("cream", [1, 0.83, 0.72], false))
+    get object() {
+        const materials = []
+        materials.push(new BasicMaterial("purple", [1, 0, 1], false))
+        materials.push(new BasicMaterial("cream", [1, 0.83, 0.72], false))
 
 
 
-        this.#headGeometry = new BoxGeometry(0.075, 0.075, 0.075)
+        const headGeometry = new BoxGeometry(0.075, 0.075, 0.075)
 
-        this.#baseGeometry = new BoxGeometry(0.2, 0.05, 0.2)
-        this.#roofGeometry = new BoxGeometry(0.2, 0.05, 0.2)
+        const baseGeometry = new BoxGeometry(0.2, 0.05, 0.2)
+        const roofGeometry = new BoxGeometry(0.2, 0.05, 0.2)
 
         // depan
-        this.#topFrontGeometry = new PlaneGeometry(0.2, 0.05)
-        this.#topFrontLeftGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#topFrontRightGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#botFrontGeometry = new PlaneGeometry(0.1, 0.05)
+        const topFrontGeometry = new PlaneGeometry(0.2, 0.05)
+        const topFrontLeftGeometry = new PlaneGeometry(0.05, 0.05)
+        const topFrontRightGeometry = new PlaneGeometry(0.05, 0.05)
+        const botFrontGeometry = new PlaneGeometry(0.1, 0.05)
 
         // belakang
-        this.#topBackGeometry = new PlaneGeometry(0.2, 0.05)
-        this.#topBackLeftGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#topBackRightGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#botBackGeometry = new PlaneGeometry(0.1, 0.05)
+        const topBackGeometry = new PlaneGeometry(0.2, 0.05)
+        const topBackLeftGeometry = new PlaneGeometry(0.05, 0.05)
+        const topBackRightGeometry = new PlaneGeometry(0.05, 0.05)
+        const botBackGeometry = new PlaneGeometry(0.1, 0.05)
 
         // kiri
-        this.#topLeftGeometry = new PlaneGeometry(0.05, 0.2)
-        this.#topLeftLeftGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#topLeftRightGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#botLeftGeometry = new PlaneGeometry(0.05, 0.1)
+        const topLeftGeometry = new PlaneGeometry(0.05, 0.2)
+        const topLeftLeftGeometry = new PlaneGeometry(0.05, 0.05)
+        const topLeftRightGeometry = new PlaneGeometry(0.05, 0.05)
+        const botLeftGeometry = new PlaneGeometry(0.05, 0.1)
 
         // kanan
-        this.#topRightGeometry = new PlaneGeometry(0.05, 0.2)
-        this.#topRightLeftGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#topRightRightGeometry = new PlaneGeometry(0.05, 0.05)
-        this.#botRightGeometry = new PlaneGeometry(0.05, 0.1)
+        const topRightGeometry = new PlaneGeometry(0.05, 0.2)
+        const topRightLeftGeometry = new PlaneGeometry(0.05, 0.05)
+        const topRightRightGeometry = new PlaneGeometry(0.05, 0.05)
+        const botRightGeometry = new PlaneGeometry(0.05, 0.1)
 
-
-        // materials [red, green, blue, yellow, lightblue, purple, black, grey, cream]
-        //             0     1      2      3        4         5      6      7     8
         // create meshes
-        this.root = new Mesh("ROOT", new BoxGeometry(0, 0, 0), this.#materials, [0, 0, 0, 0, 0, 0])
-        this.root.position = new Vector3(0, 0, 0)
-        this.root.rotation = new Vector3(0, 0, 0)
+        const root = new Mesh("ROOT", new BoxGeometry(0, 0, 0), materials, [0, 0, 0, 0, 0, 0])
+        root.position = new Vector3(0, 0, 0)
+        root.rotation = new Vector3(0, 0, 0)
 
-        this.headMesh = new Mesh("H",this.#headGeometry, this.#materials, [8, 8, 8, 8, 8, 8])
-        this.headMesh.position = new Vector3(0, 0, 0)
-        this.headMesh.rotation = new Vector3(0, 0, 0)
+        const headMesh = new Mesh("H",headGeometry, materials, [1, 1, 1, 1, 1, 1])
+        headMesh.position = new Vector3(0, 0, 0)
+        headMesh.rotation = new Vector3(0, 0, 0)
 
-        this.baseMesh = new Mesh("B", this.#baseGeometry, this.#materials, [5, 5, 5, 5, 5, 5])
-        this.baseMesh.position = new Vector3(0, -0.06, 0)
-        this.baseMesh.rotation = new Vector3(0, 0, 0)
-        this.headMesh.add(this.baseMesh)
+        const baseMesh = new Mesh("B", baseGeometry, materials, [0, 0, 0, 0, 0, 0])
+        baseMesh.position = new Vector3(0, -0.06, 0)
+        baseMesh.rotation = new Vector3(0, 0, 0)
+        headMesh.add(baseMesh)
 
-        this.roofMesh = new Mesh("R", this.#roofGeometry, this.#materials, [5, 5, 5, 5, 5, 5])
-        this.roofMesh.position = new Vector3(0, 0.09, 0)
-        this.roofMesh.rotation = new Vector3(0, 0, 0)
-        this.headMesh.add(this.roofMesh)
+        const roofMesh = new Mesh("R", roofGeometry, materials, [0, 0, 0, 0, 0, 0])
+        roofMesh.position = new Vector3(0, 0.09, 0)
+        roofMesh.rotation = new Vector3(0, 0, 0)
+        headMesh.add(roofMesh)
 
         // FRONT
-        this.topFrontMesh = new Mesh("TF", this.#topFrontGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topFrontMesh.position = new Vector3(0, 0.1, 0.05)
-        this.topFrontMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
-        this.roofMesh.add(this.topFrontMesh)
+        const topFrontMesh = new Mesh("TF", topFrontGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topFrontMesh.position = new Vector3(0, 0.1, 0.05)
+        topFrontMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
+        roofMesh.add(topFrontMesh)
 
-        this.topFrontLeftMesh = new Mesh("TFL", this.#topFrontLeftGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topFrontLeftMesh.position = new Vector3(-0.075, 0.1, 0.1)
-        this.topFrontLeftMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
-        this.roofMesh.add(this.topFrontLeftMesh)
+        const topFrontLeftMesh = new Mesh("TFL", topFrontLeftGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topFrontLeftMesh.position = new Vector3(-0.075, 0.1, 0.1)
+        topFrontLeftMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
+        roofMesh.add(topFrontLeftMesh)
         
-        this.topFrontRightMesh = new Mesh("TFR", this.#topFrontRightGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topFrontRightMesh.position = new Vector3(0.075, 0.1, 0.1)
-        this.topFrontRightMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
-        this.roofMesh.add(this.topFrontRightMesh)
+        const topFrontRightMesh = new Mesh("TFR", topFrontRightGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topFrontRightMesh.position = new Vector3(0.075, 0.1, 0.1)
+        topFrontRightMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
+        roofMesh.add(topFrontRightMesh)
 
-        this.botFrontMesh = new Mesh("BF", this.#botFrontGeometry, this.#materials, [7, 7, 7, 7, 7, 7])
-        this.botFrontMesh.position = new Vector3(0, 0.1, -0.05)
-        this.botFrontMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
-        this.baseMesh.add(this.botFrontMesh)
+        const botFrontMesh = new Mesh("BF", botFrontGeometry, materials, [0, 0, 0, 0, 0, 0])
+        botFrontMesh.position = new Vector3(0, 0.1, -0.05)
+        botFrontMesh.rotation = new Vector3(-Math.PI/2, 0, 0)
+        baseMesh.add(botFrontMesh)
 
         // BACK
-        this.topBackMesh = new Mesh("TB", this.#topBackGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topBackMesh.position = new Vector3(0, 0.1, -0.05)
-        this.topBackMesh.rotation = new Vector3(Math.PI/2, 0, 0)
-        this.roofMesh.add(this.topBackMesh)
+        const topBackMesh = new Mesh("TB", topBackGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topBackMesh.position = new Vector3(0, 0.1, -0.05)
+        topBackMesh.rotation = new Vector3(Math.PI/2, 0, 0)
+        roofMesh.add(topBackMesh)
 
-        this.topBackLeftMesh = new Mesh("TBL",this.#topBackLeftGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topBackLeftMesh.position = new Vector3(-0.075, 0.1, -0.1)
-        this.topBackLeftMesh.rotation = new Vector3(Math.PI/2, 0, 0)
-        this.roofMesh.add(this.topBackLeftMesh)
+        const topBackLeftMesh = new Mesh("TBL",topBackLeftGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topBackLeftMesh.position = new Vector3(-0.075, 0.1, -0.1)
+        topBackLeftMesh.rotation = new Vector3(Math.PI/2, 0, 0)
+        roofMesh.add(topBackLeftMesh)
         
-        this.topBackRightMesh = new Mesh("TBR",this.#topBackRightGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topBackRightMesh.position = new Vector3(0.075, 0.1, -0.1)
-        this.topBackRightMesh.rotation = new Vector3(Math.PI/2, 0, 0)
-        this.roofMesh.add(this.topBackRightMesh)
+        const topBackRightMesh = new Mesh("TBR",topBackRightGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topBackRightMesh.position = new Vector3(0.075, 0.1, -0.1)
+        topBackRightMesh.rotation = new Vector3(Math.PI/2, 0, 0)
+        roofMesh.add(topBackRightMesh)
 
-        this.botBackMesh = new Mesh("BB", this.#botBackGeometry, this.#materials, [7, 7, 7, 7, 7, 7])
-        this.botBackMesh.position = new Vector3(0, 0.1, 0.05)
-        this.botBackMesh.rotation = new Vector3(Math.PI/2, 0, 0)
-        this.baseMesh.add(this.botBackMesh)
+        const botBackMesh = new Mesh("BB", botBackGeometry, materials, [0, 0, 0, 0, 0, 0])
+        botBackMesh.position = new Vector3(0, 0.1, 0.05)
+        botBackMesh.rotation = new Vector3(Math.PI/2, 0, 0)
+        baseMesh.add(botBackMesh)
 
         // RIGHT
-        this.topRightMesh = new Mesh("TR", this.#topRightGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topRightMesh.position = new Vector3(0.05, 0.1, 0)
-        this.topRightMesh.rotation = new Vector3(0, 0, Math.PI/2)
-        this.roofMesh.add(this.topRightMesh)
+        const topRightMesh = new Mesh("TR", topRightGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topRightMesh.position = new Vector3(0.05, 0.1, 0)
+        topRightMesh.rotation = new Vector3(0, 0, Math.PI/2)
+        roofMesh.add(topRightMesh)
 
-        this.topRightLeftMesh = new Mesh("TRL",this.#topRightLeftGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topRightLeftMesh.position = new Vector3(0.1, 0.1, 0.075)
-        this.topRightLeftMesh.rotation = new Vector3(0, 0, Math.PI/2)
-        this.roofMesh.add(this.topRightLeftMesh)
+        const topRightLeftMesh = new Mesh("TRL",topRightLeftGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topRightLeftMesh.position = new Vector3(0.1, 0.1, 0.075)
+        topRightLeftMesh.rotation = new Vector3(0, 0, Math.PI/2)
+        roofMesh.add(topRightLeftMesh)
         
-        this.topRightRightMesh = new Mesh("TRR", this.#topRightRightGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topRightRightMesh.position = new Vector3(0.1, 0.1, -0.075)
-        this.topRightRightMesh.rotation = new Vector3(0, 0, Math.PI/2)
-        this.roofMesh.add(this.topRightRightMesh)
+        const topRightRightMesh = new Mesh("TRR", topRightRightGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topRightRightMesh.position = new Vector3(0.1, 0.1, -0.075)
+        topRightRightMesh.rotation = new Vector3(0, 0, Math.PI/2)
+        roofMesh.add(topRightRightMesh)
 
-        this.botRightMesh = new Mesh("BR", this.#botRightGeometry, this.#materials, [7, 7, 7, 7, 7, 7])
-        this.botRightMesh.position = new Vector3(-0.05, 0.1, 0)
-        this.botRightMesh.rotation = new Vector3(0, 0, Math.PI/2)
-        this.baseMesh.add(this.botRightMesh)
+        const botRightMesh = new Mesh("BR", botRightGeometry, materials, [0, 0, 0, 0, 0, 0])
+        botRightMesh.position = new Vector3(-0.05, 0.1, 0)
+        botRightMesh.rotation = new Vector3(0, 0, Math.PI/2)
+        baseMesh.add(botRightMesh)
 
         // KIRI
-        this.topLeftMesh = new Mesh("TL", this.#topLeftGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topLeftMesh.position = new Vector3(-0.05, 0.1, 0)
-        this.topLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
-        this.roofMesh.add(this.topLeftMesh)
+        const topLeftMesh = new Mesh("TL", topLeftGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topLeftMesh.position = new Vector3(-0.05, 0.1, 0)
+        topLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
+        roofMesh.add(topLeftMesh)
 
-        this.topLeftLeftMesh = new Mesh("TLL", this.#topLeftLeftGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topLeftLeftMesh.position = new Vector3(-0.1, 0.1, 0.075)
-        this.topLeftLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
-        this.roofMesh.add(this.topLeftLeftMesh)
+        const topLeftLeftMesh = new Mesh("TLL", topLeftLeftGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topLeftLeftMesh.position = new Vector3(-0.1, 0.1, 0.075)
+        topLeftLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
+        roofMesh.add(topLeftLeftMesh)
         
-        this.topLeftRightMesh = new Mesh("TLR", this.#topLeftRightGeometry, this.#materials, [0, 0, 0, 0, 0, 0])
-        this.topLeftRightMesh.position = new Vector3(-0.1, 0.1, -0.075)
-        this.topLeftRightMesh.rotation = new Vector3(0, 0, -Math.PI/2)
-        this.roofMesh.add(this.topLeftRightMesh)
+        const topLeftRightMesh = new Mesh("TLR", topLeftRightGeometry, materials, [0, 0, 0, 0, 0, 0])
+        topLeftRightMesh.position = new Vector3(-0.1, 0.1, -0.075)
+        topLeftRightMesh.rotation = new Vector3(0, 0, -Math.PI/2)
+        roofMesh.add(topLeftRightMesh)
 
-        this.botLeftMesh = new Mesh("BL", this.#botLeftGeometry, this.#materials, [7, 7, 7, 7, 7, 7])
-        this.botLeftMesh.position = new Vector3(0.05, 0.1, 0)
-        this.botLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
-        this.baseMesh.add(this.botLeftMesh)
+        const botLeftMesh = new Mesh("BL", botLeftGeometry, materials, [0, 0, 0, 0, 0, 0])
+        botLeftMesh.position = new Vector3(0.05, 0.1, 0)
+        botLeftMesh.rotation = new Vector3(0, 0, -Math.PI/2)
+        baseMesh.add(botLeftMesh)
 
         // this.roofMesh.position = new Vector3(0, 0.14, 0)
         // this.baseMesh.position = new Vector3(0, -0.11, 0)
-        this.root.add(this.headMesh)
-    }
+        root.add(headMesh)
 
-    get object() {
-        return this.root
+        return root
     }
 
 }
