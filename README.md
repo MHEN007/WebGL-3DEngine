@@ -35,7 +35,7 @@ Bagian ini memiliki 4 button dimana fungsinya natara lain adalah save to json, l
 ## Members
 | NIM | Nama |Pembagian Kerja |Hollow Model | Articulated Model|
 | --- | -----| ---|----- | -----
-| 13521003 |Bintang Hijriawan J.| |infinity cube| shulker
+| 13521003 |Bintang Hijriawan J.| Camera, Orthographic, Box geometry, Base light, Directional light, Point light, Spot light, Phong Material, Scene |infinity cube| shulker
 | 13521007 |Matthew Mahendra| Rendering (Shaders, Pipeline), Texture, Component Viewer and Editor, Utils(Matrix4x4, Vector), Basic Material |nether | creeper
 | 13521012 |Haikal Ardzi S.|Oblique Projection, Geometries, Save/Load, Animation Builder and Manager, Quaternion|chain |steve
 | 13521022 |Raditya Naufal A.| Camera, Component editor, Save, Object manipulation|batako | golem
