@@ -14,6 +14,9 @@ class Scene extends NodeScene{
     textureProgram
     #currentProgram = ""
     #camera
+    displacementBool
+    specularBool
+    normalBool
     #materialMap
     /**@type {Light[]} */
     #lightsources
@@ -38,6 +41,10 @@ class Scene extends NodeScene{
 
         this.basicProgram = this.createProgram(this.#basicVS, this.#basicFS)
         this.phongProgram = this.createProgram(this.#phongVS, this.#phongFS)
+
+        this.displacementBool = true
+        this.specularBool = true
+        this.normalBool = true
 
         this.init()
     }
@@ -258,9 +265,11 @@ class Scene extends NodeScene{
         gl.uniform1i(uniformSpecularMapLoc, 1)
         gl.uniform1i(uniformNormalMapLoc, 2)
         gl.uniform1i(uniformDisplacementMapLoc, 3)
-        gl.uniform1i(uniformUseDisplacementLoc, true)
-        gl.uniform1i(uniformUseSpecularLoc, true)
-        gl.uniform1i(uniformUseNormalLoc, true)
+        gl.uniform1i(uniformUseDisplacementLoc, this.displacementBool)
+        gl.uniform1i(uniformUseSpecularLoc, this.specularBool)
+        gl.uniform1i(uniformUseNormalLoc, this.normalBool)
+
+        // console.log(this.normalBool, this.specularBool, this.displacementBool)
 
         let lightPos = []
         let lightInt = []

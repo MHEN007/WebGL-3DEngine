@@ -55,6 +55,10 @@ const lastFrame = document.getElementById('lastFrame')
 const fpsIndicator = document.getElementById('fps')
 const frameIndicator = document.getElementById('frame')
 
+const displacement = document.getElementById('displacement');
+const specular = document.getElementById('specular');
+const normal = document.getElementById('normal');
+
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
 canvas.height = 600
@@ -130,7 +134,7 @@ const infinityCube = new InfinityCube()
 const nether = new NetherPortal()
 
 /* SCENE CREATION */
-let scene = new Scene(gl, [camera], [light1]).add(shulker.object);
+let scene = new Scene(gl, [camera], [light1]).add(creeper.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -833,4 +837,34 @@ lastFrame.addEventListener('click', () => {
     frameIndicator.innerHTML = `Frame: ${fps+1}/${animator.frames.length}`
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()    
+})
+
+displacement.addEventListener('change', () => {
+    if (displacement.checked){
+        scene.displacementBool = true
+    } else {
+        scene.displacementBool = false
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+specular.addEventListener('change', () => {
+    if (specular.checked){
+        scene.specularBool = true
+    } else {
+        scene.specularBool = false
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+normal.addEventListener('change', () => {
+    if (normal.checked){
+        scene.normalBool = true
+    } else {
+        scene.normalBool = false
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
 })
