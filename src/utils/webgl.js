@@ -45,7 +45,6 @@ const xScale = document.getElementById('xScale')
 const yScale = document.getElementById('yScale')
 const zScale = document.getElementById('zScale')
 
-
 const play = document.getElementById('play')
 const pause = document.getElementById('pause')
 const reverse = document.getElementById('reverse')
@@ -63,6 +62,11 @@ const displacement = document.getElementById('displacement');
 const specular = document.getElementById('specular');
 const normal = document.getElementById('normal');
 const diffuse = document.getElementById('diffuse');
+
+const ambientColor = document.getElementById('ambientColor')
+const specularColor = document.getElementById('specularColor')
+const diffuseColor = document.getElementById('diffuseColor')
+const shininess = document.getElementById('shininess')
 
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
@@ -701,7 +705,6 @@ function onMouseMove(event){
             mod(camera.rotation.x - dy * Math.PI/180, Math.PI*2), 
             mod(camera.rotation.y - dx * Math.PI/180, Math.PI*2), 
             0)
-        console.log(camera.rotation.x, camera.rotation.y, camera.rotation.z)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         scene.drawAll()
     }
@@ -1029,7 +1032,67 @@ diffuse.addEventListener('change', () => {
             })
         })
     }
-    console.log(check[0].material[0].uniforms['useTexture'])
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+function normalizeColor(hex) {
+    // Remove the hash (#) if present
+    hex = hex.replace(/^#/, '');
+
+    // Parse the hex values for red, green, and blue
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+
+    // Normalize the values to 0..1
+    let rNormalized = r / 255;
+    let gNormalized = g / 255;
+    let bNormalized = b / 255;
+
+    return [rNormalized, gNormalized, bNormalized, 1]
+}
+
+ambientColor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            m.uniforms['ambient'] = normalizeColor(ambientColor.value)
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+specularColor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['specular'] != null)
+                m.uniforms['specular'] = normalizeColor(specularColor.value)
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+
+diffuseColor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['diffuse'] != null)
+                m.uniforms['diffuse'] = normalizeColor(diffuseColor.value)
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+shininess.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['shininess'] != null)
+                m.uniforms['shininess'] = shininess.value
+        })
+    })
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
