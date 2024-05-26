@@ -154,7 +154,7 @@ var lightList = document.createElement("ul")
 lightList.appendChild(document.createTextNode("Light Sources"))
 for(let i =0; i < scene.lightSources.length; i++){
     var li = document.createElement('li')
-    var checkBox = document.createElement("input")
+    const checkBox = document.createElement("input")
     checkBox.type = 'checkbox'
     checkBox.value = scene.lightSources[i].id
 
@@ -397,7 +397,6 @@ lightZPosition.addEventListener('input', function() {
             light.position.z = parseFloat(lightZPosition.value)
         })
     }
-    console.log(lightSelected[0].position)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -523,7 +522,7 @@ function updateComponentViewer(){
     lightList.appendChild(document.createTextNode("Light Sources"))
     for(let i =0; i < scene.lightSources.length; i++){
         var li = document.createElement('li')
-        var checkBox = document.createElement("input")
+        const checkBox = document.createElement("input")
         checkBox.type = 'checkbox'
         checkBox.value = scene.lightSources[i].id
 
