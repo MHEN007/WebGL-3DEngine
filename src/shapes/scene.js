@@ -240,7 +240,8 @@ class Scene extends NodeScene{
         var uniformDisplacementMapLoc = gl.getUniformLocation(this.phongProgram, 'u_displacementMap')
         var uniformUseDisplacementLoc = gl.getUniformLocation(this.phongProgram, 'useDisplacement')
         var uniformUseSpecularLoc = gl.getUniformLocation(this.phongProgram, 'useSpecular')
-        var uniformUseNormalLoc = gl.getUniformLocation(this.phongProgram, 'useNormal');
+        var uniformUseNormalLoc = gl.getUniformLocation(this.phongProgram, 'useNormal')
+        var uniformDisplacementFactorLoc = gl.getUniformLocation(this.phongProgram, 'displacementFactor')
 
         // Set uniform values
         gl.useProgram(this.phongProgram)
@@ -254,6 +255,7 @@ class Scene extends NodeScene{
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
         gl.uniform4fv(uniformSpecularColorLoc, material.uniforms['specular'])
         gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
+        this.gl.uniform1f(uniformDisplacementFactorLoc, material.uniforms['displacementFactor'])
 
         gl.uniform1i(uniformTextureLoc, 0)
         gl.uniform1i(uniformSpecularMapLoc, 1)
@@ -465,9 +467,7 @@ class Scene extends NodeScene{
         object = object || new Scene(gl, camera, null)
         const lights = []
         json.lightsources.forEach(light => {
-            console.log(light)
             lights.push(Light.fromJSON(light))
-            console.log(Light.fromJSON(light))
         })
         object.setLightsource(lights)
         return object

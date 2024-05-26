@@ -18,6 +18,7 @@ class PhongMaterial extends ShaderMaterial {
     uniform bool vertexColor;
     uniform sampler2D u_displacementMap;
     uniform bool useDisplacement;
+    uniform float displacementFactor;
 
     varying vec4 v_color;
     varying vec3 v_normal;
@@ -31,7 +32,7 @@ class PhongMaterial extends ShaderMaterial {
         
         if (useDisplacement) {
             float displacement = texture2D(u_displacementMap, a_texcoord).r;
-            displacedPos.xyz += (0.02 * displacement) * normalize(a_normal);
+            displacedPos.xyz += (displacementFactor * displacement) * normalize(a_normal);
         }
         
         gl_Position = viewProjMat * displacedPos;
@@ -137,6 +138,7 @@ class PhongMaterial extends ShaderMaterial {
             shininess: shininess || 20,
             diffuse: diffuse || [1,1,1,1],
             specular: specular || [1,1,1,1],
+            displacementFactor: 0.02,
             useTexture: useTexture,
             useSpecular: sourceTexture.isSpecular,
             useDisplacement: sourceTexture.isDisplacement,
@@ -149,7 +151,6 @@ class PhongMaterial extends ShaderMaterial {
     }
 
     toJSON(){
-        console.log(this.uniforms)
         return {
             type: this.type,
             uniforms: {
@@ -158,6 +159,7 @@ class PhongMaterial extends ShaderMaterial {
                 shininess: this.uniforms['shininess'],
                 diffuse: this.uniforms['diffuse'],
                 specular: this.uniforms['specular'],
+                displacementFactor: this.uniforms['displacementFactor'],
                 useTexture: this.uniforms['useTexture'],
                 useSpecular: this.uniforms['useSpecular'],
                 useDisplacement: this.uniforms['useDisplacement'],

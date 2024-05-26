@@ -81,6 +81,7 @@ const ambientColor = document.getElementById('ambientColor')
 const specularColor = document.getElementById('specularColor')
 const diffuseColor = document.getElementById('diffuseColor')
 const shininess = document.getElementById('shininess')
+const displacementFactor = document.getElementById('displacementFactor')
 
 const addObjectFileSelector = document.getElementById("add-object-file-selector");
 canvas.width = 600
@@ -242,16 +243,13 @@ projectionSelector.addEventListener('change', function(){
             scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
             scene.position.z
         )
-        console.log(camera.angle)
         camera.updateProjectionMatrix()
-        console.log(scene.children[0].position)
         viewAngleLabel.style.display = 'none'
         viewAngleSelector.style.display = 'none'
         camera.position = new Vector3(0, 0, 1)
         selectAll()
     }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    console.log(camera)
     scene.drawAll()
 
 })
@@ -292,7 +290,6 @@ angleObliqueSlider.addEventListener('input', function(){
             scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
             scene.position.z
         )
-        console.log(camera.angle)
         camera.updateProjectionMatrix()
     }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -338,7 +335,6 @@ resetButton.addEventListener('click', function(){
             scene.position.y + (scene.camera.cameraScale * scene.camera.getAngleValue().y),
             scene.position.z
         )
-        console.log(camera.angle)
         camera.updateProjectionMatrix()
 
     } else if (camera.type === 'Orthographic'){
@@ -356,7 +352,6 @@ xPos.addEventListener('input', function(){
 
     if (check.length>0){
         check.forEach((item) => {
-            console.log(item)
             scene.getObject(item).position.x = parseFloat(xPos.value)
         })
     }
@@ -369,7 +364,6 @@ yPos.addEventListener('input', function(){
 
     if (check.length>0){
         check.forEach((item) => {
-            console.log(item)
             scene.getObject(item).position.y = parseFloat(yPos.value)
         })
     }
@@ -382,7 +376,6 @@ zPos.addEventListener('input', function(){
     // scene.position.z = parseFloat(zPos.value)
     if (check.length>0){
         check.forEach((item) => {
-            console.log(item)
             scene.getObject(item).position.z = parseFloat(zPos.value)
         })
     }
@@ -410,7 +403,6 @@ lightYPosition.addEventListener('input', function() {
     }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
-    console.log(light1.position.y)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -574,7 +566,6 @@ function updateComponentViewer(){
 deleteButton.addEventListener('click', function(){
     if (check.length>0){
         check.forEach((item) => {
-            console.log("yang mau di delete", item)
             scene.remove(item)
         })
     }
@@ -582,7 +573,6 @@ deleteButton.addEventListener('click', function(){
     scene.drawAll()
 
     updateComponentViewer()
-    console.log(scene)
 })
 
 function selectNoZ(){
@@ -643,7 +633,6 @@ async function animate() {
             fps = animator.frames.length - 1
         }
     }
-    console.log(fps)
 
     if (isAnimating) {
         animator.frames[Math.floor(fps)].forEach(frame => {
@@ -692,8 +681,6 @@ function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
 }
 
-// console.log(camera);
-
 canvas.addEventListener('mousemove', onMouseMove)
 canvas.addEventListener('mousedown', onMouseDown)
 canvas.addEventListener('mouseup', onMouseUp)
@@ -733,7 +720,6 @@ function onMouseWheel(event){
 
 function getAllChildren(obj) {
     for (let i = 0; i < obj.children.length; i++) {
-        console.log(obj.children[i].id);
         if (obj.children[i].children.length > 0) {
             getAllChildren(obj.children[i]);
         }
@@ -743,7 +729,6 @@ function getAllChildren(obj) {
 function findAndPushChildren(obj, name){
     for (let i = 0; i < obj.children.length; i++) {
         if (obj.children[i].id === name){
-            console.log(obj.children[i].id);
             check.push(obj.children[i]);
         }
         if (obj.children[i].children.length > 0) {
@@ -755,7 +740,6 @@ function findAndPushChildren(obj, name){
 function findAndDeleteChildren(obj, name){
     for (let i = 0; i < obj.children.length; i++) {
         if (obj.children[i].id === name){
-            console.log(obj.children[i].id);
             check = check.filter(item => item !== obj.children[i])
         }
         if (obj.children[i].children.length > 0) {
@@ -778,7 +762,6 @@ function componentViewLoader(obj) {
         if(!checkbox.checked){
             findAndDeleteChildren(scene, checkbox.value)
         }
-        console.log(check)
         const checkboxes = li.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(childCheckbox => {
             childCheckbox.checked = checkbox.checked;
@@ -814,7 +797,6 @@ addObjectFileSelector.addEventListener('change', async (e) => {
 
     if (check.length>0){
         check.forEach((item) => {
-            console.log(item)
             scene.getObject(item).add(newScene)
         })
     }
@@ -1186,14 +1168,10 @@ applyButton.addEventListener('click', () => {
         tempMaterial = new BasicMaterial("New Material", [1, 1, 1], useTxt, newTexture)
     }
 
-    console.log(tempMaterial)
-
     if (check.length > 0){
         check.forEach((item) => {
             if (scene.getObject(item).type === 'Mesh'){
                 scene.getObject(item).setMaterial([tempMaterial], [0, 0, 0, 0, 0, 0])
-                console.log(scene.getObject(item))
-                console.log(scene.getObject(item).material)
             }
         })
     }
@@ -1203,33 +1181,35 @@ applyButton.addEventListener('click', () => {
 })
 
 function loadImage(imageSrc, cat) {
-      this.img = new Image();
-      this.img.src = imageSrc;
+    this.img = new Image();
+    this.img.src = imageSrc;
 
-      // Optionally, handle the image load event if needed
-      this.img.onload = () => {
+    // Optionally, handle the image load event if needed
+    this.img.onload = () => {
         if (cat == "texture") {
             newTexture.setImageSource(imageSrc, cat)
             newTexture.texSrc = imageSrc
-            console.log(1)
-            console.log(tempMaterial)
         }
         if (cat == "normal") {
             newTexture.setImageSource(imageSrc, cat)
             newTexture.normalSrc = imageSrc
-            console.log(2)
-            console.log(tempMaterial)
-
         }
         if (cat == "specular") {
             newTexture.setImageSource(imageSrc, cat)
-            console.log(3)
-            console.log(tempMaterial)
         }
         if (cat == "displacement") {
             newTexture.setImageSource(imageSrc, cat)
-            console.log(4)
-            console.log(tempMaterial)
         }
-      };
-    }
+    };
+}
+
+displacementFactor.addEventListener('change', () => {
+    check.forEach((c) => {
+        c.material.forEach((m) => {
+            if(m.uniforms['displacementFactor'] != null)
+                m.uniforms['displacementFactor'] = displacementFactor.value
+        })
+    })
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
