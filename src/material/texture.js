@@ -1,7 +1,5 @@
 class Texture {
 
-    image
-
     get type(){
         return "TEXTURE"
     }
@@ -104,6 +102,62 @@ class Texture {
             console.log("SPECULAR LOADED " + this.name)
             this.speLoaded = true
         }
+    }
+
+    setImageSource(imgSrc, cat){
+        switch(cat){
+            case "texture":
+                this.texture.src = imgSrc
+                this.texture.onload = () => {
+                    console.log("TEXTURE LOADED" + this.name)
+                    this.texLoaded = true
+                }
+                break
+            case "displacement":
+                this.displacement.src = imgSrc
+                this.displacement.onload = () => {
+                    console.log("DISPLACEMENT LOADED " + this.name)
+                    this.disLoaded = true
+                }
+                break
+            case "normal":
+                this.normal.src = imgSrc
+                this.normal.onload = () => {
+                    console.log("NORMAL LOADED " + this.name)
+                    this.norLoaded = true
+                }
+                break
+            case "specular":
+                this.specular.src = imgSrc
+                this.specular.onload = () => {
+                    console.log("SPECULAR LOADED " + this.name)
+                    this.speLoaded = true
+                }
+                break
+        }
+        this.isDisplacement = Boolean(this.displacementSrc)
+        this.isNormal = Boolean(this.normalSrc)
+        this.isSpecular = Boolean(this.specularSrc)
+    }
+
+    setImage(image, cat) {
+        switch(cat){
+            case "texture":
+                this.texture = image
+                break
+            case "displacement":
+                this.displacement = image
+                break
+            case "normal":
+                this.normal = image
+                break
+            case "specular":
+                this.specular = image
+                break
+        }
+        this.isDisplacement = Boolean(this.displacement)
+        this.isNormal = Boolean(this.normal)
+        this.isSpecular = Boolean(this.specular)
     }
   
     toJSON(){
