@@ -39,4 +39,4 @@ Bagian ini memiliki 4 button dimana fungsinya natara lain adalah save to json, l
 | 13521007 |Matthew Mahendra| Rendering (Shaders, Pipeline), Texture, Component Viewer and Editor, Utils(Matrix4x4, Vector), Basic Material |nether | creeper
 | 13521012 |Haikal Ardzi S.|Oblique Projection, Geometries, Save/Load, Animation Builder and Manager, Quaternion|chain |steve
 | 13521022 |Raditya Naufal A.| Camera, Component editor, Save, Object manipulation|batako | golem
-| 13521027 |Agsha Athalla N.| |cube| wither
+| 13521027 |Agsha Athalla N.| Mesh, Add-remove Object, Camera Controller, Orbit Control, Component Editor |cube| wither
