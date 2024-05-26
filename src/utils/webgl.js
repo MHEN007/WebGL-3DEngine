@@ -1142,7 +1142,9 @@ applyButton.addEventListener('click', () => {
     var normalSrc = ""
     var specularSrc = ""
     var displacementSrc = ""
+    var useTxt = false
     if (texImg) {
+        useTxt = true
         const reader = new FileReader()
         reader.onload = function(e) {
             const src = e.target.result
@@ -1151,6 +1153,7 @@ applyButton.addEventListener('click', () => {
         reader.readAsDataURL(texImg);
     }
     if (normalImg) {
+        useTxt = true
         const reader = new FileReader()
         reader.onload = function(e) {
             const src = e.target.result
@@ -1159,6 +1162,7 @@ applyButton.addEventListener('click', () => {
         reader.readAsDataURL(normalImg);
     }
     if (specularImg) {
+        useTxt = true
         const reader = new FileReader()
         reader.onload = function(e) {
             const src = e.target.result
@@ -1167,6 +1171,7 @@ applyButton.addEventListener('click', () => {
         reader.readAsDataURL(specularImg);
     }
     if (displacementImg) {
+        useTxt = true
         const reader = new FileReader()
         reader.onload = function(e) {
             const src = e.target.result
@@ -1177,10 +1182,10 @@ applyButton.addEventListener('click', () => {
 
     newTexture = new Texture("New Texture", texSrc, displacementSrc, normalSrc, specularSrc)
     if (materialDropDown.value === 'phong'){
-        tempMaterial = new PhongMaterial("New Material", [1, 1, 1], true, newTexture)
+        tempMaterial = new PhongMaterial("New Material", [1, 1, 1], useTxt, newTexture)
     }
     else {
-        tempMaterial = new BasicMaterial("New Material", [1, 1, 1], true, newTexture)
+        tempMaterial = new BasicMaterial("New Material", [1, 1, 1], useTxt, newTexture)
     }
 
     console.log(tempMaterial)
