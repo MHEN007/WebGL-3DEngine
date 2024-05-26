@@ -140,7 +140,7 @@ const infinityCube = new InfinityCube()
 const nether = new NetherPortal()
 
 /* SCENE CREATION */
-let scene = new Scene(gl, [camera], [light1, light3]).add(creeper.object);
+let scene = new Scene(gl, [camera], [light1, light3]).add(golem.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -793,13 +793,11 @@ addObjectFileSelector.addEventListener('change', async (e) => {
     }
 
     const newScene = NodeScene.fromJSON(json)
-    // getAllChildren(scene)
-    const newObject = newScene.children[0]
 
     if (check.length>0){
         check.forEach((item) => {
             console.log(item)
-            scene.getObject(item).add(newObject)
+            scene.getObject(item).add(newScene)
         })
     }
     updateComponentViewer()
