@@ -32,6 +32,9 @@ Frame Controller memiliki beberapa kegunaan diantaranya untuk melihat berapa fps
 ### 7. Settings
 Bagian ini memiliki 4 button dimana fungsinya natara lain adalah save to json, load from json, kemudian delete selected object, dan add object to selected object.
 
+### 8. Texture
+Bagian ini digunakan untuk mengatur texture dan atau material yang digunakan pada objek yang dipilih. Dalam bagian ini ada 2 opsi material dan pengguna dapat mengupload texture yang ingin digunakan.
+
 ## Members
 | NIM | Nama |Pembagian Kerja |Hollow Model | Articulated Model|
 | --- | -----| ---|----- | -----
