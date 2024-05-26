@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=2048, initial-scale=1.0">
+    <title>ABA Engine</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #2f2f2f;
+            color: white;
+            overflow: visible;
+            padding-top: 100px;
+        }
+
+        .main-container {
+            display: flex;
+            margin-top: 80px;
+            justify-content: center;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items:start;
+            padding: 20px;
+            z-index: 1;
+            margin-left: 1px;
+        }
+
+        #glCanvas {
+            border: solid 1px;
+        }
+
+        #right-controller {
+            width: 600px;
+            margin-left: 20px;
+            flex-shrink: 0;
+        }
+
+        #componentViewer{
+            position: relative;
+            width: 475px;
+            margin-right: 2px;
+            margin-left: 20px;
+            flex-shrink: 0;
+            overflow-y: auto;
+            height: fit-content;
+        }
+        
+        .right{
+            position: relative;
+            width: 475px;
+            margin-right: 2px;
+            margin-left: 20px;
+            height: 20vh;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>3D Model Engine</h1>
+    <div class="main-container">
+        <div>
+            <div id="componentViewer">
+                <h2>Component Viewer</h2>
+            </div>
+            <div class="right">
+                <h2>Animation Manager</h2>
+                <button id="play">play</button>
+                <button id="pause">pause</button>
+                <br>
+                <br>
+                <label for="reverse">reverse:</label>
+                <label class="switch">
+                    <input type="checkbox" id="reverse">
+                </label>
+                <label for="autoreplay">auto-replay:</label>
+                <label class="switch">
+                    <input type="checkbox" id="autoreplay">
+                </label>
+                <br>
+                <br>
+                <label for="addFrame">Add Frame:</label>
+                <button id="addFrame">Add</button>
+                <br/>
+                <br/>
+                <label for="saveAnim">saveAnim:</label>
+                <button id="saveAnim">Save</button>
+                <br/>
+                <br/>
+                <label for="anim-selector">Load Anim: </label>
+                <input type="file" id="anim-selector">
+                
+                <br>
+                <br>
+            </div>
+        </div>
+        <div class="canvas-container">
+            <canvas id="glCanvas"></canvas>
+            <div>
+                <h2>Frame Controller</h2>
+                <p id="fps">FPS: 0</p>
+                <p id="frame">Frame: 0/0</p>
+                <button id="nextFrame">Next</button>
+                <button id="prevFrame">Previous</button>
+                <button id="firstFrame">First</button>
+                <button id="lastFrame">Last</button>
+            </div>
+        </div>
+        <div id="right-controller">
+            <div>Camera</div>
+            <label for="projection">Projection :</label>
+            <select name="projection" id="projection">
+                <option value="perspective">Perspective</option>
+                <option value="oblique">Oblique</option>
+                <option value="orthographic">Orthographic</option>
+            </select>
+            <br/>
+            <label for="viewAngle" id="viewAngleLabel" hidden>View Angle :</label>
+            <select name="viewAngle" id="viewAngle" hidden>
+                <option value="front">Front</option>
+                <option value="back">Back</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+            <br/>
+            <label for="rotationXLabel" id="rotationXLabel">Rotation x :</label>
+            <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationX">
+            <br/>
+            <br/>
+            <label for="rotationYLabel" id="rotationYLabel">Rotation y :</label>
+            <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationY">
+            <br/>
+            <br/>
+            <label for="rotationZLabel" id="rotationZLabel">Rotation z :</label>
+            <input type="range" min="-3.14" max="3.14" value="0" step="0.01" id="rotationZ">
+            <br/>
+            <br/>
+            <label for="distance" id="distanceLabel" hidden>Distance :</label>
+            <input type="range" min="0" max="2" value="1" step="0.01" id="distance" hidden>
+            <br/>
+            <br/>
+            <button id="reset">Reset</button>
+            <br/>
+            <label for="angleOblique" id="angleObliqueLabel" hidden>Oblique Angle :</label>
+            <input type="range" min="0" max="360" value="0" step="0.01" id="angleOblique" hidden>
+            <br/>
+            <br/>
+            <label for="x">X-Pos :</label>
+            <input type="range" min="-1" max="1" value="0" step="0.01" id="x">
+            <label for="xRot">X-Rot :</label>
+            <input type="range" min="0" max="360" value="0" step="0.1" id="xRot">
+            <label for="xScale">Scale :</label>
+            <input type="range" min="0" max="2" value="1" step="0.01" id="xScale">
+            <br/>
+            <br/>
+            <label for="y">Y-Pos :</label>
+            <input type="range" min="-1" max="1" value="0" step="0.01" id="y">
+            <label for="yRot">Y-Rot :</label>
+            <input type="range" min="0" max="360" value="0" step="0.1" id="yRot">
+            <label for="yScale">Scale :</label>
+            <input type="range" min="0" max="2" value="1" step="0.01" id="yScale">
+            <br/>
+            <br/>
+            <label for="z">Z-Pos :</label>
+            <input type="range" min="-1" max="1" value="0" step="0.01" id="z">
+            <label for="zRot">Z-Rot :</label>
+            <input type="range" min="0" max="360" value="0" step="0.1" id="zRot">
+            <label for="zScale">Scale :</label>
+            <input type="range" min="0" max="2" value="1" step="0.01" id="zScale">
+            <br/>
+            <br/>
+            <label for="l-x">Light Position :</label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-x">
+            </label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-y">
+            </label>
+            <label class="switch">
+                <input type="range" min="-1" max="1" value="0" step="0.01" id="l-z">
+            </label>
+            <br />
+            <br />
+            <label for="l-intensity-r">Light Colour :</label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-r">
+            </label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-g">
+            </label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity-b">
+            </label>
+            <br />
+            <br />
+
+            <label for="l-intensity">Light Intensity :</label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-intensity">
+            </label>
+
+            <label for="l-angle">Light Angle :</label>
+            <label class="switch">
+                <input type="range" min="0" max="360" value="0.5" step="0.01" id="l-angle">
+            </label>
+            <br>
+            <br>
+
+            <label for="l-angle">Light Direction :</label>
+            <label class="switch">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-dir-x">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-dir-y">
+                <input type="range" min="0" max="1" value="0.5" step="0.01" id="l-dir-z">
+            </label>
+            <br/>
+            <br/>
+            <label for="save">save:</label>
+            <button id="save">Save</button>
+            <label for="file-selector">Load</label>
+            <input type="file" id="file-selector">
+            <br/>
+            <br/>
+            <label for="export-object">Export Object</label>
+            <button id="export-object">Export</button>
+            <br/>
+            <br/>
+            <label for="delete-button">Delete Object</label>
+            <button id="delete-button">Delete</button>
+            <br/>
+            <br/>
+            <label for="add-object-file-selector">Add Object</label>
+            <input type="file" id="add-object-file-selector">
+            <br/>
+            <br/>
+            <label class="switch">
+                <input type="checkbox" id="diffuse" checked>
+                <label for="diffuse">Diffuse</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="displacement" checked>
+                <label for="displacement">Displacement</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="specular" checked>
+                <label for="specular">Specular</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="normal" checked>
+                <label for="normal">Normal</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="useVertColor" checked>
+                <label for="useVertColor">Use Vertex Color</label>
+            </label>
+            <br>
+            <br>
+            <label class="switch">
+                <input type="color" id="ambientColor">
+                <label for="ambientColor">
+                    Ambient
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="color" id="specularColor">
+                <label for="specularColor">
+                    Specular
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="color" id="diffuseColor">
+                <label for="diffuseColor">
+                    Diffuse
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="range" min=0 max=100 value=64 id="shininess">
+                <label for="shininess">
+                    Shininess
+                </label> 
+            </label>
+            <label class="switch">
+                <input type="range" min=-0.5 max=0.5 value=0.02 step="0.01" id="displacementFactor">
+                <label for="displacementFactor">
+                    Displacement Factor
+                </label> 
+            </label>
+            <br/>
+            <br/>
+            <label for="change-material">Change Material: </label>
+            <select name="projection" id="materialSelect">
+                <option value="basic">Basic</option>
+                <option value="phong">Phong</option>
+            </select>
+            <label class="switch">
+                <input type="checkbox" id="change-texture" checked>
+                <label for="texture">Texture</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-displacement" checked>
+                <label for="displacement">Displacement</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-specular" checked>
+                <label for="specular">Specular</label>
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="change-normal" checked>
+                <label for="normal">Normal</label>
+            </label>
+            <button id="applyChange">Apply</button>
+            <br/>
+            <br/>
+            <label for="change-texture-file-selector">Texture File</label>
+            <input type="file" id="change-texture-file-selector">
+            <br/>
+            <label for="change-displacement-file-selector">Displacement Map File</label>
+            <input type="file" id="change-displacement-file-selector">
+            <br/>
+            <label for="change-specular-file-selector">Specular Map File</label>
+            <input type="file" id="change-specular-file-selector">
+            <br/>
+            <label for="change-normal-file-selector">Normal Map File</label>
+            <input type="file" id="change-normal-file-selector">
+
+        </div>
+        
+    </div>
+    
+    <script src="./models/steve.js"></script>
+    <script src="./models/creeper.js"></script>
+    <script src="./models/wither.js"></script>
+    <script src="./models/shulker.js"></script>
+    <script src="./models/golem.js"></script>
+    <script src="./models/HollowModel/nether.js"></script>
+    <script src="./models/HollowModel/cube.js"></script>
+    <script src="./models/HollowModel/Chain.js"></script>
+    <script src="./models/HollowModel/batako.js"></script>
+    
+    <script src="./models/HollowModel/infinityCube.js"></script>
+    <script src="./material/shaderMaterial.js"></script>
+    <script src="./material/basicMaterial.js"></script>
+    <script src="./material/phongMaterial.js"></script>
+    <script src="./material/texture.js"></script>
+    
+    <script src="./shapes/node.js"></script>
+    <script src="./shapes/scene.js"></script>
+    <script src="./shapes/Mesh.js"></script>
+
+    <script src="./camera/Camera.js"></script>
+    <script src="./camera/Orthographic.js"></script>
+    <script src="./camera/Perspective.js"></script>
+    <script src="./camera/Oblique.js"></script>
+
+    <script src="./geometry/BufferGeometry.js"></script>
+    <script src="./geometry/BufferAttribute.js"></script>
+    <script src="./geometry/PlaneGeometry.js"></script>
+    <script src="./geometry/BoxGeometry.js"></script>
+
+    <script src="./light/baseLight.js"></script>
+    <script src="./light/directionalLight.js"></script>
+    <script src="./light/spotLight.js"></script>
+    <script src="./light/pointLight.js"></script>
+    
+    <script src="./utils/animRunner.js"></script>
+    <script src="./utils/updater.js"></script>
+    <script src="./utils/Quarternion.js"></script>
+    <script src="./utils/Matrix4x4.js"></script>
+    <script src="./utils/vector.js"></script>
+    <script src="./utils/webgl.js"></script>
+    <script src="./utils/Load.js"></script>
+    <script src="./utils/save.js"></script>
+
+</body>
+</html>
