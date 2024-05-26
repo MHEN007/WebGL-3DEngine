@@ -36,6 +36,6 @@ Bagian ini memiliki 4 button dimana fungsinya natara lain adalah save to json, l
 | --- | -----| ---|----- | -----
 | 13521003 |Bintang Hijriawan J.| |infinity cube| shulker
 | 13521007 |Matthew Mahendra| |nether | creeper
-| 13521012 |Haikal Ardzi S.| |chain |steve
+| 13521012 |Haikal Ardzi S.|Oblique Projection, Geometries, Save/Load, Animation Builder and Manager, Quaternion|chain |steve
 | 13521022 |Raditya Naufal A.| |batako | golem
 | 13521027 |Agsha Athalla N.| |cube| wither
