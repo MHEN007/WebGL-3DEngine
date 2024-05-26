@@ -30,6 +30,10 @@ const lightIntensityR = document.getElementById('l-intensity-r')
 const lightIntensityG = document.getElementById('l-intensity-g')
 const lightIntensityB = document.getElementById('l-intensity-b')
 const lightIntensity = document.getElementById('l-intensity')
+const lightDirX = document.getElementById('l-dir-x')
+const lightDirY = document.getElementById('l-dir-y')
+const lightDirZ = document.getElementById('l-dir-z')
+const lightAngle = document.getElementById('l-angle')
 
 const xPos = document.getElementById("x")
 const yPos = document.getElementById("y")
@@ -60,6 +64,7 @@ canvas.width = 600
 canvas.height = 600
 
 let check = []
+let lightSelected = []
 
 let animator = new AnimationRunner(30)
 let fps = 0;
@@ -67,13 +72,13 @@ let fps = 0;
 const phongUpdater = new Updater()
 
 /* LIGHT */
-const light2 = new DirectionalLight("Light 2", new Vector3(0, 1, 0), 1.0, new Vector3(0, 0, -1))
-const light3 = new DirectionalLight("Light 3", new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, 1))
+const light2 = new DirectionalLight("Light 2", new Vector3(0, 1, 0), 1.0, new Vector3(0, -0.03, 0))
+const light3 = new SpotLight("Light 3", new Vector3(1, 1, 1), 1.0, new Vector3(0, 0, 1))
 const light1 = new PointLight("Light 1", new Vector3(0, 1, 0), 1.0, new Vector3(0, 0.03, 0))
 // const light1 = new SpotLight(new Vector3(0, 1, 1), new Vector3(0, 1, 0), new Vector3(0, -1, 0), 1)
-lightIntensityR.value = light1.intensity.x
-lightIntensityG.value = light1.intensity.y
-lightIntensityB.value = light1.intensity.z
+lightIntensityR.value = 0
+lightIntensityG.value = 0
+lightIntensityB.value = 0
 distanceSlider.style.display = 'block'
 distanceLabel.style.display = 'block'
 
@@ -83,7 +88,7 @@ camera.position = new Vector3(0, 1, 1)
 camera.rotation = new Vector3(0, 0, 0)
 
 /* MATERIALS */
-const tex1 = new Texture('tex1', './utils/texture.png')
+const tex1 = null
 const green = new BasicMaterial("green", [0, 1, 0], false, tex1)
 const red = new BasicMaterial("red", [1, 0, 0], false, tex1)
 const blue = new BasicMaterial("blue", [0, 0, 1], false, tex1)
@@ -130,7 +135,7 @@ const infinityCube = new InfinityCube()
 const nether = new NetherPortal()
 
 /* SCENE CREATION */
-let scene = new Scene(gl, [camera], [light1]).add(shulker.object);
+let scene = new Scene(gl, [camera], [light1, light3]).add(creeper.object);
 scene.position = new Vector3(0,0,0)
 
 const left = -0.5
@@ -152,6 +157,17 @@ for(let i =0; i < scene.lightSources.length; i++){
     var checkBox = document.createElement("input")
     checkBox.type = 'checkbox'
     checkBox.value = scene.lightSources[i].id
+
+    checkBox.addEventListener('change', function() {
+        if(checkBox.checked){
+            lightSelected.push(scene.lightSources[i])
+        }
+
+        if(!checkBox.checked){
+            lightSelected = lightSelected.filter(it => it !== scene.lightSources[i])
+        }
+    })
+
     li.appendChild(checkBox)
     li.appendChild(document.createTextNode(scene.lightSources[i].id))
     lightList.appendChild(li)
@@ -351,7 +367,11 @@ zPos.addEventListener('input', function(){
 })
 
 lightXPosition.addEventListener('input', function() {
-    light1.position.x = parseFloat(lightXPosition.value)
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.position.x = parseFloat(lightXPosition.value)
+        })
+    }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -359,7 +379,11 @@ lightXPosition.addEventListener('input', function() {
 })
 
 lightYPosition.addEventListener('input', function() {
-    light1.position.y = parseFloat(lightYPosition.value)
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.position.y = parseFloat(lightYPosition.value)
+        })
+    }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     console.log(light1.position.y)
@@ -368,7 +392,12 @@ lightYPosition.addEventListener('input', function() {
 })
 
 lightZPosition.addEventListener('input', function() {
-    light1.position.z = parseFloat(lightZPosition.value)
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.position.z = parseFloat(lightZPosition.value)
+        })
+    }
+    console.log(lightSelected[0].position)
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -376,21 +405,33 @@ lightZPosition.addEventListener('input', function() {
 })
 
 lightIntensityR.addEventListener('input', function() {
-    light1.color = new Vector3(parseFloat(lightIntensityR.value), light1.color.y, light1.color.z)
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.color = new Vector3(parseFloat(lightIntensityR.value), light.color.y, light.color.z)
+        })
+    }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityG.addEventListener('input', function() {
-    light1.color = new Vector3(light1.color.x, parseFloat(lightIntensityG.value), light1.intenscolority.z)
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.color = new Vector3(light.color.x, parseFloat(lightIntensityG.value), light.intenscolority.z)
+        })
+    }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
 lightIntensityB.addEventListener('input', function() {
-    light1.color = new Vector3(light1.color.x, light1.color.y, parseFloat(lightIntensityB.value))
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.color = new Vector3(light.color.x, light.color.y, parseFloat(lightIntensityB.value))
+        })
+    }
     var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
     // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -398,7 +439,68 @@ lightIntensityB.addEventListener('input', function() {
 })
 
 lightIntensity.addEventListener('input', function(){
-    light1.intensity = parseFloat(lightIntensity.value)
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            light.intensity = parseFloat(lightIntensity.value)
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightAngle.addEventListener('change', function (){
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            if(light.type == 'SpotLight'){
+                light.angle = parseFloat(lightAngle.value)
+            }
+        })
+    }
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+
+lightDirX.addEventListener('change', () => {
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            if(light.type != 'PointLight'){
+                light.direction = new Vector3(parseFloat(lightDirX.value), light.direction.y, light.direction.z)
+            }
+        })
+    }
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightDirY.addEventListener('change', () => {
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            if(light.type != 'PointLight'){
+                light.direction = new Vector3(light.direction.x, parseFloat(lightDirY.value), light.direction.z)
+            }
+        })
+    }
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+lightDirZ.addEventListener('change', () => {
+    if(lightSelected.length > 0){
+        lightSelected.forEach((light) => {
+            if(light.type != 'PointLight'){
+                light.direction = new Vector3(light.direction.x, light.direction.y, parseFloat(lightDirZ.value))
+            }
+        })
+    }
+    var updates = { lightPosition: light1.calculatePosition(scene.position), lightIntensity: light1.intensity }
+    // phongUpdater.update(updates)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     scene.drawAll()
 })
@@ -424,6 +526,17 @@ function updateComponentViewer(){
         var checkBox = document.createElement("input")
         checkBox.type = 'checkbox'
         checkBox.value = scene.lightSources[i].id
+
+        checkBox.addEventListener('change', function() {
+            if(checkBox.checked){
+                lightSelected.push(scene.lightSources[i])
+            }
+    
+            if(!checkBox.checked){
+                lightSelected = lightSelected.filter(it => it !== scene.lightSources[i])
+            }
+        })
+
         li.appendChild(checkBox)
         li.appendChild(document.createTextNode(scene.lightSources[i].id))
         lightList.appendChild(li)
@@ -432,6 +545,7 @@ function updateComponentViewer(){
     ulChild.appendChild(lightParent)
 
     check = []
+    lightSelected = []
 }
 
 deleteButton.addEventListener('click', function(){

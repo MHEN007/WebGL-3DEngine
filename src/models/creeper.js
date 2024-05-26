@@ -1,7 +1,7 @@
 class Creeper{
     get object()
     {
-        const headTexture = new Texture('creeperHead', './utils/texture.png', './utils/displacement.png', './utils/normal.png', './utils/specular.png')
+        const headTexture = new Texture('creeperHead', './utils/texture.png', './utils/displacementMap.png', './utils/normal.png', './utils/specular.png')
         const material = [new PhongMaterial('creep', [1, 1, 1], true, headTexture), new BasicMaterial('creepbody', [0.039, 0.5, 0.125], false, null, [1, 1, 1, 1]), new BasicMaterial('creepLeg', [0, 1, 0], false)]
 
         const leg = new BoxGeometry(0.09, 0.3, 0.1)

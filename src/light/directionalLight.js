@@ -14,14 +14,13 @@ class DirectionalLight extends Light {
     }
 
     calculatePosition(objPos) {
-        console.log(objPos)
         var lightPos = new Vector3(objPos.x, objPos.y, objPos.z)
         lightPos.sub(this.direction)
         return lightPos
     }
 
     calculateIntensity(objPos) {
-        return this.color.multiply(this.intensity)
+        return new Vector3(this.color.x * this.intensity, this.color.y * this.intensity, this.color.y * this.intensity)
     }
 
     get type(){

@@ -1,14 +1,11 @@
 class SpotLight extends Light {
 
     /**@type {Vector3} */
-    position 
-    /**@type {Vector3} */
     direction
     /**@type {number} */
     angle
-    constructor(id, c, i, position, direction, angle){
+    constructor(id, c, i, direction, angle){
         super(id, c, i)
-        this.position = position
         this.direction = direction
         this.angle = angle
     }
