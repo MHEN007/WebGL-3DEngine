@@ -148,7 +148,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniform3fv(uniformColorLoc, material.uniforms['color'])
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
-        gl.uniform1i(uniformVertexColorLoc, true)
+        gl.uniform1i(uniformVertexColorLoc, material.uniforms['useVertexColor'])
         this.gl.uniform1i(uniformUseTexture, material.uniforms['useTexture'])
         this.gl.uniform1i(uniformTextureLoc, 0)
     
@@ -186,12 +186,13 @@ class Scene extends NodeScene{
             gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
     
             var texture = gl.createTexture()
+            this.gl.activeTexture(gl.TEXTURE0)
 
-            if(texObj.loaded){
+            if(texObj.texLoaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.texture)
                 
-                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                if (isPowerOf2(texObj.texture.width) && isPowerOf2(texObj.texture.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -247,7 +248,7 @@ class Scene extends NodeScene{
         gl.uniformMatrix4fv(uniformViewProjMatLoc, false, viewProjMatrix)
         gl.uniformMatrix4fv(uniformNormalMatLoc, false, Matrix4x4.transpose(Matrix4x4.inverse(worldMatrix)))
         gl.uniform2fv(uniformResolutionLoc, [canvas.width, canvas.height])
-        gl.uniform1i(uniformVertexColorLoc, true) // Assuming you want to use vertex color
+        gl.uniform1i(uniformVertexColorLoc, material.uniforms['useVertexColor']) // Assuming you want to use vertex color
         gl.uniform4fv(uniformAmbientColorLoc, material.uniforms['ambient'])
         gl.uniform1f(uniformShininessLoc, material.uniforms['shininess'])
         gl.uniform4fv(uniformDiffuseColorLoc, material.uniforms['diffuse'])
