@@ -186,12 +186,13 @@ class Scene extends NodeScene{
             gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset)
     
             var texture = gl.createTexture()
+            this.gl.activeTexture(gl.TEXTURE0)
 
-            if(texObj.loaded){
+            if(texObj.texLoaded){
                 gl.bindTexture(gl.TEXTURE_2D, texture)
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texObj.texture)
                 
-                if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+                if (isPowerOf2(texObj.texture.width) && isPowerOf2(texObj.texture.height)) {
                     gl.generateMipmap(gl.TEXTURE_2D)
                 } else {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
