@@ -531,7 +531,7 @@ class NetherPortal {
         const vertices = new Float32Array([...outerVertices]);
 
         
-        const black = new BasicMaterial("black", [0, 0, 0])
+        const black = new BasicMaterial("black", [1, 1, 0])
         const grey = new BasicMaterial("grey", [0.5, 0.5, 0.5])
         
         var materials = []

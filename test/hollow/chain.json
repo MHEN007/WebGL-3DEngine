@@ -2726,31 +2726,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2762,7 +2783,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2774,31 +2802,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2810,7 +2859,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2822,7 +2878,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2834,31 +2897,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2870,7 +2954,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2882,31 +2973,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2918,7 +3030,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2930,7 +3049,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2942,31 +3068,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2978,7 +3125,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -2990,31 +3144,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3026,7 +3201,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3038,7 +3220,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3050,31 +3239,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3086,7 +3296,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3098,31 +3315,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3134,7 +3372,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3146,7 +3391,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3158,31 +3410,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3194,7 +3467,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3206,31 +3486,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3242,7 +3543,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3254,7 +3562,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3266,31 +3581,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3302,7 +3638,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3314,31 +3657,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3350,7 +3714,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3362,7 +3733,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3374,31 +3752,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3410,7 +3809,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3422,31 +3828,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3458,7 +3885,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3470,7 +3904,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3482,31 +3923,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3518,7 +3980,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3530,31 +3999,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3566,7 +4056,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3578,7 +4075,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3590,31 +4094,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3626,7 +4151,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3638,31 +4170,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3674,7 +4227,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3686,7 +4246,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3698,31 +4265,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3734,7 +4322,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3746,31 +4341,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3782,7 +4398,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3794,7 +4417,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3806,31 +4436,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3842,7 +4493,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3854,31 +4512,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3890,7 +4569,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3902,7 +4588,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3914,31 +4607,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3950,7 +4664,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3962,31 +4683,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -3998,7 +4740,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4010,7 +4759,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4022,31 +4778,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4058,7 +4835,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4070,31 +4854,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4106,7 +4911,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4118,7 +4930,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4130,31 +4949,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4166,7 +5006,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4178,31 +5025,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4214,7 +5082,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4226,7 +5101,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4238,31 +5120,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4274,7 +5177,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4286,31 +5196,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4322,7 +5253,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4334,7 +5272,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4346,31 +5291,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4382,7 +5348,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4394,31 +5367,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4430,7 +5424,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4442,7 +5443,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4454,31 +5462,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4490,7 +5519,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4502,31 +5538,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4538,7 +5595,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4550,7 +5614,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4562,31 +5633,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4598,7 +5690,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4610,31 +5709,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4646,7 +5766,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4658,7 +5785,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4670,31 +5804,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4706,7 +5861,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4718,31 +5880,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4754,7 +5937,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4766,7 +5956,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4778,31 +5975,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4814,7 +6032,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4826,31 +6051,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4862,7 +6108,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4874,7 +6127,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4886,31 +6146,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4922,7 +6203,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4934,31 +6222,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4970,7 +6279,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4982,7 +6298,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -4994,31 +6317,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5030,7 +6374,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5042,31 +6393,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5078,7 +6450,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5090,7 +6469,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5102,31 +6488,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5138,7 +6545,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5150,31 +6564,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5186,7 +6621,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5198,7 +6640,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5210,31 +6659,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5246,7 +6716,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5258,31 +6735,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5294,7 +6792,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5306,7 +6811,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5318,31 +6830,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5354,7 +6887,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5366,31 +6906,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5402,7 +6963,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5414,7 +6982,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5426,31 +7001,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5462,7 +7058,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5474,31 +7077,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5510,7 +7134,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5522,7 +7153,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5534,31 +7172,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5570,7 +7229,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5582,31 +7248,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5618,7 +7305,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5630,7 +7324,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5642,31 +7343,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5678,7 +7400,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5690,31 +7419,52 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
           "type": "BASIC",
           "uniforms": {
             "color": [
-              0,
-              0,
+              1,
+              1,
               0
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5726,7 +7476,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         },
         {
@@ -5738,7 +7495,14 @@
               0.5
             ],
             "useTexture": false,
-            "sourceTexture": ""
+            "sourceTexture": "",
+            "ambient": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "useVertexColor": true
           }
         }
       ],
@@ -5919,7 +7683,7 @@
   "type": "Scene",
   "lightsources": [
     {
-      "id": "NodeMesh",
+      "id": "Light 1",
       "position": {
         "x": 0,
         "y": 0.03,
@@ -5980,6 +7744,74 @@
       },
       "intensity": 1,
       "type": "PointLight"
+    },
+    {
+      "id": "Light 3",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "worldMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "children": [],
+      "visible": true,
+      "color": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "intensity": 1,
+      "type": "SpotLight",
+      "direction": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      }
     }
   ]
 }
