@@ -51,7 +51,7 @@ class SpotLight extends Light {
      * @param {SpotLight} object 
      */
     static fromJSON(json, object){
-        object = new SpotLight(new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
+        object = new SpotLight(json.id, new Vector3(json.intensity.x, json.intensity.y, json.intensity.z))
         object.position = new Vector3(json.position.x, json.position.y, json.position.z)
         object.direction = new Vector3(json.direction.x, json.direction.y, json.direction.z)
         object.angle = json.angle

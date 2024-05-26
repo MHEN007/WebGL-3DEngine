@@ -40,10 +40,34 @@ const animSelector = document.getElementById("anim-selector")
     
     /* LOAD VIEWER */
     componentViewer.innerHTML = "<h2>Component Viewer</h2>"
-    const ul = document.createElement("ul")
-
+    var ul = document.createElement("ul")
     ul.appendChild(componentViewLoader(scene))
+    var lightParent = document.createElement('li')
+    var lightList = document.createElement("ul")
+    lightList.appendChild(document.createTextNode("Light Sources"))
+    for(let i =0; i < scene.lightSources.length; i++){
+        var li = document.createElement('li')
+        const checkBox = document.createElement("input")
+        checkBox.type = 'checkbox'
+        checkBox.value = scene.lightSources[i].id
 
+        checkBox.addEventListener('change', function() {
+            if(checkBox.checked){
+                lightSelected.push(scene.lightSources[i])
+            }
+
+            if(!checkBox.checked){
+                lightSelected = lightSelected.filter(it => it !== scene.lightSources[i])
+            }
+        })
+
+        li.appendChild(checkBox)
+        console.log(scene.lightSources[i])
+        li.appendChild(document.createTextNode(scene.lightSources[i].id))
+        lightList.appendChild(li)
+    }
+    lightParent.appendChild(lightList)
+    ul.appendChild(lightList)
     componentViewer.appendChild(ul)
 })
 
