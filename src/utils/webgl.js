@@ -37,6 +37,10 @@ const zPos = document.getElementById("z")
 const xRot = document.getElementById('xRot')
 const yRot = document.getElementById('yRot')
 const zRot = document.getElementById('zRot')
+const xScale = document.getElementById('xScale')
+const yScale = document.getElementById('yScale')
+const zScale = document.getElementById('zScale')
+
 
 const play = document.getElementById('play')
 const pause = document.getElementById('pause')
@@ -711,6 +715,36 @@ zRot.addEventListener('input', () =>{
     if (check.length > 0){
         check.forEach((item) => {
             scene.getObject(item).rotation.z = parseFloat(zRot.value) * Math.PI / 180;
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+xScale.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).scale.x = parseFloat(xScale.value);
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+yScale.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).scale.y = parseFloat(yScale.value);
+        })
+    }
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    scene.drawAll()
+})
+
+zScale.addEventListener('input', () => {
+    if (check.length > 0){
+        check.forEach((item) => {
+            scene.getObject(item).scale.z = parseFloat(zScale.value);
         })
     }
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
