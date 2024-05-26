@@ -452,7 +452,7 @@ lightAngle.addEventListener('change', function (){
     if(lightSelected.length > 0){
         lightSelected.forEach((light) => {
             if(light.type == 'SpotLight'){
-                light.angle = parseFloat(lightAngle.value)
+                light.angle = parseFloat(lightAngle.value) * 3.14 / 180
             }
         })
     }
